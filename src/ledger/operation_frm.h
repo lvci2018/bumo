@@ -60,8 +60,8 @@ namespace bumo{
 		void Exit(std::shared_ptr<Environment> environment);
 		//void OperationDeployContract(Environment *environment);
 		//void InvokeContract(Environment *environment);
-		void MatchOrder(std::shared_ptr<Environment> environment);
-		void UpdateIssuedAsset(std::shared_ptr<Environment> environment);
+		void ProcessOrder(std::shared_ptr<Environment> environment);
+		void UpdateAssetProperty(std::shared_ptr<Environment> environment);
 	};
 };
 #endif

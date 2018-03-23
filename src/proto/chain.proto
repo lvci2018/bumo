@@ -123,8 +123,8 @@ message Operation {
 			SET_THRESHOLD			= 6;
 			PAY_COIN                = 7;
 			LOG						= 8;
-			MATCH_ORDER				= 9;
-			UPDATE_ISSUED_ASSET		= 10;
+			PROCESS_ORDER			= 9;
+			UPDATE_ASSET_PROPERTY	= 10;
 	};
 	Type type = 1;
 	string source_address = 2;

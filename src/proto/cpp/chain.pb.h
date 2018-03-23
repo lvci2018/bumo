@@ -78,14 +78,14 @@ enum Operation_Type {
   Operation_Type_SET_THRESHOLD = 6,
   Operation_Type_PAY_COIN = 7,
   Operation_Type_LOG = 8,
-  Operation_Type_MATCH_ORDER = 9,
-  Operation_Type_UPDATE_ISSUED_ASSET = 10,
+  Operation_Type_PROCESS_ORDER = 9,
+  Operation_Type_UPDATE_ASSET_PROPERTY = 10,
   Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   Operation_Type_Operation_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool Operation_Type_IsValid(int value);
 const Operation_Type Operation_Type_Type_MIN = Operation_Type_UNKNOWN;
-const Operation_Type Operation_Type_Type_MAX = Operation_Type_UPDATE_ISSUED_ASSET;
+const Operation_Type Operation_Type_Type_MAX = Operation_Type_UPDATE_ASSET_PROPERTY;
 const int Operation_Type_Type_ARRAYSIZE = Operation_Type_Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Operation_Type_descriptor();
@@ -1947,10 +1947,10 @@ class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point
     Operation_Type_PAY_COIN;
   static const Type LOG =
     Operation_Type_LOG;
-  static const Type MATCH_ORDER =
-    Operation_Type_MATCH_ORDER;
-  static const Type UPDATE_ISSUED_ASSET =
-    Operation_Type_UPDATE_ISSUED_ASSET;
+  static const Type PROCESS_ORDER =
+    Operation_Type_PROCESS_ORDER;
+  static const Type UPDATE_ASSET_PROPERTY =
+    Operation_Type_UPDATE_ASSET_PROPERTY;
   static inline bool Type_IsValid(int value) {
     return Operation_Type_IsValid(value);
   }

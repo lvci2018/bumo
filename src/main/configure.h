@@ -108,8 +108,8 @@ namespace bumo {
 			int64_t set_sigure_weight_fee_;
 			int64_t set_threshold_fee_;
 			int64_t pay_coin_fee_;
-			int64_t match_order_fee_;
-			int64_t update_issued_asset_fee_;
+			int64_t process_order_fee_;
+			int64_t update_asset_property_fee_;
 		};
 		FeeConfigure fees_;
 

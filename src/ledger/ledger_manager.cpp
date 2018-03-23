@@ -298,8 +298,8 @@ namespace bumo {
 		fees_.set_set_sigure_weight_fee(Configure::Instance().genesis_configure_.fees_.set_sigure_weight_fee_);
 		fees_.set_set_threshold_fee(Configure::Instance().genesis_configure_.fees_.set_threshold_fee_);
 		fees_.set_pay_coin_fee(Configure::Instance().genesis_configure_.fees_.pay_coin_fee_);
-		fees_.set_match_fee(Configure::Instance().genesis_configure_.fees_.match_order_fee_);
-		fees_.set_update_issued_asset_fee(Configure::Instance().genesis_configure_.fees_.update_issued_asset_fee_);
+		fees_.set_process_order_fee(Configure::Instance().genesis_configure_.fees_.process_order_fee_);
+		fees_.set_update_asset_property_fee(Configure::Instance().genesis_configure_.fees_.update_asset_property_fee_);
 		std::string fees_hash = HashWrapper::Crypto(fees_.SerializeAsString());
 		header->set_fees_hash(fees_hash);
 

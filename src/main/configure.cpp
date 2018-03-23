@@ -181,8 +181,8 @@ namespace bumo {
 		Configure::GetValue(value["fees"], "set_sigure_weight_fee", fees_.set_sigure_weight_fee_);
 		Configure::GetValue(value["fees"], "set_threshold_fee", fees_.set_threshold_fee_);
 		Configure::GetValue(value["fees"], "pay_coin_fee", fees_.pay_coin_fee_);
-		Configure::GetValue(value["fees"], "match_order_fee", fees_.match_order_fee_);
-		Configure::GetValue(value["fees"], "update_issued_asset_fee", fees_.update_issued_asset_fee_);
+		Configure::GetValue(value["fees"], "process_order_fee", fees_.process_order_fee_);
+		Configure::GetValue(value["fees"], "update_asset_property_fee", fees_.update_asset_property_fee_);
 		return true;
 	}
 

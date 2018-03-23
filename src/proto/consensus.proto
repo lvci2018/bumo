@@ -119,8 +119,8 @@ message FeeConfig
 			SET_SIGNER_WEIGHT_FEE		= 7;
 			SET_THRESHOLD_FEE			= 8;
 			PAY_COIN_FEE				= 9;
-			MATCH_FEE					= 10;
-			UPDATE_ISSUED_ASSET_FEE		= 11;
+			PROCESS_ORDER_FEE			= 10;
+			UPDATE_ASSET_PROPERTY_FEE	= 11;
 	};
 	int64 byte_fee = 1;
 	int64 base_reserve = 2;
@@ -131,6 +131,6 @@ message FeeConfig
 	int64 set_sigure_weight_fee = 7;
 	int64 set_threshold_fee = 8;
 	int64 pay_coin_fee = 9;
-	int64 match_fee = 10;
-	int64 update_issued_asset_fee = 11;
+	int64 process_order_fee = 10;
+	int64 update_asset_property_fee = 11;
 }

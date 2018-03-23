@@ -365,11 +365,11 @@ namespace bumo {
 			}
 			break;
 		}
-		case protocol::Operation_Type_MATCH_ORDER:
+		case protocol::Operation_Type_PROCESS_ORDER:
 		{
 
 		}
-		case protocol::Operation_Type_UPDATE_ISSUED_ASSET:
+		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
 		{
 
 		}
@@ -452,11 +452,11 @@ namespace bumo {
 		case protocol::Operation_Type_LOG:
 			Log(environment);
 			break;
-		case protocol::Operation_Type_MATCH_ORDER:
-			MatchOrder(environment);
+		case protocol::Operation_Type_PROCESS_ORDER:
+			ProcessOrder(environment);
 			break;
-		case protocol::Operation_Type_UPDATE_ISSUED_ASSET:
-			UpdateIssuedAsset(environment);
+		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
+			UpdateAssetProperty(environment);
 			break;
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;
@@ -888,8 +888,8 @@ namespace bumo {
 	}
 
 	void OperationFrm::Log(std::shared_ptr<Environment> environment) {}
-	void OperationFrm::MatchOrder(std::shared_ptr<Environment> environment){}
-	void OperationFrm::UpdateIssuedAsset(std::shared_ptr<Environment> environment){}
+	void OperationFrm::ProcessOrder(std::shared_ptr<Environment> environment){}
+	void OperationFrm::UpdateAssetProperty(std::shared_ptr<Environment> environment){}
 	
 	void OperationFrm::OptFee(const protocol::Operation_Type type) {
 		protocol::FeeConfig fee_config = LedgerManager::Instance().GetCurFeeConfig();
@@ -917,11 +917,11 @@ namespace bumo {
 		case protocol::Operation_Type_PAY_COIN:
 			ope_fee_ = fee_config.pay_coin_fee();
 			break;
-		case protocol::Operation_Type_MATCH_ORDER:
-			ope_fee_ = fee_config.match_fee();
+		case protocol::Operation_Type_PROCESS_ORDER:
+			ope_fee_ = fee_config.process_order_fee();
 			break;
-		case protocol::Operation_Type_UPDATE_ISSUED_ASSET:
-			ope_fee_ = fee_config.update_issued_asset_fee();
+		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
+			ope_fee_ = fee_config.update_asset_property_fee();
 			break;
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;
