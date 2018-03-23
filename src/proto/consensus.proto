@@ -114,11 +114,13 @@ message FeeConfig
 			BASE_RESERVE_FEE			= 2;
 			CREATE_ACCOUNT_FEE 			= 3;
 			ISSUE_ASSET_FEE 			= 4;
-			PAYMENT_FEE                 = 5;
+			PAYMENT_FEE					= 5;
 			SET_METADATA_FEE			= 6;
 			SET_SIGNER_WEIGHT_FEE		= 7;
 			SET_THRESHOLD_FEE			= 8;
-			PAY_COIN_FEE                = 9;
+			PAY_COIN_FEE				= 9;
+			MATCH_FEE					= 10;
+			UPDATE_ISSUED_ASSET_FEE		= 11;
 	};
 	int64 byte_fee = 1;
 	int64 base_reserve = 2;
@@ -129,4 +131,6 @@ message FeeConfig
 	int64 set_sigure_weight_fee = 7;
 	int64 set_threshold_fee = 8;
 	int64 pay_coin_fee = 9;
+	int64 match_fee = 10;
+	int64 update_issued_asset_fee = 11;
 }

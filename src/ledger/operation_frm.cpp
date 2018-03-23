@@ -365,6 +365,14 @@ namespace bumo {
 			}
 			break;
 		}
+		case protocol::Operation_Type_MATCH_ORDER:
+		{
+
+		}
+		case protocol::Operation_Type_UPDATE_ISSUED_ASSET:
+		{
+
+		}
 
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;
@@ -443,6 +451,12 @@ namespace bumo {
 			break;
 		case protocol::Operation_Type_LOG:
 			Log(environment);
+			break;
+		case protocol::Operation_Type_MATCH_ORDER:
+			MatchOrder(environment);
+			break;
+		case protocol::Operation_Type_UPDATE_ISSUED_ASSET:
+			UpdateIssuedAsset(environment);
 			break;
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;
@@ -551,7 +565,7 @@ namespace bumo {
 				protocol::AssetStore asset;
 				asset.mutable_key()->CopyFrom(key);
 				asset.set_amount(ope.amount());
-				//asset.mutable_property()->CopyFrom(ope.property());
+				asset.mutable_property()->CopyFrom(ope.property());
 				source_account_->SetAsset(asset);
 			}
 			else {
@@ -596,9 +610,9 @@ namespace bumo {
 					break;
 				}
 
-				if (payment.asset().key().type() == 0){
+				if (payment.asset().key().type() == 0 || (payment.asset().key().type() != 0 && source_account_->GetAccountAddress() != payment.asset().key().issuer() && dest_account->GetAccountAddress() != payment.asset().key().issuer() )){
 
-					int64_t sender_amount = asset_e.amount() - payment.asset().amount();
+					int64_t sender_amount = asset_e.amount() -asset_e.freezn_amount() - payment.asset().amount();
 					if (sender_amount < 0) {
 						result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
 						result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
@@ -626,12 +640,72 @@ namespace bumo {
 					}
 				}
 				else{
-					/*if (source_account_->GetAccountAddress() == payment.asset().key().issuer()){
+					if (source_account_->GetAccountAddress() == payment.asset().key().issuer()){
+						int64_t left_amount = asset_e.property().max_supply() - asset_e.property().issued_amount() - payment.asset().amount();
+						if (left_amount < 0) {
+							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+							break;
+						}
+						int64_t sender_amount = asset_e.property().issued_amount() + payment.asset().amount();
+						asset_e.mutable_property()->set_issued_amount(sender_amount);
+						source_account_->SetAsset(asset_e);
+
+						protocol::AssetStore dest_asset;
+						if (!dest_account->GetAsset(key, dest_asset)) {
+							dest_asset.mutable_key()->CopyFrom(key);
+							dest_asset.set_amount(payment.asset().amount());
+							dest_account->SetAsset(dest_asset);
+						}
+						else {
+							int64_t receiver_amount = dest_asset.amount() + payment.asset().amount();
+							if (receiver_amount < dest_asset.amount() || receiver_amount < payment.asset().amount())
+							{
+								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
+								result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), key.type(), dest_asset.amount(), payment.asset().amount()));
+								break;
+							}
+							dest_asset.set_amount(receiver_amount);
+							dest_account->SetAsset(dest_asset);
+						}
+
 					}
 					else if (dest_account->GetAccountAddress() == payment.asset().key().issuer()){
+						int64_t sender_amount = asset_e.amount() - asset_e.freezn_amount() - payment.asset().amount();
+						if (sender_amount < 0) {
+							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+							break;
+						}
+						asset_e.set_amount(sender_amount);
+						source_account_->SetAsset(asset_e);
+
+						protocol::AssetStore dest_asset;
+						if (!dest_account->GetAsset(key, dest_asset)) {
+							result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+							result_.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), key.type()));
+							break;
+						}
+						else {
+							int64_t receiver_amount = dest_asset.property().issued_amount() + payment.asset().amount();
+							if (receiver_amount < dest_asset.amount() || receiver_amount < payment.asset().amount() || receiver_amount > dest_asset.property().max_supply())
+							{
+								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
+								result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), key.type(), (int64_t)dest_asset.property().max_supply(), payment.asset().amount()));
+								break;
+							}
+							int64_t issued_amount = dest_asset.property().issued_amount() - payment.asset().amount();
+							if (issued_amount < 0){
+								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+								result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+								break;
+							}
+							dest_asset.mutable_property()->set_issued_amount(issued_amount);
+							dest_account->SetAsset(dest_asset);
+						}
 					}
 					else{
-					}*/
+					}
 				}
 			}
 			
@@ -814,6 +888,8 @@ namespace bumo {
 	}
 
 	void OperationFrm::Log(std::shared_ptr<Environment> environment) {}
+	void OperationFrm::MatchOrder(std::shared_ptr<Environment> environment){}
+	void OperationFrm::UpdateIssuedAsset(std::shared_ptr<Environment> environment){}
 	
 	void OperationFrm::OptFee(const protocol::Operation_Type type) {
 		protocol::FeeConfig fee_config = LedgerManager::Instance().GetCurFeeConfig();
@@ -840,6 +916,12 @@ namespace bumo {
 			break;
 		case protocol::Operation_Type_PAY_COIN:
 			ope_fee_ = fee_config.pay_coin_fee();
+			break;
+		case protocol::Operation_Type_MATCH_ORDER:
+			ope_fee_ = fee_config.match_fee();
+			break;
+		case protocol::Operation_Type_UPDATE_ISSUED_ASSET:
+			ope_fee_ = fee_config.update_issued_asset_fee();
 			break;
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;

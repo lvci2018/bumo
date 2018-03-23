@@ -63,12 +63,14 @@ enum FeeConfig_Type {
   FeeConfig_Type_SET_SIGNER_WEIGHT_FEE = 7,
   FeeConfig_Type_SET_THRESHOLD_FEE = 8,
   FeeConfig_Type_PAY_COIN_FEE = 9,
+  FeeConfig_Type_MATCH_FEE = 10,
+  FeeConfig_Type_UPDATE_ISSUED_ASSET_FEE = 11,
   FeeConfig_Type_FeeConfig_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FeeConfig_Type_FeeConfig_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FeeConfig_Type_IsValid(int value);
 const FeeConfig_Type FeeConfig_Type_Type_MIN = FeeConfig_Type_UNKNOWN;
-const FeeConfig_Type FeeConfig_Type_Type_MAX = FeeConfig_Type_PAY_COIN_FEE;
+const FeeConfig_Type FeeConfig_Type_Type_MAX = FeeConfig_Type_UPDATE_ISSUED_ASSET_FEE;
 const int FeeConfig_Type_Type_ARRAYSIZE = FeeConfig_Type_Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FeeConfig_Type_descriptor();
@@ -1501,6 +1503,10 @@ class FeeConfig : public ::google::protobuf::Message /* @@protoc_insertion_point
     FeeConfig_Type_SET_THRESHOLD_FEE;
   static const Type PAY_COIN_FEE =
     FeeConfig_Type_PAY_COIN_FEE;
+  static const Type MATCH_FEE =
+    FeeConfig_Type_MATCH_FEE;
+  static const Type UPDATE_ISSUED_ASSET_FEE =
+    FeeConfig_Type_UPDATE_ISSUED_ASSET_FEE;
   static inline bool Type_IsValid(int value) {
     return FeeConfig_Type_IsValid(value);
   }
@@ -1578,6 +1584,18 @@ class FeeConfig : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::int64 pay_coin_fee() const;
   void set_pay_coin_fee(::google::protobuf::int64 value);
 
+  // optional int64 match_fee = 10;
+  void clear_match_fee();
+  static const int kMatchFeeFieldNumber = 10;
+  ::google::protobuf::int64 match_fee() const;
+  void set_match_fee(::google::protobuf::int64 value);
+
+  // optional int64 update_issued_asset_fee = 11;
+  void clear_update_issued_asset_fee();
+  static const int kUpdateIssuedAssetFeeFieldNumber = 11;
+  ::google::protobuf::int64 update_issued_asset_fee() const;
+  void set_update_issued_asset_fee(::google::protobuf::int64 value);
+
   // @@protoc_insertion_point(class_scope:protocol.FeeConfig)
  private:
 
@@ -1592,6 +1610,8 @@ class FeeConfig : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::int64 set_sigure_weight_fee_;
   ::google::protobuf::int64 set_threshold_fee_;
   ::google::protobuf::int64 pay_coin_fee_;
+  ::google::protobuf::int64 match_fee_;
+  ::google::protobuf::int64 update_issued_asset_fee_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_consensus_2eproto();
   friend void protobuf_AssignDesc_consensus_2eproto();
@@ -2876,6 +2896,34 @@ inline void FeeConfig::set_pay_coin_fee(::google::protobuf::int64 value) {
   
   pay_coin_fee_ = value;
   // @@protoc_insertion_point(field_set:protocol.FeeConfig.pay_coin_fee)
+}
+
+// optional int64 match_fee = 10;
+inline void FeeConfig::clear_match_fee() {
+  match_fee_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 FeeConfig::match_fee() const {
+  // @@protoc_insertion_point(field_get:protocol.FeeConfig.match_fee)
+  return match_fee_;
+}
+inline void FeeConfig::set_match_fee(::google::protobuf::int64 value) {
+  
+  match_fee_ = value;
+  // @@protoc_insertion_point(field_set:protocol.FeeConfig.match_fee)
+}
+
+// optional int64 update_issued_asset_fee = 11;
+inline void FeeConfig::clear_update_issued_asset_fee() {
+  update_issued_asset_fee_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 FeeConfig::update_issued_asset_fee() const {
+  // @@protoc_insertion_point(field_get:protocol.FeeConfig.update_issued_asset_fee)
+  return update_issued_asset_fee_;
+}
+inline void FeeConfig::set_update_issued_asset_fee(::google::protobuf::int64 value) {
+  
+  update_issued_asset_fee_ = value;
+  // @@protoc_insertion_point(field_set:protocol.FeeConfig.update_issued_asset_fee)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS

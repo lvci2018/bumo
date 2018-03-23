@@ -11351,6 +11351,16 @@ public final class Consensus {
      * <code>optional int64 pay_coin_fee = 9;</code>
      */
     long getPayCoinFee();
+
+    /**
+     * <code>optional int64 match_fee = 10;</code>
+     */
+    long getMatchFee();
+
+    /**
+     * <code>optional int64 update_issued_asset_fee = 11;</code>
+     */
+    long getUpdateIssuedAssetFee();
   }
   /**
    * Protobuf type {@code protocol.FeeConfig}
@@ -11373,6 +11383,8 @@ public final class Consensus {
       setSigureWeightFee_ = 0L;
       setThresholdFee_ = 0L;
       payCoinFee_ = 0L;
+      matchFee_ = 0L;
+      updateIssuedAssetFee_ = 0L;
     }
 
     @java.lang.Override
@@ -11445,6 +11457,16 @@ public final class Consensus {
               payCoinFee_ = input.readInt64();
               break;
             }
+            case 80: {
+
+              matchFee_ = input.readInt64();
+              break;
+            }
+            case 88: {
+
+              updateIssuedAssetFee_ = input.readInt64();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -11513,6 +11535,14 @@ public final class Consensus {
        * <code>PAY_COIN_FEE = 9;</code>
        */
       PAY_COIN_FEE(9),
+      /**
+       * <code>MATCH_FEE = 10;</code>
+       */
+      MATCH_FEE(10),
+      /**
+       * <code>UPDATE_ISSUED_ASSET_FEE = 11;</code>
+       */
+      UPDATE_ISSUED_ASSET_FEE(11),
       UNRECOGNIZED(-1),
       ;
 
@@ -11556,6 +11586,14 @@ public final class Consensus {
        * <code>PAY_COIN_FEE = 9;</code>
        */
       public static final int PAY_COIN_FEE_VALUE = 9;
+      /**
+       * <code>MATCH_FEE = 10;</code>
+       */
+      public static final int MATCH_FEE_VALUE = 10;
+      /**
+       * <code>UPDATE_ISSUED_ASSET_FEE = 11;</code>
+       */
+      public static final int UPDATE_ISSUED_ASSET_FEE_VALUE = 11;
 
 
       public final int getNumber() {
@@ -11586,6 +11624,8 @@ public final class Consensus {
           case 7: return SET_SIGNER_WEIGHT_FEE;
           case 8: return SET_THRESHOLD_FEE;
           case 9: return PAY_COIN_FEE;
+          case 10: return MATCH_FEE;
+          case 11: return UPDATE_ISSUED_ASSET_FEE;
           default: return null;
         }
       }
@@ -11719,6 +11759,24 @@ public final class Consensus {
       return payCoinFee_;
     }
 
+    public static final int MATCH_FEE_FIELD_NUMBER = 10;
+    private long matchFee_;
+    /**
+     * <code>optional int64 match_fee = 10;</code>
+     */
+    public long getMatchFee() {
+      return matchFee_;
+    }
+
+    public static final int UPDATE_ISSUED_ASSET_FEE_FIELD_NUMBER = 11;
+    private long updateIssuedAssetFee_;
+    /**
+     * <code>optional int64 update_issued_asset_fee = 11;</code>
+     */
+    public long getUpdateIssuedAssetFee() {
+      return updateIssuedAssetFee_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -11757,6 +11815,12 @@ public final class Consensus {
       }
       if (payCoinFee_ != 0L) {
         output.writeInt64(9, payCoinFee_);
+      }
+      if (matchFee_ != 0L) {
+        output.writeInt64(10, matchFee_);
+      }
+      if (updateIssuedAssetFee_ != 0L) {
+        output.writeInt64(11, updateIssuedAssetFee_);
       }
     }
 
@@ -11801,6 +11865,14 @@ public final class Consensus {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(9, payCoinFee_);
       }
+      if (matchFee_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(10, matchFee_);
+      }
+      if (updateIssuedAssetFee_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(11, updateIssuedAssetFee_);
+      }
       memoizedSize = size;
       return size;
     }
@@ -11835,6 +11907,10 @@ public final class Consensus {
           == other.getSetThresholdFee());
       result = result && (getPayCoinFee()
           == other.getPayCoinFee());
+      result = result && (getMatchFee()
+          == other.getMatchFee());
+      result = result && (getUpdateIssuedAssetFee()
+          == other.getUpdateIssuedAssetFee());
       return result;
     }
 
@@ -11872,6 +11948,12 @@ public final class Consensus {
       hash = (37 * hash) + PAY_COIN_FEE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getPayCoinFee());
+      hash = (37 * hash) + MATCH_FEE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMatchFee());
+      hash = (37 * hash) + UPDATE_ISSUED_ASSET_FEE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUpdateIssuedAssetFee());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -12008,6 +12090,10 @@ public final class Consensus {
 
         payCoinFee_ = 0L;
 
+        matchFee_ = 0L;
+
+        updateIssuedAssetFee_ = 0L;
+
         return this;
       }
 
@@ -12039,6 +12125,8 @@ public final class Consensus {
         result.setSigureWeightFee_ = setSigureWeightFee_;
         result.setThresholdFee_ = setThresholdFee_;
         result.payCoinFee_ = payCoinFee_;
+        result.matchFee_ = matchFee_;
+        result.updateIssuedAssetFee_ = updateIssuedAssetFee_;
         onBuilt();
         return result;
       }
@@ -12106,6 +12194,12 @@ public final class Consensus {
         }
         if (other.getPayCoinFee() != 0L) {
           setPayCoinFee(other.getPayCoinFee());
+        }
+        if (other.getMatchFee() != 0L) {
+          setMatchFee(other.getMatchFee());
+        }
+        if (other.getUpdateIssuedAssetFee() != 0L) {
+          setUpdateIssuedAssetFee(other.getUpdateIssuedAssetFee());
         }
         onChanged();
         return this;
@@ -12366,6 +12460,58 @@ public final class Consensus {
         onChanged();
         return this;
       }
+
+      private long matchFee_ ;
+      /**
+       * <code>optional int64 match_fee = 10;</code>
+       */
+      public long getMatchFee() {
+        return matchFee_;
+      }
+      /**
+       * <code>optional int64 match_fee = 10;</code>
+       */
+      public Builder setMatchFee(long value) {
+        
+        matchFee_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 match_fee = 10;</code>
+       */
+      public Builder clearMatchFee() {
+        
+        matchFee_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long updateIssuedAssetFee_ ;
+      /**
+       * <code>optional int64 update_issued_asset_fee = 11;</code>
+       */
+      public long getUpdateIssuedAssetFee() {
+        return updateIssuedAssetFee_;
+      }
+      /**
+       * <code>optional int64 update_issued_asset_fee = 11;</code>
+       */
+      public Builder setUpdateIssuedAssetFee(long value) {
+        
+        updateIssuedAssetFee_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 update_issued_asset_fee = 11;</code>
+       */
+      public Builder clearUpdateIssuedAssetFee() {
+        
+        updateIssuedAssetFee_ = 0L;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -12524,24 +12670,26 @@ public final class Consensus {
       "\001 \001(\t\022\032\n\022pledge_coin_amount\030\002 \001(\003\"7\n\014Val" +
       "idatorSet\022\'\n\nvalidators\030\001 \003(\0132\023.protocol" +
       ".Validator\"/\n\tPbftProof\022\"\n\007commits\030\001 \003(\013" +
-      "2\021.protocol.PbftEnv\"\265\003\n\tFeeConfig\022\020\n\010byt" +
+      "2\021.protocol.PbftEnv\"\225\004\n\tFeeConfig\022\020\n\010byt" +
       "e_fee\030\001 \001(\003\022\024\n\014base_reserve\030\002 \001(\003\022\032\n\022cre" +
       "ate_account_fee\030\003 \001(\003\022\027\n\017issue_asset_fee" +
       "\030\004 \001(\003\022\017\n\007pay_fee\030\005 \001(\003\022\030\n\020set_metadata_" +
       "fee\030\006 \001(\003\022\035\n\025set_sigure_weight_fee\030\007 \001(\003",
       "\022\031\n\021set_threshold_fee\030\010 \001(\003\022\024\n\014pay_coin_" +
-      "fee\030\t \001(\003\"\317\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\014\n\010BYTE_" +
-      "FEE\020\001\022\024\n\020BASE_RESERVE_FEE\020\002\022\026\n\022CREATE_AC" +
-      "COUNT_FEE\020\003\022\023\n\017ISSUE_ASSET_FEE\020\004\022\017\n\013PAYM" +
-      "ENT_FEE\020\005\022\024\n\020SET_METADATA_FEE\020\006\022\031\n\025SET_S" +
-      "IGNER_WEIGHT_FEE\020\007\022\025\n\021SET_THRESHOLD_FEE\020" +
-      "\010\022\020\n\014PAY_COIN_FEE\020\t*\243\001\n\017PbftMessageType\022" +
-      "\030\n\024PBFT_TYPE_PREPREPARE\020\000\022\025\n\021PBFT_TYPE_P" +
-      "REPARE\020\001\022\024\n\020PBFT_TYPE_COMMIT\020\002\022\030\n\024PBFT_T" +
-      "YPE_CHECKPOINT\020\003\022\030\n\024PBFT_TYPE_VIEWCHANGE",
-      "\020\004\022\025\n\021PBFT_TYPE_NEWVIEW\020\005*8\n\rPbftValueTy" +
-      "pe\022\021\n\rPBFT_VALUE_TX\020\000\022\024\n\020PBFT_VALUE_TXSE" +
-      "T\020\001b\006proto3"
+      "fee\030\t \001(\003\022\021\n\tmatch_fee\030\n \001(\003\022\037\n\027update_i" +
+      "ssued_asset_fee\030\013 \001(\003\"\373\001\n\004Type\022\013\n\007UNKNOW" +
+      "N\020\000\022\014\n\010BYTE_FEE\020\001\022\024\n\020BASE_RESERVE_FEE\020\002\022" +
+      "\026\n\022CREATE_ACCOUNT_FEE\020\003\022\023\n\017ISSUE_ASSET_F" +
+      "EE\020\004\022\017\n\013PAYMENT_FEE\020\005\022\024\n\020SET_METADATA_FE" +
+      "E\020\006\022\031\n\025SET_SIGNER_WEIGHT_FEE\020\007\022\025\n\021SET_TH" +
+      "RESHOLD_FEE\020\010\022\020\n\014PAY_COIN_FEE\020\t\022\r\n\tMATCH" +
+      "_FEE\020\n\022\033\n\027UPDATE_ISSUED_ASSET_FEE\020\013*\243\001\n\017" +
+      "PbftMessageType\022\030\n\024PBFT_TYPE_PREPREPARE\020",
+      "\000\022\025\n\021PBFT_TYPE_PREPARE\020\001\022\024\n\020PBFT_TYPE_CO" +
+      "MMIT\020\002\022\030\n\024PBFT_TYPE_CHECKPOINT\020\003\022\030\n\024PBFT" +
+      "_TYPE_VIEWCHANGE\020\004\022\025\n\021PBFT_TYPE_NEWVIEW\020" +
+      "\005*8\n\rPbftValueType\022\021\n\rPBFT_VALUE_TX\020\000\022\024\n" +
+      "\020PBFT_VALUE_TXSET\020\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -12633,7 +12781,7 @@ public final class Consensus {
     internal_static_protocol_FeeConfig_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_FeeConfig_descriptor,
-        new java.lang.String[] { "ByteFee", "BaseReserve", "CreateAccountFee", "IssueAssetFee", "PayFee", "SetMetadataFee", "SetSigureWeightFee", "SetThresholdFee", "PayCoinFee", });
+        new java.lang.String[] { "ByteFee", "BaseReserve", "CreateAccountFee", "IssueAssetFee", "PayFee", "SetMetadataFee", "SetSigureWeightFee", "SetThresholdFee", "PayCoinFee", "MatchFee", "UpdateIssuedAssetFee", });
     cn.bumo.blockchain.adapter3.Common.getDescriptor();
   }
 

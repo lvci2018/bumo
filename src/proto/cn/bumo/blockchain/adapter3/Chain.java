@@ -2706,6 +2706,11 @@ public final class Chain {
      * <code>optional int64 issued_amount = 4;</code>
      */
     long getIssuedAmount();
+
+    /**
+     * <code>optional int32 fee_percent = 5;</code>
+     */
+    int getFeePercent();
   }
   /**
    * Protobuf type {@code protocol.AssetProperty}
@@ -2723,6 +2728,7 @@ public final class Chain {
       description_ = "";
       maxSupply_ = 0L;
       issuedAmount_ = 0L;
+      feePercent_ = 0;
     }
 
     @java.lang.Override
@@ -2769,6 +2775,11 @@ public final class Chain {
             case 32: {
 
               issuedAmount_ = input.readInt64();
+              break;
+            }
+            case 40: {
+
+              feePercent_ = input.readInt32();
               break;
             }
           }
@@ -2855,6 +2866,15 @@ public final class Chain {
       return issuedAmount_;
     }
 
+    public static final int FEE_PERCENT_FIELD_NUMBER = 5;
+    private int feePercent_;
+    /**
+     * <code>optional int32 fee_percent = 5;</code>
+     */
+    public int getFeePercent() {
+      return feePercent_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2879,6 +2899,9 @@ public final class Chain {
       if (issuedAmount_ != 0L) {
         output.writeInt64(4, issuedAmount_);
       }
+      if (feePercent_ != 0) {
+        output.writeInt32(5, feePercent_);
+      }
     }
 
     public int getSerializedSize() {
@@ -2900,6 +2923,10 @@ public final class Chain {
       if (issuedAmount_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, issuedAmount_);
+      }
+      if (feePercent_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, feePercent_);
       }
       memoizedSize = size;
       return size;
@@ -2925,6 +2952,8 @@ public final class Chain {
           == other.getMaxSupply());
       result = result && (getIssuedAmount()
           == other.getIssuedAmount());
+      result = result && (getFeePercent()
+          == other.getFeePercent());
       return result;
     }
 
@@ -2945,6 +2974,8 @@ public final class Chain {
       hash = (37 * hash) + ISSUED_AMOUNT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getIssuedAmount());
+      hash = (37 * hash) + FEE_PERCENT_FIELD_NUMBER;
+      hash = (53 * hash) + getFeePercent();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3071,6 +3102,8 @@ public final class Chain {
 
         issuedAmount_ = 0L;
 
+        feePercent_ = 0;
+
         return this;
       }
 
@@ -3097,6 +3130,7 @@ public final class Chain {
         result.description_ = description_;
         result.maxSupply_ = maxSupply_;
         result.issuedAmount_ = issuedAmount_;
+        result.feePercent_ = feePercent_;
         onBuilt();
         return result;
       }
@@ -3150,6 +3184,9 @@ public final class Chain {
         }
         if (other.getIssuedAmount() != 0L) {
           setIssuedAmount(other.getIssuedAmount());
+        }
+        if (other.getFeePercent() != 0) {
+          setFeePercent(other.getFeePercent());
         }
         onChanged();
         return this;
@@ -3323,6 +3360,32 @@ public final class Chain {
         onChanged();
         return this;
       }
+
+      private int feePercent_ ;
+      /**
+       * <code>optional int32 fee_percent = 5;</code>
+       */
+      public int getFeePercent() {
+        return feePercent_;
+      }
+      /**
+       * <code>optional int32 fee_percent = 5;</code>
+       */
+      public Builder setFeePercent(int value) {
+        
+        feePercent_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 fee_percent = 5;</code>
+       */
+      public Builder clearFeePercent() {
+        
+        feePercent_ = 0;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -3402,13 +3465,27 @@ public final class Chain {
     cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getKeyOrBuilder();
 
     /**
-     * <pre>
-     *AssetProperty property = 3;
-     * </pre>
-     *
      * <code>optional int64 amount = 2;</code>
      */
     long getAmount();
+
+    /**
+     * <code>optional int64 freezn_amount = 3;</code>
+     */
+    long getFreeznAmount();
+
+    /**
+     * <code>optional .protocol.AssetProperty property = 4;</code>
+     */
+    boolean hasProperty();
+    /**
+     * <code>optional .protocol.AssetProperty property = 4;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetProperty getProperty();
+    /**
+     * <code>optional .protocol.AssetProperty property = 4;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetPropertyOrBuilder getPropertyOrBuilder();
   }
   /**
    * Protobuf type {@code protocol.AssetStore}
@@ -3423,6 +3500,7 @@ public final class Chain {
     }
     private AssetStore() {
       amount_ = 0L;
+      freeznAmount_ = 0L;
     }
 
     @java.lang.Override
@@ -3466,6 +3544,24 @@ public final class Chain {
             case 16: {
 
               amount_ = input.readInt64();
+              break;
+            }
+            case 24: {
+
+              freeznAmount_ = input.readInt64();
+              break;
+            }
+            case 34: {
+              cn.bumo.blockchain.adapter3.Chain.AssetProperty.Builder subBuilder = null;
+              if (property_ != null) {
+                subBuilder = property_.toBuilder();
+              }
+              property_ = input.readMessage(cn.bumo.blockchain.adapter3.Chain.AssetProperty.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(property_);
+                property_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -3527,14 +3623,40 @@ public final class Chain {
     public static final int AMOUNT_FIELD_NUMBER = 2;
     private long amount_;
     /**
-     * <pre>
-     *AssetProperty property = 3;
-     * </pre>
-     *
      * <code>optional int64 amount = 2;</code>
      */
     public long getAmount() {
       return amount_;
+    }
+
+    public static final int FREEZN_AMOUNT_FIELD_NUMBER = 3;
+    private long freeznAmount_;
+    /**
+     * <code>optional int64 freezn_amount = 3;</code>
+     */
+    public long getFreeznAmount() {
+      return freeznAmount_;
+    }
+
+    public static final int PROPERTY_FIELD_NUMBER = 4;
+    private cn.bumo.blockchain.adapter3.Chain.AssetProperty property_;
+    /**
+     * <code>optional .protocol.AssetProperty property = 4;</code>
+     */
+    public boolean hasProperty() {
+      return property_ != null;
+    }
+    /**
+     * <code>optional .protocol.AssetProperty property = 4;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetProperty getProperty() {
+      return property_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetProperty.getDefaultInstance() : property_;
+    }
+    /**
+     * <code>optional .protocol.AssetProperty property = 4;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
+      return getProperty();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -3555,6 +3677,12 @@ public final class Chain {
       if (amount_ != 0L) {
         output.writeInt64(2, amount_);
       }
+      if (freeznAmount_ != 0L) {
+        output.writeInt64(3, freeznAmount_);
+      }
+      if (property_ != null) {
+        output.writeMessage(4, getProperty());
+      }
     }
 
     public int getSerializedSize() {
@@ -3569,6 +3697,14 @@ public final class Chain {
       if (amount_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, amount_);
+      }
+      if (freeznAmount_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, freeznAmount_);
+      }
+      if (property_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getProperty());
       }
       memoizedSize = size;
       return size;
@@ -3593,6 +3729,13 @@ public final class Chain {
       }
       result = result && (getAmount()
           == other.getAmount());
+      result = result && (getFreeznAmount()
+          == other.getFreeznAmount());
+      result = result && (hasProperty() == other.hasProperty());
+      if (hasProperty()) {
+        result = result && getProperty()
+            .equals(other.getProperty());
+      }
       return result;
     }
 
@@ -3610,6 +3753,13 @@ public final class Chain {
       hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getAmount());
+      hash = (37 * hash) + FREEZN_AMOUNT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getFreeznAmount());
+      if (hasProperty()) {
+        hash = (37 * hash) + PROPERTY_FIELD_NUMBER;
+        hash = (53 * hash) + getProperty().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3736,6 +3886,14 @@ public final class Chain {
         }
         amount_ = 0L;
 
+        freeznAmount_ = 0L;
+
+        if (propertyBuilder_ == null) {
+          property_ = null;
+        } else {
+          property_ = null;
+          propertyBuilder_ = null;
+        }
         return this;
       }
 
@@ -3764,6 +3922,12 @@ public final class Chain {
           result.key_ = keyBuilder_.build();
         }
         result.amount_ = amount_;
+        result.freeznAmount_ = freeznAmount_;
+        if (propertyBuilder_ == null) {
+          result.property_ = property_;
+        } else {
+          result.property_ = propertyBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -3810,6 +3974,12 @@ public final class Chain {
         }
         if (other.getAmount() != 0L) {
           setAmount(other.getAmount());
+        }
+        if (other.getFreeznAmount() != 0L) {
+          setFreeznAmount(other.getFreeznAmount());
+        }
+        if (other.hasProperty()) {
+          mergeProperty(other.getProperty());
         }
         onChanged();
         return this;
@@ -3992,20 +4162,12 @@ public final class Chain {
 
       private long amount_ ;
       /**
-       * <pre>
-       *AssetProperty property = 3;
-       * </pre>
-       *
        * <code>optional int64 amount = 2;</code>
        */
       public long getAmount() {
         return amount_;
       }
       /**
-       * <pre>
-       *AssetProperty property = 3;
-       * </pre>
-       *
        * <code>optional int64 amount = 2;</code>
        */
       public Builder setAmount(long value) {
@@ -4015,10 +4177,6 @@ public final class Chain {
         return this;
       }
       /**
-       * <pre>
-       *AssetProperty property = 3;
-       * </pre>
-       *
        * <code>optional int64 amount = 2;</code>
        */
       public Builder clearAmount() {
@@ -4026,6 +4184,149 @@ public final class Chain {
         amount_ = 0L;
         onChanged();
         return this;
+      }
+
+      private long freeznAmount_ ;
+      /**
+       * <code>optional int64 freezn_amount = 3;</code>
+       */
+      public long getFreeznAmount() {
+        return freeznAmount_;
+      }
+      /**
+       * <code>optional int64 freezn_amount = 3;</code>
+       */
+      public Builder setFreeznAmount(long value) {
+        
+        freeznAmount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 freezn_amount = 3;</code>
+       */
+      public Builder clearFreeznAmount() {
+        
+        freeznAmount_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private cn.bumo.blockchain.adapter3.Chain.AssetProperty property_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          cn.bumo.blockchain.adapter3.Chain.AssetProperty, cn.bumo.blockchain.adapter3.Chain.AssetProperty.Builder, cn.bumo.blockchain.adapter3.Chain.AssetPropertyOrBuilder> propertyBuilder_;
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public boolean hasProperty() {
+        return propertyBuilder_ != null || property_ != null;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetProperty getProperty() {
+        if (propertyBuilder_ == null) {
+          return property_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetProperty.getDefaultInstance() : property_;
+        } else {
+          return propertyBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public Builder setProperty(cn.bumo.blockchain.adapter3.Chain.AssetProperty value) {
+        if (propertyBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          property_ = value;
+          onChanged();
+        } else {
+          propertyBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public Builder setProperty(
+          cn.bumo.blockchain.adapter3.Chain.AssetProperty.Builder builderForValue) {
+        if (propertyBuilder_ == null) {
+          property_ = builderForValue.build();
+          onChanged();
+        } else {
+          propertyBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public Builder mergeProperty(cn.bumo.blockchain.adapter3.Chain.AssetProperty value) {
+        if (propertyBuilder_ == null) {
+          if (property_ != null) {
+            property_ =
+              cn.bumo.blockchain.adapter3.Chain.AssetProperty.newBuilder(property_).mergeFrom(value).buildPartial();
+          } else {
+            property_ = value;
+          }
+          onChanged();
+        } else {
+          propertyBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public Builder clearProperty() {
+        if (propertyBuilder_ == null) {
+          property_ = null;
+          onChanged();
+        } else {
+          property_ = null;
+          propertyBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetProperty.Builder getPropertyBuilder() {
+        
+        onChanged();
+        return getPropertyFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetPropertyOrBuilder getPropertyOrBuilder() {
+        if (propertyBuilder_ != null) {
+          return propertyBuilder_.getMessageOrBuilder();
+        } else {
+          return property_ == null ?
+              cn.bumo.blockchain.adapter3.Chain.AssetProperty.getDefaultInstance() : property_;
+        }
+      }
+      /**
+       * <code>optional .protocol.AssetProperty property = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          cn.bumo.blockchain.adapter3.Chain.AssetProperty, cn.bumo.blockchain.adapter3.Chain.AssetProperty.Builder, cn.bumo.blockchain.adapter3.Chain.AssetPropertyOrBuilder> 
+          getPropertyFieldBuilder() {
+        if (propertyBuilder_ == null) {
+          propertyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              cn.bumo.blockchain.adapter3.Chain.AssetProperty, cn.bumo.blockchain.adapter3.Chain.AssetProperty.Builder, cn.bumo.blockchain.adapter3.Chain.AssetPropertyOrBuilder>(
+                  getProperty(),
+                  getParentForChildren(),
+                  isClean());
+          property_ = null;
+        }
+        return propertyBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -12996,6 +13297,14 @@ public final class Chain {
        * <code>LOG = 8;</code>
        */
       LOG(8),
+      /**
+       * <code>MATCH_ORDER = 9;</code>
+       */
+      MATCH_ORDER(9),
+      /**
+       * <code>UPDATE_ISSUED_ASSET = 10;</code>
+       */
+      UPDATE_ISSUED_ASSET(10),
       UNRECOGNIZED(-1),
       ;
 
@@ -13035,6 +13344,14 @@ public final class Chain {
        * <code>LOG = 8;</code>
        */
       public static final int LOG_VALUE = 8;
+      /**
+       * <code>MATCH_ORDER = 9;</code>
+       */
+      public static final int MATCH_ORDER_VALUE = 9;
+      /**
+       * <code>UPDATE_ISSUED_ASSET = 10;</code>
+       */
+      public static final int UPDATE_ISSUED_ASSET_VALUE = 10;
 
 
       public final int getNumber() {
@@ -13064,6 +13381,8 @@ public final class Chain {
           case 6: return SET_THRESHOLD;
           case 7: return PAY_COIN;
           case 8: return LOG;
+          case 9: return MATCH_ORDER;
+          case 10: return UPDATE_ISSUED_ASSET;
           default: return null;
         }
       }
@@ -27283,100 +27602,103 @@ public final class Chain {
       "ntract\022\017\n\007balance\030\007 \001(\003\"6\n\010AssetKey\022\016\n\006i" +
       "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"" +
       "8\n\005Asset\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe" +
-      "y\022\016\n\006amount\030\002 \001(\003\"`\n\rAssetProperty\022\017\n\007de" +
+      "y\022\016\n\006amount\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007de" +
       "cimal\030\001 \001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_",
-      "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\"=\n\nA" +
-      "ssetStore\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetK" +
-      "ey\022\016\n\006amount\030\002 \001(\003\"\355\001\n\014LedgerHeader\022\013\n\003s" +
-      "eq\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rprevious_hash\030" +
-      "\003 \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022\022\n\nclos" +
-      "e_time\030\005 \001(\003\022\034\n\024consensus_value_hash\030\006 \001" +
-      "(\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010 \001(\003\022\027\n" +
-      "\017validators_hash\030\t \001(\014\022\021\n\tfees_hash\030\n \001(" +
-      "\014\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006header\030\001" +
-      " \001(\0132\026.protocol.LedgerHeader\0222\n\020transact",
-      "ion_envs\030\002 \003(\0132\030.protocol.TransactionEnv" +
-      "\"W\n\020OperationPayment\022\024\n\014dest_address\030\001 \001" +
-      "(\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asset\022\r\n\005in" +
-      "put\030\003 \001(\t\"S\n\026OperationTypeThreshold\022&\n\004t" +
-      "ype\030\001 \001(\0162\030.protocol.Operation.Type\022\021\n\tt" +
-      "hreshold\030\002 \001(\003\"|\n\020AccountPrivilege\022\025\n\rma" +
-      "ster_weight\030\001 \001(\003\022!\n\007signers\030\002 \003(\0132\020.pro" +
-      "tocol.Signer\022.\n\nthresholds\030\003 \001(\0132\032.proto" +
-      "col.AccountThreshold\"c\n\020AccountThreshold" +
-      "\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_threshold",
-      "s\030\002 \003(\0132 .protocol.OperationTypeThreshol" +
-      "d\"l\n\023OperationIssueAsset\022\014\n\004code\030\001 \001(\t\022\016" +
-      "\n\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010property" +
-      "\030\004 \001(\0132\027.protocol.AssetProperty\"G\n\020Opera" +
-      "tionPayCoin\022\024\n\014dest_address\030\001 \001(\t\022\016\n\006amo" +
-      "unt\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030OperationSet" +
-      "SignerWeight\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007s" +
-      "igners\030\002 \003(\0132\020.protocol.Signer\",\n\014Operat" +
-      "ionLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 \003(\t\"\223\005\n" +
-      "\tOperation\022&\n\004type\030\001 \001(\0162\030.protocol.Oper",
-      "ation.Type\022\026\n\016source_address\030\002 \001(\t\022\020\n\010me" +
-      "tadata\030\003 \001(\014\0228\n\016create_account\030\004 \001(\0132 .p" +
-      "rotocol.OperationCreateAccount\0222\n\013issue_" +
-      "asset\030\005 \001(\0132\035.protocol.OperationIssueAss" +
-      "et\022+\n\007payment\030\006 \001(\0132\032.protocol.Operation" +
-      "Payment\0224\n\014set_metadata\030\007 \001(\0132\036.protocol" +
-      ".OperationSetMetadata\022=\n\021set_signer_weig" +
-      "ht\030\010 \001(\0132\".protocol.OperationSetSignerWe" +
-      "ight\0226\n\rset_threshold\030\t \001(\0132\037.protocol.O" +
-      "perationSetThreshold\022,\n\010pay_coin\030\n \001(\0132\032",
-      ".protocol.OperationPayCoin\022#\n\003log\030\013 \001(\0132" +
-      "\026.protocol.OperationLog\"\230\001\n\004Type\022\013\n\007UNKN" +
-      "OWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSUE_ASSET" +
-      "\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004\022\025\n\021SET" +
-      "_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010P" +
-      "AY_COIN\020\007\022\007\n\003LOG\020\010\"h\n\025OperationSetThresh" +
-      "old\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_thresh" +
-      "olds\030\004 \003(\0132 .protocol.OperationTypeThres" +
-      "hold\"\274\001\n\013Transaction\022\026\n\016source_address\030\001" +
-      " \001(\t\022\r\n\005nonce\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil",
-      "_ledger_seq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n\no" +
-      "perations\030\006 \003(\0132\023.protocol.Operation\"%\n\005" +
-      "Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006S" +
-      "igner\022\017\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$" +
-      "\n\005Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n" +
-      "\007Trigger\022;\n\020transaction_type\030\001 \001(\0162!.pro" +
-      "tocol.Trigger.TransactionType\022\022\n\nledger_" +
-      "seq\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132\".protoco" +
-      "l.Trigger.OperationTrigger\032/\n\020OperationT" +
-      "rigger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017T",
-      "ransactionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030" +
-      "\n\024CONTRACT_TRANSACTION\020\001\"\211\001\n\016Transaction" +
-      "Env\022*\n\013transaction\030\001 \001(\0132\025.protocol.Tran" +
-      "saction\022\'\n\nsignatures\030\002 \003(\0132\023.protocol.S" +
-      "ignature\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Tri" +
-      "gger\"\246\001\n\023TransactionEnvStore\0221\n\017transact" +
-      "ion_env\030\001 \001(\0132\030.protocol.TransactionEnv\022" +
-      "\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022" +
-      "\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022" +
-      "\014\n\004hash\030\006 \001(\014\":\n\021TransactionEnvSet\022%\n\003tx",
-      "s\030\002 \003(\0132\030.protocol.TransactionEnv\"G\n\030Con" +
-      "sensusValueValidation\022\025\n\rexpire_tx_ids\030\001" +
-      " \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n\016Consensus" +
-      "Value\022*\n\005txset\030\001 \001(\0132\033.protocol.Transact" +
-      "ionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022\026\n\016previou" +
-      "s_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 \001(\003\022\034\n\024pre" +
-      "vious_ledger_hash\030\005 \001(\014\022/\n\016ledger_upgrad" +
-      "e\030\006 \001(\0132\027.protocol.LedgerUpgrade\0226\n\nvali" +
-      "dation\030\007 \001(\0132\".protocol.ConsensusValueVa" +
-      "lidation\"j\n\010Contract\022-\n\004type\030\001 \001(\0162\037.pro",
-      "tocol.Contract.ContractType\022\017\n\007payload\030\002" +
-      " \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCRIPT\020\000\"\316\001\n" +
-      "\026OperationCreateAccount\022\024\n\014dest_address\030" +
-      "\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.protocol.Contr" +
-      "act\022(\n\004priv\030\003 \001(\0132\032.protocol.AccountPriv" +
-      "ilege\022$\n\tmetadatas\030\004 \003(\0132\021.protocol.KeyP" +
-      "air\022\024\n\014init_balance\030\005 \001(\003\022\022\n\ninit_input\030" +
-      "\006 \001(\t\"X\n\024OperationSetMetadata\022\013\n\003key\030\001 \001" +
-      "(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 \001(\003\022\023\n\013de" +
-      "lete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKNOWN\020\000\022\r\n",
-      "\tSIGNATURE\020dB\035\n\033cn.bumo.blockchain.adapt" +
-      "er3b\006proto3"
+      "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013f" +
+      "ee_percent\030\005 \001(\005\"\177\n\nAssetStore\022\037\n\003key\030\001 " +
+      "\001(\0132\022.protocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022" +
+      "\025\n\rfreezn_amount\030\003 \001(\003\022)\n\010property\030\004 \001(\013" +
+      "2\027.protocol.AssetProperty\"\355\001\n\014LedgerHead" +
+      "er\022\013\n\003seq\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rpreviou" +
+      "s_hash\030\003 \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022" +
+      "\022\n\nclose_time\030\005 \001(\003\022\034\n\024consensus_value_h" +
+      "ash\030\006 \001(\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010" +
+      " \001(\003\022\027\n\017validators_hash\030\t \001(\014\022\021\n\tfees_ha",
+      "sh\030\n \001(\014\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006h" +
+      "eader\030\001 \001(\0132\026.protocol.LedgerHeader\0222\n\020t" +
+      "ransaction_envs\030\002 \003(\0132\030.protocol.Transac" +
+      "tionEnv\"W\n\020OperationPayment\022\024\n\014dest_addr" +
+      "ess\030\001 \001(\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asse" +
+      "t\022\r\n\005input\030\003 \001(\t\"S\n\026OperationTypeThresho" +
+      "ld\022&\n\004type\030\001 \001(\0162\030.protocol.Operation.Ty" +
+      "pe\022\021\n\tthreshold\030\002 \001(\003\"|\n\020AccountPrivileg" +
+      "e\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007signers\030\002 \003(" +
+      "\0132\020.protocol.Signer\022.\n\nthresholds\030\003 \001(\0132",
+      "\032.protocol.AccountThreshold\"c\n\020AccountTh" +
+      "reshold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_th" +
+      "resholds\030\002 \003(\0132 .protocol.OperationTypeT" +
+      "hreshold\"l\n\023OperationIssueAsset\022\014\n\004code\030" +
+      "\001 \001(\t\022\016\n\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010p" +
+      "roperty\030\004 \001(\0132\027.protocol.AssetProperty\"G" +
+      "\n\020OperationPayCoin\022\024\n\014dest_address\030\001 \001(\t" +
+      "\022\016\n\006amount\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030Opera" +
+      "tionSetSignerWeight\022\025\n\rmaster_weight\030\001 \001" +
+      "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\",\n",
+      "\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 " +
+      "\003(\t\"\275\005\n\tOperation\022&\n\004type\030\001 \001(\0162\030.protoc" +
+      "ol.Operation.Type\022\026\n\016source_address\030\002 \001(" +
+      "\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004 " +
+      "\001(\0132 .protocol.OperationCreateAccount\0222\n" +
+      "\013issue_asset\030\005 \001(\0132\035.protocol.OperationI" +
+      "ssueAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.Op" +
+      "erationPayment\0224\n\014set_metadata\030\007 \001(\0132\036.p" +
+      "rotocol.OperationSetMetadata\022=\n\021set_sign" +
+      "er_weight\030\010 \001(\0132\".protocol.OperationSetS",
+      "ignerWeight\0226\n\rset_threshold\030\t \001(\0132\037.pro" +
+      "tocol.OperationSetThreshold\022,\n\010pay_coin\030" +
+      "\n \001(\0132\032.protocol.OperationPayCoin\022#\n\003log" +
+      "\030\013 \001(\0132\026.protocol.OperationLog\"\302\001\n\004Type\022" +
+      "\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSU" +
+      "E_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004" +
+      "\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD" +
+      "\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\017\n\013MATCH_ORDER" +
+      "\020\t\022\027\n\023UPDATE_ISSUED_ASSET\020\n\"h\n\025Operation" +
+      "SetThreshold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017ty",
+      "pe_thresholds\030\004 \003(\0132 .protocol.Operation" +
+      "TypeThreshold\"\274\001\n\013Transaction\022\026\n\016source_" +
+      "address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\013\n\003fee\030\003 \001(" +
+      "\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022\020\n\010metadata\030\005" +
+      " \001(\014\022\'\n\noperations\030\006 \003(\0132\023.protocol.Oper" +
+      "ation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATION" +
+      "S\020\350\007\"O\n\006Signer\022\017\n\007address\030\001 \001(\t\022\016\n\006weigh" +
+      "t\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIG" +
+      "NER\020d\"\211\002\n\007Trigger\022;\n\020transaction_type\030\001 " +
+      "\001(\0162!.protocol.Trigger.TransactionType\022\022",
+      "\n\nledger_seq\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132" +
+      "\".protocol.Trigger.OperationTrigger\032/\n\020O" +
+      "perationTrigger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002" +
+      " \001(\003\"C\n\017TransactionType\022\026\n\022NORMAL_TRANSA" +
+      "CTION\020\000\022\030\n\024CONTRACT_TRANSACTION\020\001\"\211\001\n\016Tr" +
+      "ansactionEnv\022*\n\013transaction\030\001 \001(\0132\025.prot" +
+      "ocol.Transaction\022\'\n\nsignatures\030\002 \003(\0132\023.p" +
+      "rotocol.Signature\022\"\n\007trigger\030\003 \001(\0132\021.pro" +
+      "tocol.Trigger\"\246\001\n\023TransactionEnvStore\0221\n" +
+      "\017transaction_env\030\001 \001(\0132\030.protocol.Transa",
+      "ctionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_de" +
+      "sc\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_ti" +
+      "me\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\":\n\021TransactionEnv" +
+      "Set\022%\n\003txs\030\002 \003(\0132\030.protocol.TransactionE" +
+      "nv\"G\n\030ConsensusValueValidation\022\025\n\rexpire" +
+      "_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n\016" +
+      "ConsensusValue\022*\n\005txset\030\001 \001(\0132\033.protocol" +
+      ".TransactionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022\026" +
+      "\n\016previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 \001" +
+      "(\003\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016ledg",
+      "er_upgrade\030\006 \001(\0132\027.protocol.LedgerUpgrad" +
+      "e\0226\n\nvalidation\030\007 \001(\0132\".protocol.Consens" +
+      "usValueValidation\"j\n\010Contract\022-\n\004type\030\001 " +
+      "\001(\0162\037.protocol.Contract.ContractType\022\017\n\007" +
+      "payload\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCR" +
+      "IPT\020\000\"\316\001\n\026OperationCreateAccount\022\024\n\014dest" +
+      "_address\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.proto" +
+      "col.Contract\022(\n\004priv\030\003 \001(\0132\032.protocol.Ac" +
+      "countPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.prot" +
+      "ocol.KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n\nin",
+      "it_input\030\006 \001(\t\"X\n\024OperationSetMetadata\022\013" +
+      "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 " +
+      "\001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNK" +
+      "NOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.bumo.blockch" +
+      "ain.adapter3b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -27414,13 +27736,13 @@ public final class Chain {
     internal_static_protocol_AssetProperty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_AssetProperty_descriptor,
-        new java.lang.String[] { "Decimal", "Description", "MaxSupply", "IssuedAmount", });
+        new java.lang.String[] { "Decimal", "Description", "MaxSupply", "IssuedAmount", "FeePercent", });
     internal_static_protocol_AssetStore_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_protocol_AssetStore_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_AssetStore_descriptor,
-        new java.lang.String[] { "Key", "Amount", });
+        new java.lang.String[] { "Key", "Amount", "FreeznAmount", "Property", });
     internal_static_protocol_LedgerHeader_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_protocol_LedgerHeader_fieldAccessorTable = new
