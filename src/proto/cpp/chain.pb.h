@@ -56,10 +56,13 @@ class OperationIssueAsset;
 class OperationLog;
 class OperationPayCoin;
 class OperationPayment;
+class OperationProcessOrder;
 class OperationSetMetadata;
 class OperationSetSignerWeight;
 class OperationSetThreshold;
 class OperationTypeThreshold;
+class OperationUpdateAssetProperty;
+class Price;
 class Signer;
 class Transaction;
 class TransactionEnv;
@@ -1870,6 +1873,316 @@ class OperationLog : public ::google::protobuf::Message /* @@protoc_insertion_po
 };
 // -------------------------------------------------------------------
 
+class Price : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.Price) */ {
+ public:
+  Price();
+  virtual ~Price();
+
+  Price(const Price& from);
+
+  inline Price& operator=(const Price& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Price& default_instance();
+
+  void Swap(Price* other);
+
+  // implements Message ----------------------------------------------
+
+  inline Price* New() const { return New(NULL); }
+
+  Price* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Price& from);
+  void MergeFrom(const Price& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(Price* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 n = 1;
+  void clear_n();
+  static const int kNFieldNumber = 1;
+  ::google::protobuf::int32 n() const;
+  void set_n(::google::protobuf::int32 value);
+
+  // optional int32 d = 2;
+  void clear_d();
+  static const int kDFieldNumber = 2;
+  ::google::protobuf::int32 d() const;
+  void set_d(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:protocol.Price)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::int32 n_;
+  ::google::protobuf::int32 d_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_chain_2eproto();
+  friend void protobuf_AssignDesc_chain_2eproto();
+  friend void protobuf_ShutdownFile_chain_2eproto();
+
+  void InitAsDefaultInstance();
+  static Price* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class OperationProcessOrder : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.OperationProcessOrder) */ {
+ public:
+  OperationProcessOrder();
+  virtual ~OperationProcessOrder();
+
+  OperationProcessOrder(const OperationProcessOrder& from);
+
+  inline OperationProcessOrder& operator=(const OperationProcessOrder& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const OperationProcessOrder& default_instance();
+
+  void Swap(OperationProcessOrder* other);
+
+  // implements Message ----------------------------------------------
+
+  inline OperationProcessOrder* New() const { return New(NULL); }
+
+  OperationProcessOrder* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const OperationProcessOrder& from);
+  void MergeFrom(const OperationProcessOrder& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(OperationProcessOrder* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .protocol.AssetKey selling = 1;
+  bool has_selling() const;
+  void clear_selling();
+  static const int kSellingFieldNumber = 1;
+  const ::protocol::AssetKey& selling() const;
+  ::protocol::AssetKey* mutable_selling();
+  ::protocol::AssetKey* release_selling();
+  void set_allocated_selling(::protocol::AssetKey* selling);
+
+  // optional .protocol.AssetKey buying = 2;
+  bool has_buying() const;
+  void clear_buying();
+  static const int kBuyingFieldNumber = 2;
+  const ::protocol::AssetKey& buying() const;
+  ::protocol::AssetKey* mutable_buying();
+  ::protocol::AssetKey* release_buying();
+  void set_allocated_buying(::protocol::AssetKey* buying);
+
+  // optional int64 amount = 3;
+  void clear_amount();
+  static const int kAmountFieldNumber = 3;
+  ::google::protobuf::int64 amount() const;
+  void set_amount(::google::protobuf::int64 value);
+
+  // optional .protocol.Price price = 4;
+  bool has_price() const;
+  void clear_price();
+  static const int kPriceFieldNumber = 4;
+  const ::protocol::Price& price() const;
+  ::protocol::Price* mutable_price();
+  ::protocol::Price* release_price();
+  void set_allocated_price(::protocol::Price* price);
+
+  // optional uint64 order_id = 5;
+  void clear_order_id();
+  static const int kOrderIdFieldNumber = 5;
+  ::google::protobuf::uint64 order_id() const;
+  void set_order_id(::google::protobuf::uint64 value);
+
+  // optional int32 fee_percent = 6;
+  void clear_fee_percent();
+  static const int kFeePercentFieldNumber = 6;
+  ::google::protobuf::int32 fee_percent() const;
+  void set_fee_percent(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:protocol.OperationProcessOrder)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::protocol::AssetKey* selling_;
+  ::protocol::AssetKey* buying_;
+  ::google::protobuf::int64 amount_;
+  ::protocol::Price* price_;
+  ::google::protobuf::uint64 order_id_;
+  ::google::protobuf::int32 fee_percent_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_chain_2eproto();
+  friend void protobuf_AssignDesc_chain_2eproto();
+  friend void protobuf_ShutdownFile_chain_2eproto();
+
+  void InitAsDefaultInstance();
+  static OperationProcessOrder* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class OperationUpdateAssetProperty : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.OperationUpdateAssetProperty) */ {
+ public:
+  OperationUpdateAssetProperty();
+  virtual ~OperationUpdateAssetProperty();
+
+  OperationUpdateAssetProperty(const OperationUpdateAssetProperty& from);
+
+  inline OperationUpdateAssetProperty& operator=(const OperationUpdateAssetProperty& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const OperationUpdateAssetProperty& default_instance();
+
+  void Swap(OperationUpdateAssetProperty* other);
+
+  // implements Message ----------------------------------------------
+
+  inline OperationUpdateAssetProperty* New() const { return New(NULL); }
+
+  OperationUpdateAssetProperty* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const OperationUpdateAssetProperty& from);
+  void MergeFrom(const OperationUpdateAssetProperty& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(OperationUpdateAssetProperty* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .protocol.AssetKey key = 1;
+  bool has_key() const;
+  void clear_key();
+  static const int kKeyFieldNumber = 1;
+  const ::protocol::AssetKey& key() const;
+  ::protocol::AssetKey* mutable_key();
+  ::protocol::AssetKey* release_key();
+  void set_allocated_key(::protocol::AssetKey* key);
+
+  // optional .protocol.AssetProperty property = 2;
+  bool has_property() const;
+  void clear_property();
+  static const int kPropertyFieldNumber = 2;
+  const ::protocol::AssetProperty& property() const;
+  ::protocol::AssetProperty* mutable_property();
+  ::protocol::AssetProperty* release_property();
+  void set_allocated_property(::protocol::AssetProperty* property);
+
+  // @@protoc_insertion_point(class_scope:protocol.OperationUpdateAssetProperty)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::protocol::AssetKey* key_;
+  ::protocol::AssetProperty* property_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_chain_2eproto();
+  friend void protobuf_AssignDesc_chain_2eproto();
+  friend void protobuf_ShutdownFile_chain_2eproto();
+
+  void InitAsDefaultInstance();
+  static OperationUpdateAssetProperty* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.Operation) */ {
  public:
   Operation();
@@ -2074,6 +2387,24 @@ class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::protocol::OperationLog* release_log();
   void set_allocated_log(::protocol::OperationLog* log);
 
+  // optional .protocol.OperationProcessOrder process_order = 12;
+  bool has_process_order() const;
+  void clear_process_order();
+  static const int kProcessOrderFieldNumber = 12;
+  const ::protocol::OperationProcessOrder& process_order() const;
+  ::protocol::OperationProcessOrder* mutable_process_order();
+  ::protocol::OperationProcessOrder* release_process_order();
+  void set_allocated_process_order(::protocol::OperationProcessOrder* process_order);
+
+  // optional .protocol.OperationUpdateAssetProperty update_asset_property = 13;
+  bool has_update_asset_property() const;
+  void clear_update_asset_property();
+  static const int kUpdateAssetPropertyFieldNumber = 13;
+  const ::protocol::OperationUpdateAssetProperty& update_asset_property() const;
+  ::protocol::OperationUpdateAssetProperty* mutable_update_asset_property();
+  ::protocol::OperationUpdateAssetProperty* release_update_asset_property();
+  void set_allocated_update_asset_property(::protocol::OperationUpdateAssetProperty* update_asset_property);
+
   // @@protoc_insertion_point(class_scope:protocol.Operation)
  private:
 
@@ -2089,6 +2420,8 @@ class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::protocol::OperationSetThreshold* set_threshold_;
   ::protocol::OperationPayCoin* pay_coin_;
   ::protocol::OperationLog* log_;
+  ::protocol::OperationProcessOrder* process_order_;
+  ::protocol::OperationUpdateAssetProperty* update_asset_property_;
   int type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
@@ -5362,6 +5695,278 @@ OperationLog::mutable_datas() {
 
 // -------------------------------------------------------------------
 
+// Price
+
+// optional int32 n = 1;
+inline void Price::clear_n() {
+  n_ = 0;
+}
+inline ::google::protobuf::int32 Price::n() const {
+  // @@protoc_insertion_point(field_get:protocol.Price.n)
+  return n_;
+}
+inline void Price::set_n(::google::protobuf::int32 value) {
+  
+  n_ = value;
+  // @@protoc_insertion_point(field_set:protocol.Price.n)
+}
+
+// optional int32 d = 2;
+inline void Price::clear_d() {
+  d_ = 0;
+}
+inline ::google::protobuf::int32 Price::d() const {
+  // @@protoc_insertion_point(field_get:protocol.Price.d)
+  return d_;
+}
+inline void Price::set_d(::google::protobuf::int32 value) {
+  
+  d_ = value;
+  // @@protoc_insertion_point(field_set:protocol.Price.d)
+}
+
+// -------------------------------------------------------------------
+
+// OperationProcessOrder
+
+// optional .protocol.AssetKey selling = 1;
+inline bool OperationProcessOrder::has_selling() const {
+  return !_is_default_instance_ && selling_ != NULL;
+}
+inline void OperationProcessOrder::clear_selling() {
+  if (GetArenaNoVirtual() == NULL && selling_ != NULL) delete selling_;
+  selling_ = NULL;
+}
+inline const ::protocol::AssetKey& OperationProcessOrder::selling() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.selling)
+  return selling_ != NULL ? *selling_ : *default_instance_->selling_;
+}
+inline ::protocol::AssetKey* OperationProcessOrder::mutable_selling() {
+  
+  if (selling_ == NULL) {
+    selling_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.OperationProcessOrder.selling)
+  return selling_;
+}
+inline ::protocol::AssetKey* OperationProcessOrder::release_selling() {
+  // @@protoc_insertion_point(field_release:protocol.OperationProcessOrder.selling)
+  
+  ::protocol::AssetKey* temp = selling_;
+  selling_ = NULL;
+  return temp;
+}
+inline void OperationProcessOrder::set_allocated_selling(::protocol::AssetKey* selling) {
+  delete selling_;
+  selling_ = selling;
+  if (selling) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationProcessOrder.selling)
+}
+
+// optional .protocol.AssetKey buying = 2;
+inline bool OperationProcessOrder::has_buying() const {
+  return !_is_default_instance_ && buying_ != NULL;
+}
+inline void OperationProcessOrder::clear_buying() {
+  if (GetArenaNoVirtual() == NULL && buying_ != NULL) delete buying_;
+  buying_ = NULL;
+}
+inline const ::protocol::AssetKey& OperationProcessOrder::buying() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.buying)
+  return buying_ != NULL ? *buying_ : *default_instance_->buying_;
+}
+inline ::protocol::AssetKey* OperationProcessOrder::mutable_buying() {
+  
+  if (buying_ == NULL) {
+    buying_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.OperationProcessOrder.buying)
+  return buying_;
+}
+inline ::protocol::AssetKey* OperationProcessOrder::release_buying() {
+  // @@protoc_insertion_point(field_release:protocol.OperationProcessOrder.buying)
+  
+  ::protocol::AssetKey* temp = buying_;
+  buying_ = NULL;
+  return temp;
+}
+inline void OperationProcessOrder::set_allocated_buying(::protocol::AssetKey* buying) {
+  delete buying_;
+  buying_ = buying;
+  if (buying) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationProcessOrder.buying)
+}
+
+// optional int64 amount = 3;
+inline void OperationProcessOrder::clear_amount() {
+  amount_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 OperationProcessOrder::amount() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.amount)
+  return amount_;
+}
+inline void OperationProcessOrder::set_amount(::google::protobuf::int64 value) {
+  
+  amount_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.amount)
+}
+
+// optional .protocol.Price price = 4;
+inline bool OperationProcessOrder::has_price() const {
+  return !_is_default_instance_ && price_ != NULL;
+}
+inline void OperationProcessOrder::clear_price() {
+  if (GetArenaNoVirtual() == NULL && price_ != NULL) delete price_;
+  price_ = NULL;
+}
+inline const ::protocol::Price& OperationProcessOrder::price() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.price)
+  return price_ != NULL ? *price_ : *default_instance_->price_;
+}
+inline ::protocol::Price* OperationProcessOrder::mutable_price() {
+  
+  if (price_ == NULL) {
+    price_ = new ::protocol::Price;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.OperationProcessOrder.price)
+  return price_;
+}
+inline ::protocol::Price* OperationProcessOrder::release_price() {
+  // @@protoc_insertion_point(field_release:protocol.OperationProcessOrder.price)
+  
+  ::protocol::Price* temp = price_;
+  price_ = NULL;
+  return temp;
+}
+inline void OperationProcessOrder::set_allocated_price(::protocol::Price* price) {
+  delete price_;
+  price_ = price;
+  if (price) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationProcessOrder.price)
+}
+
+// optional uint64 order_id = 5;
+inline void OperationProcessOrder::clear_order_id() {
+  order_id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 OperationProcessOrder::order_id() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.order_id)
+  return order_id_;
+}
+inline void OperationProcessOrder::set_order_id(::google::protobuf::uint64 value) {
+  
+  order_id_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.order_id)
+}
+
+// optional int32 fee_percent = 6;
+inline void OperationProcessOrder::clear_fee_percent() {
+  fee_percent_ = 0;
+}
+inline ::google::protobuf::int32 OperationProcessOrder::fee_percent() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.fee_percent)
+  return fee_percent_;
+}
+inline void OperationProcessOrder::set_fee_percent(::google::protobuf::int32 value) {
+  
+  fee_percent_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.fee_percent)
+}
+
+// -------------------------------------------------------------------
+
+// OperationUpdateAssetProperty
+
+// optional .protocol.AssetKey key = 1;
+inline bool OperationUpdateAssetProperty::has_key() const {
+  return !_is_default_instance_ && key_ != NULL;
+}
+inline void OperationUpdateAssetProperty::clear_key() {
+  if (GetArenaNoVirtual() == NULL && key_ != NULL) delete key_;
+  key_ = NULL;
+}
+inline const ::protocol::AssetKey& OperationUpdateAssetProperty::key() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationUpdateAssetProperty.key)
+  return key_ != NULL ? *key_ : *default_instance_->key_;
+}
+inline ::protocol::AssetKey* OperationUpdateAssetProperty::mutable_key() {
+  
+  if (key_ == NULL) {
+    key_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.OperationUpdateAssetProperty.key)
+  return key_;
+}
+inline ::protocol::AssetKey* OperationUpdateAssetProperty::release_key() {
+  // @@protoc_insertion_point(field_release:protocol.OperationUpdateAssetProperty.key)
+  
+  ::protocol::AssetKey* temp = key_;
+  key_ = NULL;
+  return temp;
+}
+inline void OperationUpdateAssetProperty::set_allocated_key(::protocol::AssetKey* key) {
+  delete key_;
+  key_ = key;
+  if (key) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationUpdateAssetProperty.key)
+}
+
+// optional .protocol.AssetProperty property = 2;
+inline bool OperationUpdateAssetProperty::has_property() const {
+  return !_is_default_instance_ && property_ != NULL;
+}
+inline void OperationUpdateAssetProperty::clear_property() {
+  if (GetArenaNoVirtual() == NULL && property_ != NULL) delete property_;
+  property_ = NULL;
+}
+inline const ::protocol::AssetProperty& OperationUpdateAssetProperty::property() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationUpdateAssetProperty.property)
+  return property_ != NULL ? *property_ : *default_instance_->property_;
+}
+inline ::protocol::AssetProperty* OperationUpdateAssetProperty::mutable_property() {
+  
+  if (property_ == NULL) {
+    property_ = new ::protocol::AssetProperty;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.OperationUpdateAssetProperty.property)
+  return property_;
+}
+inline ::protocol::AssetProperty* OperationUpdateAssetProperty::release_property() {
+  // @@protoc_insertion_point(field_release:protocol.OperationUpdateAssetProperty.property)
+  
+  ::protocol::AssetProperty* temp = property_;
+  property_ = NULL;
+  return temp;
+}
+inline void OperationUpdateAssetProperty::set_allocated_property(::protocol::AssetProperty* property) {
+  delete property_;
+  property_ = property;
+  if (property) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationUpdateAssetProperty.property)
+}
+
+// -------------------------------------------------------------------
+
 // Operation
 
 // optional .protocol.Operation.Type type = 1;
@@ -5768,6 +6373,82 @@ inline void Operation::set_allocated_log(::protocol::OperationLog* log) {
     
   }
   // @@protoc_insertion_point(field_set_allocated:protocol.Operation.log)
+}
+
+// optional .protocol.OperationProcessOrder process_order = 12;
+inline bool Operation::has_process_order() const {
+  return !_is_default_instance_ && process_order_ != NULL;
+}
+inline void Operation::clear_process_order() {
+  if (GetArenaNoVirtual() == NULL && process_order_ != NULL) delete process_order_;
+  process_order_ = NULL;
+}
+inline const ::protocol::OperationProcessOrder& Operation::process_order() const {
+  // @@protoc_insertion_point(field_get:protocol.Operation.process_order)
+  return process_order_ != NULL ? *process_order_ : *default_instance_->process_order_;
+}
+inline ::protocol::OperationProcessOrder* Operation::mutable_process_order() {
+  
+  if (process_order_ == NULL) {
+    process_order_ = new ::protocol::OperationProcessOrder;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.Operation.process_order)
+  return process_order_;
+}
+inline ::protocol::OperationProcessOrder* Operation::release_process_order() {
+  // @@protoc_insertion_point(field_release:protocol.Operation.process_order)
+  
+  ::protocol::OperationProcessOrder* temp = process_order_;
+  process_order_ = NULL;
+  return temp;
+}
+inline void Operation::set_allocated_process_order(::protocol::OperationProcessOrder* process_order) {
+  delete process_order_;
+  process_order_ = process_order;
+  if (process_order) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.Operation.process_order)
+}
+
+// optional .protocol.OperationUpdateAssetProperty update_asset_property = 13;
+inline bool Operation::has_update_asset_property() const {
+  return !_is_default_instance_ && update_asset_property_ != NULL;
+}
+inline void Operation::clear_update_asset_property() {
+  if (GetArenaNoVirtual() == NULL && update_asset_property_ != NULL) delete update_asset_property_;
+  update_asset_property_ = NULL;
+}
+inline const ::protocol::OperationUpdateAssetProperty& Operation::update_asset_property() const {
+  // @@protoc_insertion_point(field_get:protocol.Operation.update_asset_property)
+  return update_asset_property_ != NULL ? *update_asset_property_ : *default_instance_->update_asset_property_;
+}
+inline ::protocol::OperationUpdateAssetProperty* Operation::mutable_update_asset_property() {
+  
+  if (update_asset_property_ == NULL) {
+    update_asset_property_ = new ::protocol::OperationUpdateAssetProperty;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.Operation.update_asset_property)
+  return update_asset_property_;
+}
+inline ::protocol::OperationUpdateAssetProperty* Operation::release_update_asset_property() {
+  // @@protoc_insertion_point(field_release:protocol.Operation.update_asset_property)
+  
+  ::protocol::OperationUpdateAssetProperty* temp = update_asset_property_;
+  update_asset_property_ = NULL;
+  return temp;
+}
+inline void Operation::set_allocated_update_asset_property(::protocol::OperationUpdateAssetProperty* update_asset_property) {
+  delete update_asset_property_;
+  update_asset_property_ = update_asset_property;
+  if (update_asset_property) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.Operation.update_asset_property)
 }
 
 // -------------------------------------------------------------------
@@ -7185,6 +7866,12 @@ inline void OperationSetMetadata::set_delete_flag(bool value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

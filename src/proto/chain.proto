@@ -111,6 +111,28 @@ message OperationLog{
 	repeated string datas = 2;
 }
 
+message Price{
+	int32 n	=1; // numerator
+	int32 d	=2; // denominator
+}
+
+message OperationProcessOrder{
+	AssetKey selling	=1;
+	AssetKey buying		=2;
+	int64 amount		=3; // amount being sold. if set to 0, delete the offer
+	Price price			=4; // price of thing being sold in terms of what you are buying
+	
+	// 0=create a new offer, otherwise edit an existing offer
+	uint64 order_id		=5;
+	int32 fee_percent	=6;
+}
+
+
+message OperationUpdateAssetProperty{
+	AssetKey key = 1;
+	AssetProperty property = 2;
+}
+
 
 message Operation {
 	enum Type {
@@ -139,6 +161,8 @@ message Operation {
 	OperationSetThreshold		set_threshold 	   = 9;
 	OperationPayCoin			pay_coin           = 10;
 	OperationLog				log				   = 11;
+	OperationProcessOrder		process_order	   = 12;
+	OperationUpdateAssetProperty update_asset_property =13;
 }
 
 message OperationSetThreshold{
