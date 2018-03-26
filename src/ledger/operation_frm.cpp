@@ -965,7 +965,7 @@ namespace bumo {
 
 	void OperationFrm::ProcessOrder(std::shared_ptr<Environment> environment){
 		auto ope = operation_.process_order();
-		if (ope.order_id){
+		if (ope.order_id()==0){
 			CancelOrder(ope, environment);
 		}
 		else {

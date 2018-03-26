@@ -158,13 +158,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http;../../src/3rd/basic/include/v8</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http;../../src/3rd/basic/include/v8;../../src/3rd/basic/include/soci/core</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;ASIO_STANDALONE;_WEBSOCKETPP_CPP11_STL_;WIN32_LEAN_AND_MEAN;_SHARED_PTR_H;PCRE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>leveldb_d.lib;json_d.lib;sqlite3_d.lib;iphlpapi.lib;libprotobuf_d.lib;libeay32.lib;ssleay32.lib;pcre_d.lib;winmm.lib;gdi32.lib;v8.lib;icui18n.lib;v8_libplatform.lib;icuuc.lib;v8_libbase.lib;libscrypt.lib</AdditionalDependencies>
+      <AdditionalDependencies>leveldb_d.lib;json_d.lib;sqlite3_d.lib;iphlpapi.lib;libprotobuf_d.lib;libeay32.lib;ssleay32.lib;pcre_d.lib;winmm.lib;gdi32.lib;v8.lib;icui18n.lib;v8_libplatform.lib;icuuc.lib;v8_libbase.lib;libscrypt.lib;libsqlite.lib;libsoci_sqlite3.lib;libsoci.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../src/3rd/basic/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <StackReserveSize>5000000</StackReserveSize>
     </Link>

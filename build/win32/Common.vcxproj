@@ -56,7 +56,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_SCL_SECURE_NO_WARNINGS;ASIO_STANDALONE;_WEBSOCKETPP_CPP11_STL_;WIN32_LEAN_AND_MEAN;_SHARED_PTR_H;PCRE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http;../../src/3rd/basic/include/soci/core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\src\common\argument.cpp" />
     <ClCompile Include="..\..\src\common\configure_base.cpp" />
     <ClCompile Include="..\..\src\common\daemon.cpp" />
+    <ClCompile Include="..\..\src\common\database.cpp" />
     <ClCompile Include="..\..\src\common\data_secret_key.cpp" />
     <ClCompile Include="..\..\src\common\general.cpp" />
     <ClCompile Include="..\..\src\common\key_store.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="..\..\src\common\argument.h" />
     <ClInclude Include="..\..\src\common\configure_base.h" />
     <ClInclude Include="..\..\src\common\daemon.h" />
+    <ClInclude Include="..\..\src\common\database.h" />
     <ClInclude Include="..\..\src\common\general.h" />
     <ClInclude Include="..\..\src\common\key_store.h" />
     <ClInclude Include="..\..\src\common\network.h" />

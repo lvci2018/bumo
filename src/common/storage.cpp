@@ -311,6 +311,11 @@ namespace bumo {
 				break;
 			}
 
+			//sqlite databaee
+			lite_db_ = std::make_unique<Database>(db_config.sqlite_);
+			lite_db_->initialize();
+
+
 			TimerNotify::RegisterModule(this);
 			return true;
 
@@ -361,6 +366,10 @@ namespace bumo {
 
 	KeyValueDb *Storage::account_db() {
 		return account_db_;
+	}
+
+	Database& Storage::lite_db(){
+		return *lite_db_;
 	}
 
 	KeyValueDb *Storage::NewKeyValueDb(const DbConfigure &db_config) {

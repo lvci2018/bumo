@@ -15,7 +15,7 @@
 
 #ifndef STORAGE_H_
 #define STORAGE_H_
-
+#include <memory>
 #include <unordered_map>
 #include <utils/headers.h>
 #include <utils/sqlparser.h>
@@ -27,6 +27,7 @@
 #else
 #include <rocksdb/db.h>
 #endif
+#include "database.h"
 
 namespace bumo {
 #ifdef WIN32
@@ -113,6 +114,7 @@ namespace bumo {
 		KeyValueDb *keyvalue_db_;
 		KeyValueDb *ledger_db_;
 		KeyValueDb *account_db_;
+		std::unique_ptr<Database> lite_db_;
 
 		bool CloseDb();
 		bool DescribeTable(const std::string &name, const std::string &sql_create_table);
@@ -126,6 +128,7 @@ namespace bumo {
 		KeyValueDb *keyvalue_db();   //storage others
 		KeyValueDb *account_db();   //storage account tree
 		KeyValueDb *ledger_db();    //storage transaction and ledger
+		Database&	lite_db();
 
 		virtual void OnTimer(int64_t current_time) {};
 		virtual void OnSlowTimer(int64_t current_time);
