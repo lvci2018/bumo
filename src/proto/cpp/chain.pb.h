@@ -62,6 +62,7 @@ class OperationSetSignerWeight;
 class OperationSetThreshold;
 class OperationTypeThreshold;
 class OperationUpdateAssetProperty;
+class Order;
 class Price;
 class Signer;
 class Transaction;
@@ -2061,11 +2062,17 @@ class OperationProcessOrder : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint64 order_id() const;
   void set_order_id(::google::protobuf::uint64 value);
 
-  // optional int32 fee_percent = 6;
-  void clear_fee_percent();
-  static const int kFeePercentFieldNumber = 6;
-  ::google::protobuf::int32 fee_percent() const;
-  void set_fee_percent(::google::protobuf::int32 value);
+  // optional int32 sell_fee_percent = 6;
+  void clear_sell_fee_percent();
+  static const int kSellFeePercentFieldNumber = 6;
+  ::google::protobuf::int32 sell_fee_percent() const;
+  void set_sell_fee_percent(::google::protobuf::int32 value);
+
+  // optional int32 buy_fee_percent = 7;
+  void clear_buy_fee_percent();
+  static const int kBuyFeePercentFieldNumber = 7;
+  ::google::protobuf::int32 buy_fee_percent() const;
+  void set_buy_fee_percent(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:protocol.OperationProcessOrder)
  private:
@@ -2077,7 +2084,8 @@ class OperationProcessOrder : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::int64 amount_;
   ::protocol::Price* price_;
   ::google::protobuf::uint64 order_id_;
-  ::google::protobuf::int32 fee_percent_;
+  ::google::protobuf::int32 sell_fee_percent_;
+  ::google::protobuf::int32 buy_fee_percent_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -2085,6 +2093,103 @@ class OperationProcessOrder : public ::google::protobuf::Message /* @@protoc_ins
 
   void InitAsDefaultInstance();
   static OperationProcessOrder* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Order : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.Order) */ {
+ public:
+  Order();
+  virtual ~Order();
+
+  Order(const Order& from);
+
+  inline Order& operator=(const Order& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Order& default_instance();
+
+  void Swap(Order* other);
+
+  // implements Message ----------------------------------------------
+
+  inline Order* New() const { return New(NULL); }
+
+  Order* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Order& from);
+  void MergeFrom(const Order& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(Order* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .protocol.OperationProcessOrder order = 1;
+  bool has_order() const;
+  void clear_order();
+  static const int kOrderFieldNumber = 1;
+  const ::protocol::OperationProcessOrder& order() const;
+  ::protocol::OperationProcessOrder* mutable_order();
+  ::protocol::OperationProcessOrder* release_order();
+  void set_allocated_order(::protocol::OperationProcessOrder* order);
+
+  // optional string system_order_id = 2;
+  void clear_system_order_id();
+  static const int kSystemOrderIdFieldNumber = 2;
+  const ::std::string& system_order_id() const;
+  void set_system_order_id(const ::std::string& value);
+  void set_system_order_id(const char* value);
+  void set_system_order_id(const char* value, size_t size);
+  ::std::string* mutable_system_order_id();
+  ::std::string* release_system_order_id();
+  void set_allocated_system_order_id(::std::string* system_order_id);
+
+  // @@protoc_insertion_point(class_scope:protocol.Order)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::protocol::OperationProcessOrder* order_;
+  ::google::protobuf::internal::ArenaStringPtr system_order_id_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_chain_2eproto();
+  friend void protobuf_AssignDesc_chain_2eproto();
+  friend void protobuf_ShutdownFile_chain_2eproto();
+
+  void InitAsDefaultInstance();
+  static Order* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -5871,18 +5976,118 @@ inline void OperationProcessOrder::set_order_id(::google::protobuf::uint64 value
   // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.order_id)
 }
 
-// optional int32 fee_percent = 6;
-inline void OperationProcessOrder::clear_fee_percent() {
-  fee_percent_ = 0;
+// optional int32 sell_fee_percent = 6;
+inline void OperationProcessOrder::clear_sell_fee_percent() {
+  sell_fee_percent_ = 0;
 }
-inline ::google::protobuf::int32 OperationProcessOrder::fee_percent() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.fee_percent)
-  return fee_percent_;
+inline ::google::protobuf::int32 OperationProcessOrder::sell_fee_percent() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.sell_fee_percent)
+  return sell_fee_percent_;
 }
-inline void OperationProcessOrder::set_fee_percent(::google::protobuf::int32 value) {
+inline void OperationProcessOrder::set_sell_fee_percent(::google::protobuf::int32 value) {
   
-  fee_percent_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.fee_percent)
+  sell_fee_percent_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.sell_fee_percent)
+}
+
+// optional int32 buy_fee_percent = 7;
+inline void OperationProcessOrder::clear_buy_fee_percent() {
+  buy_fee_percent_ = 0;
+}
+inline ::google::protobuf::int32 OperationProcessOrder::buy_fee_percent() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.buy_fee_percent)
+  return buy_fee_percent_;
+}
+inline void OperationProcessOrder::set_buy_fee_percent(::google::protobuf::int32 value) {
+  
+  buy_fee_percent_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.buy_fee_percent)
+}
+
+// -------------------------------------------------------------------
+
+// Order
+
+// optional .protocol.OperationProcessOrder order = 1;
+inline bool Order::has_order() const {
+  return !_is_default_instance_ && order_ != NULL;
+}
+inline void Order::clear_order() {
+  if (GetArenaNoVirtual() == NULL && order_ != NULL) delete order_;
+  order_ = NULL;
+}
+inline const ::protocol::OperationProcessOrder& Order::order() const {
+  // @@protoc_insertion_point(field_get:protocol.Order.order)
+  return order_ != NULL ? *order_ : *default_instance_->order_;
+}
+inline ::protocol::OperationProcessOrder* Order::mutable_order() {
+  
+  if (order_ == NULL) {
+    order_ = new ::protocol::OperationProcessOrder;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.Order.order)
+  return order_;
+}
+inline ::protocol::OperationProcessOrder* Order::release_order() {
+  // @@protoc_insertion_point(field_release:protocol.Order.order)
+  
+  ::protocol::OperationProcessOrder* temp = order_;
+  order_ = NULL;
+  return temp;
+}
+inline void Order::set_allocated_order(::protocol::OperationProcessOrder* order) {
+  delete order_;
+  order_ = order;
+  if (order) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.Order.order)
+}
+
+// optional string system_order_id = 2;
+inline void Order::clear_system_order_id() {
+  system_order_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& Order::system_order_id() const {
+  // @@protoc_insertion_point(field_get:protocol.Order.system_order_id)
+  return system_order_id_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Order::set_system_order_id(const ::std::string& value) {
+  
+  system_order_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.Order.system_order_id)
+}
+inline void Order::set_system_order_id(const char* value) {
+  
+  system_order_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.Order.system_order_id)
+}
+inline void Order::set_system_order_id(const char* value, size_t size) {
+  
+  system_order_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.Order.system_order_id)
+}
+inline ::std::string* Order::mutable_system_order_id() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.Order.system_order_id)
+  return system_order_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Order::release_system_order_id() {
+  // @@protoc_insertion_point(field_release:protocol.Order.system_order_id)
+  
+  return system_order_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Order::set_allocated_system_order_id(::std::string* system_order_id) {
+  if (system_order_id != NULL) {
+    
+  } else {
+    
+  }
+  system_order_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), system_order_id);
+  // @@protoc_insertion_point(field_set_allocated:protocol.Order.system_order_id)
 }
 
 // -------------------------------------------------------------------
@@ -7866,6 +8071,8 @@ inline void OperationSetMetadata::set_delete_flag(bool value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

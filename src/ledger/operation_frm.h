@@ -62,6 +62,13 @@ namespace bumo{
 		//void InvokeContract(Environment *environment);
 		void ProcessOrder(std::shared_ptr<Environment> environment);
 		void UpdateAssetProperty(std::shared_ptr<Environment> environment);
+
+	private:
+		//for order
+		void CancelOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment);
+		void InsertOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment);
+		void FreeznAsset(protocol::AssetStore& asset,const int64_t& amount);
+		void UnfreeznAsset(protocol::AssetStore& asset, const int64_t& amount);
 	};
 };
 #endif

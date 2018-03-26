@@ -367,7 +367,81 @@ namespace bumo {
 		}
 		case protocol::Operation_Type_PROCESS_ORDER:
 		{
+			const protocol::OperationProcessOrder operation_process_order = operation.process_order();
 
+			if (!operation_process_order.has_selling() && !operation_process_order.has_buying()){
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("order must has selling and buying "));
+				break;
+			}
+
+			std::string trim_code = operation_process_order.selling().code();
+			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+				break;
+			}
+
+			if (!bumo::PublicKey::IsAddressValid(operation_process_order.selling().issuer())) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+				break;
+			}
+
+			trim_code = operation_process_order.buying().code();
+			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+				break;
+			}
+
+			if (!bumo::PublicKey::IsAddressValid(operation_process_order.buying().issuer())) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+				break;
+			}
+
+			AccountFrm::pointer seller;
+			if (!Environment::AccountFromDB(operation_process_order.selling().issuer(), seller)) {
+				result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
+				result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.selling().issuer().c_str()));
+				LOG_ERROR("%s", result.desc().c_str());
+				break;
+			}
+
+			protocol::AssetStore asset_s;
+			if (!seller->GetAsset(operation_process_order.selling(), asset_s)){
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type()));
+				break;
+			}
+			if (operation_process_order.sell_fee_percent() < asset_s.property().fee_percent()){
+				result.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+				result.set_desc(utils::String::Format("asset(%s:%s:%d) fee percent is lower(%d)", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type(), asset_s.property().fee_percent()));
+				break;
+			}
+
+			AccountFrm::pointer buyer;
+			if (!Environment::AccountFromDB(operation_process_order.buying().issuer(), buyer)) {
+				result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
+				result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.buying().issuer().c_str()));
+				LOG_ERROR("%s", result.desc().c_str());
+				break;
+			}
+
+			protocol::AssetStore asset_b;
+			if (!seller->GetAsset(operation_process_order.buying(), asset_b)){
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type()));
+				break;
+			}
+			if (operation_process_order.buy_fee_percent() < asset_b.property().fee_percent()){
+				result.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+				result.set_desc(utils::String::Format("asset(%s:%s:%d) fee percent is lower(%d)", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type(), asset_s.property().fee_percent()));
+				break;
+			}
+
+			break;
 		}
 		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
 		{
@@ -888,8 +962,36 @@ namespace bumo {
 	}
 
 	void OperationFrm::Log(std::shared_ptr<Environment> environment) {}
-	void OperationFrm::ProcessOrder(std::shared_ptr<Environment> environment){}
+
+	void OperationFrm::ProcessOrder(std::shared_ptr<Environment> environment){
+		auto ope = operation_.process_order();
+		if (ope.order_id){
+			CancelOrder(ope, environment);
+		}
+		else {
+			InsertOrder(ope, environment);
+		}
+	}
+
+	void OperationFrm::CancelOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment){
+
+	}
+
+	void OperationFrm::InsertOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment){
+
+	}
+
 	void OperationFrm::UpdateAssetProperty(std::shared_ptr<Environment> environment){}
+
+	void OperationFrm::FreeznAsset(protocol::AssetStore& asset, const int64_t& amount){
+		int64_t new_amount = asset.freezn_amount() + amount;
+		asset.set_freezn_amount(new_amount);
+	}
+
+	void OperationFrm::UnfreeznAsset(protocol::AssetStore& asset, const int64_t& amount){
+		int64_t new_amount = asset.freezn_amount() - amount;
+		asset.set_freezn_amount(new_amount);
+	}
 	
 	void OperationFrm::OptFee(const protocol::Operation_Type type) {
 		protocol::FeeConfig fee_config = LedgerManager::Instance().GetCurFeeConfig();

@@ -124,7 +124,13 @@ message OperationProcessOrder{
 	
 	// 0=create a new offer, otherwise edit an existing offer
 	uint64 order_id		=5;
-	int32 fee_percent	=6;
+	int32 sell_fee_percent	=6;
+	int32 buy_fee_percent	=7;
+}
+
+message Order{
+	OperationProcessOrder order=1;
+	string system_order_id =2; //ledger_seq+tran_hash+op_index
 }
 
 
