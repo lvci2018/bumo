@@ -36,7 +36,7 @@ namespace bumo {
 		"price            DOUBLE PRECISION NOT NULL,"
 		"flags            INT              NOT NULL,"
 		"lastmodified     INT              NOT NULL,"
-		"PRIMARY KEY      (offerid)"
+		"PRIMARY KEY      (orderid)"
 		");";
 
 	const char* OrderFrame::kSQLCreateStatement2 =
@@ -117,7 +117,9 @@ namespace bumo {
 		
 		std::string sql;
 		soci::indicator selling_ind = soci::i_ok, buying_ind = soci::i_ok;
-
+		unsigned int sellingType = order_.order().selling().type();
+		unsigned int buyingType = order_.order().buying().type();
+		unsigned int flags = 1;
 		if (insert)
 		{
 			sql = "INSERT INTO orders (sellerid,orderid,"
@@ -143,10 +145,10 @@ namespace bumo {
 			st.exchange(use(order_.seller_address(), "sid"));
 		}
 		st.exchange(use(order_.order().order_id(), "oid"));
-		st.exchange(use(order_.order().selling().type(), "sat"));
+		st.exchange(use(sellingType, "sat"));
 		st.exchange(use(order_.order().selling().code(), selling_ind, "sac"));
 		st.exchange(use(order_.order().selling().issuer(), selling_ind, "si"));
-		st.exchange(use(order_.order().buying().type(), "bat"));
+		st.exchange(use(buyingType, "bat"));
 		st.exchange(use(order_.order().buying().code(), buying_ind, "bac"));
 		st.exchange(use(order_.order().buying().issuer(), buying_ind, "bi"));
 		st.exchange(use(order_.order().amount(), "a"));
@@ -154,7 +156,7 @@ namespace bumo {
 		st.exchange(use(order_.order().price().d(), "pd"));
 		auto price = ComputePrice();
 		st.exchange(use(price, "p"));
-		st.exchange(use(1, "f"));
+		st.exchange(use(flags, "f"));
 		//st.exchange(use(getLastModified(), "l"));
 		st.define_and_bind();
 
@@ -234,29 +236,40 @@ namespace bumo {
 		//st.exchange(into(le.lastModifiedLedgerSeq));
 		st.define_and_bind();
 		st.execute(true);
+
+		order.mutable_order()->set_order_id(order_id);
+		order.mutable_order()->set_amount(amount);
+		order.mutable_order()->mutable_price()->set_n(price_n);
+		order.mutable_order()->mutable_price()->set_d(price_d);
+		//fee percent ...
+
 		while (st.got_data()){
 			order.set_seller_address(account_address);
 			
-			order.mutable_order()->mutable_buying()->set_type(buyingAssetType);
-			order.mutable_order()->mutable_selling()->set_type(sellingAssetType);
+			order.mutable_order()->mutable_buying()->set_type((protocol::AssetKey_Type)buyingAssetType);
+			order.mutable_order()->mutable_selling()->set_type((protocol::AssetKey_Type)sellingAssetType);
 
-			if ((sellingAssetCodeIndicator != soci::i_ok) ||
-				(sellingIssuerIndicator != soci::i_ok))
-			{
-				LOG_ERROR("bad database state");
-				throw std::runtime_error("bad database state");
+			if (sellingAssetType != protocol::AssetKey_Type_SELF_COIN){
+				if ((sellingAssetCodeIndicator != soci::i_ok) ||
+					(sellingIssuerIndicator != soci::i_ok))
+				{
+					LOG_ERROR("bad database state");
+					throw std::runtime_error("bad database state");
+				}
+				order.mutable_order()->mutable_selling()->set_code(sellingAssetCode);
+				order.mutable_order()->mutable_selling()->set_issuer(sellingIssuerStrKey);
 			}
-			order.mutable_order()->mutable_selling()->set_code(sellingAssetCode);
-			order.mutable_order()->mutable_selling()->set_issuer(sellingIssuerStrKey);
 
-			if ((buyingAssetCodeIndicator != soci::i_ok) ||
-				(buyingIssuerIndicator != soci::i_ok))
-			{
-				LOG_ERROR("bad database state");
-				throw std::runtime_error("bad database state");
+			if (buyingAssetType != protocol::AssetKey_Type_SELF_COIN){
+				if ((buyingAssetCodeIndicator != soci::i_ok) ||
+					(buyingIssuerIndicator != soci::i_ok))
+				{
+					LOG_ERROR("bad database state");
+					throw std::runtime_error("bad database state");
+				}
+				order.mutable_order()->mutable_buying()->set_code(buyingAssetCode);
+				order.mutable_order()->mutable_buying()->set_issuer(buyingIssuerStrKey);
 			}
-			order.mutable_order()->mutable_buying()->set_code(buyingAssetCode);
-			order.mutable_order()->mutable_buying()->set_issuer(buyingIssuerStrKey);
 
 			OrderProcessor(order);
 			st.fetch();
@@ -271,16 +284,16 @@ namespace bumo {
 		bool useSellingAsset = false;
 		bool useBuyingAsset = false;
 
-		if (selling.type() == 0){
-			sql += " WHERE sellingassettype = 0 AND sellingissuer IS NULL";
+		if (selling.type() == protocol::AssetKey_Type_SELF_COIN){
+			sql += " WHERE sellingassettype = 1 AND sellingissuer IS NULL";
 		}
 		else{
 			useSellingAsset = true;
 			sql += " WHERE sellingassetcode = :pcur AND sellingissuer = :pi";
 		}
 
-		if (buying.type() == 0)	{
-			sql += " AND buyingassettype = 0 AND buyingissuer IS NULL";
+		if (buying.type() == protocol::AssetKey_Type_SELF_COIN)	{
+			sql += " AND buyingassettype = 1 AND buyingissuer IS NULL";
 		}
 		else{
 			useBuyingAsset = true;

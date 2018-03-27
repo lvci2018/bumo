@@ -206,6 +206,12 @@ namespace bumo {
 					result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
 					break;
 				}
+
+				if ((protocol::AssetKey_Type)payment.asset().key().type() == protocol::AssetKey_Type_SELF_COIN){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("Payment asset(%s:%s:%d) can not pay self coin", payment.asset().key().issuer().c_str(), payment.asset().key().code().c_str(), (int)payment.asset().key().type()));
+					break;
+				}
 			}
 
 			if (source_address == payment.dest_address()) {
@@ -239,11 +245,12 @@ namespace bumo {
 				break;
 			}
 
-			if (issue_asset.type() != 0){
+			if ((protocol::AssetKey_Type)issue_asset.type() != protocol::AssetKey_Type_UNLIMIN){
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
 				result.set_desc(utils::String::Format("Asset type now must be zero"));
 				break;
 			}
+
 
 			break;
 		}
@@ -624,12 +631,18 @@ namespace bumo {
 
 		const protocol::OperationIssueAsset& ope = operation_.issue_asset();
 		do {
+			//can not issue self coin
+			if ((protocol::AssetKey_Type)ope.type() == protocol::AssetKey_Type_SELF_COIN){
+				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) can not issue self coin", source_account_->GetAccountAddress().c_str(), ope.code().c_str(), ope.type()));
+				break;
+			}
 
 			protocol::AssetStore asset_e;
 			protocol::AssetKey key;
 			key.set_issuer(source_account_->GetAccountAddress());
 			key.set_code(ope.code());
-			key.set_type(ope.type());
+			key.set_type((protocol::AssetKey_Type)ope.type());
 			if (!source_account_->GetAsset(key, asset_e)) {
 				protocol::AssetStore asset;
 				asset.mutable_key()->CopyFrom(key);
@@ -643,7 +656,7 @@ namespace bumo {
 					if (amount < asset_e.amount() || amount < ope.amount())
 					{
 						result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
-						result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), key.type(), asset_e.amount(), ope.amount()));
+						result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), (int)key.type(), asset_e.amount(), ope.amount()));
 						break;
 					}
 					asset_e.set_amount(amount);
@@ -651,7 +664,7 @@ namespace bumo {
 				}
 				else {
 					result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-					result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) repeat issue", key.issuer().c_str(), key.code().c_str(), key.type()));
+					result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) repeat issue", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 					break;
 				}
 			}
@@ -661,7 +674,15 @@ namespace bumo {
 
 	void OperationFrm::Payment(std::shared_ptr<Environment> environment) {
 		const protocol::OperationPayment& payment = operation_.payment();
+
 		do {
+			//can not pay self coin
+			if ((protocol::AssetKey_Type)payment.asset().key().type() == protocol::AssetKey_Type_SELF_COIN){
+				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) can not pay self coin", payment.asset().key().issuer().c_str(), payment.asset().key().code().c_str(), (int)payment.asset().key().type()));
+				break;
+			}
+
 			std::shared_ptr<AccountFrm> dest_account = nullptr;
 
 			if (!environment->GetEntry(payment.dest_address(), dest_account)) {
@@ -675,7 +696,7 @@ namespace bumo {
 				protocol::AssetKey key = payment.asset().key();
 				if (!source_account_->GetAsset(key, asset_e)) {
 					result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-					result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+					result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 					break;
 				}
 
@@ -684,7 +705,7 @@ namespace bumo {
 					int64_t sender_amount = asset_e.amount() -asset_e.freezn_amount() - payment.asset().amount();
 					if (sender_amount < 0) {
 						result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-						result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+						result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 						break;
 					}
 					asset_e.set_amount(sender_amount);
@@ -701,7 +722,7 @@ namespace bumo {
 						if (receiver_amount < dest_asset.amount() || receiver_amount < payment.asset().amount())
 						{
 							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
-							result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), key.type(), dest_asset.amount(), payment.asset().amount()));
+							result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), (int)key.type(), dest_asset.amount(), payment.asset().amount()));
 							break;
 						}
 						dest_asset.set_amount(receiver_amount);
@@ -713,7 +734,7 @@ namespace bumo {
 						int64_t left_amount = asset_e.property().max_supply() - asset_e.property().issued_amount() - payment.asset().amount();
 						if (left_amount < 0) {
 							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 							break;
 						}
 						int64_t sender_amount = asset_e.property().issued_amount() + payment.asset().amount();
@@ -731,7 +752,7 @@ namespace bumo {
 							if (receiver_amount < dest_asset.amount() || receiver_amount < payment.asset().amount())
 							{
 								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
-								result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), key.type(), dest_asset.amount(), payment.asset().amount()));
+								result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), (int)key.type(), dest_asset.amount(), payment.asset().amount()));
 								break;
 							}
 							dest_asset.set_amount(receiver_amount);
@@ -743,7 +764,7 @@ namespace bumo {
 						int64_t sender_amount = asset_e.amount() - asset_e.freezn_amount() - payment.asset().amount();
 						if (sender_amount < 0) {
 							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 							break;
 						}
 						asset_e.set_amount(sender_amount);
@@ -752,7 +773,7 @@ namespace bumo {
 						protocol::AssetStore dest_asset;
 						if (!dest_account->GetAsset(key, dest_asset)) {
 							result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-							result_.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), key.type()));
+							result_.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 							break;
 						}
 						else {
@@ -760,13 +781,13 @@ namespace bumo {
 							if (receiver_amount < dest_asset.amount() || receiver_amount < payment.asset().amount() || receiver_amount > dest_asset.property().max_supply())
 							{
 								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
-								result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), key.type(), (int64_t)dest_asset.property().max_supply(), payment.asset().amount()));
+								result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), (int)key.type(), (int64_t)dest_asset.property().max_supply(), payment.asset().amount()));
 								break;
 							}
 							int64_t issued_amount = dest_asset.property().issued_amount() - payment.asset().amount();
 							if (issued_amount < 0){
 								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-								result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), key.type()));
+								result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 								break;
 							}
 							dest_asset.mutable_property()->set_issued_amount(issued_amount);

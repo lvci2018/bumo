@@ -95,7 +95,7 @@ namespace bumo {
 				protocol::AssetKey p;
 				p.set_issuer(issuer);
 				p.set_code(code);
-				p.set_type(asset_type);
+				p.set_type((protocol::AssetKey_Type)asset_type);
 				protocol::AssetStore asset;
 				if (acc->GetAsset(p, asset)) {
 					jsonassets[(Json::UInt)0] = Proto2Json(asset);
@@ -199,7 +199,7 @@ namespace bumo {
 				protocol::AssetKey p;
 				p.set_issuer(issuer);
 				p.set_code(code);
-				p.set_type(asset_type);
+				p.set_type((protocol::AssetKey_Type)asset_type);
 				protocol::AssetStore asset;
 				if (acc->GetAsset(p, asset)) {
 					result["asset"] = Proto2Json(asset);
