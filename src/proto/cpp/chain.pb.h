@@ -45,6 +45,7 @@ class Asset;
 class AssetKey;
 class AssetProperty;
 class AssetStore;
+class ClaimOrder;
 class ConsensusValue;
 class ConsensusValueValidation;
 class Contract;
@@ -72,6 +73,28 @@ class TransactionEnvStore;
 class Trigger;
 class Trigger_OperationTrigger;
 
+enum AssetKey_Type {
+  AssetKey_Type_UNLIMIN = 0,
+  AssetKey_Type_SELF_COIN = 1,
+  AssetKey_Type_LIMIT = 2,
+  AssetKey_Type_AssetKey_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  AssetKey_Type_AssetKey_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool AssetKey_Type_IsValid(int value);
+const AssetKey_Type AssetKey_Type_Type_MIN = AssetKey_Type_UNLIMIN;
+const AssetKey_Type AssetKey_Type_Type_MAX = AssetKey_Type_LIMIT;
+const int AssetKey_Type_Type_ARRAYSIZE = AssetKey_Type_Type_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* AssetKey_Type_descriptor();
+inline const ::std::string& AssetKey_Type_Name(AssetKey_Type value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    AssetKey_Type_descriptor(), value);
+}
+inline bool AssetKey_Type_Parse(
+    const ::std::string& name, AssetKey_Type* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<AssetKey_Type>(
+    AssetKey_Type_descriptor(), name, value);
+}
 enum Operation_Type {
   Operation_Type_UNKNOWN = 0,
   Operation_Type_CREATE_ACCOUNT = 1,
@@ -411,6 +434,34 @@ class AssetKey : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // nested types ----------------------------------------------------
 
+  typedef AssetKey_Type Type;
+  static const Type UNLIMIN =
+    AssetKey_Type_UNLIMIN;
+  static const Type SELF_COIN =
+    AssetKey_Type_SELF_COIN;
+  static const Type LIMIT =
+    AssetKey_Type_LIMIT;
+  static inline bool Type_IsValid(int value) {
+    return AssetKey_Type_IsValid(value);
+  }
+  static const Type Type_MIN =
+    AssetKey_Type_Type_MIN;
+  static const Type Type_MAX =
+    AssetKey_Type_Type_MAX;
+  static const int Type_ARRAYSIZE =
+    AssetKey_Type_Type_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  Type_descriptor() {
+    return AssetKey_Type_descriptor();
+  }
+  static inline const ::std::string& Type_Name(Type value) {
+    return AssetKey_Type_Name(value);
+  }
+  static inline bool Type_Parse(const ::std::string& name,
+      Type* value) {
+    return AssetKey_Type_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   // optional string issuer = 1;
@@ -435,11 +486,11 @@ class AssetKey : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_code();
   void set_allocated_code(::std::string* code);
 
-  // optional int32 type = 3;
+  // optional .protocol.AssetKey.Type type = 3;
   void clear_type();
   static const int kTypeFieldNumber = 3;
-  ::google::protobuf::int32 type() const;
-  void set_type(::google::protobuf::int32 value);
+  ::protocol::AssetKey_Type type() const;
+  void set_type(::protocol::AssetKey_Type value);
 
   // @@protoc_insertion_point(class_scope:protocol.AssetKey)
  private:
@@ -448,7 +499,7 @@ class AssetKey : public ::google::protobuf::Message /* @@protoc_insertion_point(
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr issuer_;
   ::google::protobuf::internal::ArenaStringPtr code_;
-  ::google::protobuf::int32 type_;
+  int type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -2062,17 +2113,11 @@ class OperationProcessOrder : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint64 order_id() const;
   void set_order_id(::google::protobuf::uint64 value);
 
-  // optional int32 sell_fee_percent = 6;
-  void clear_sell_fee_percent();
-  static const int kSellFeePercentFieldNumber = 6;
-  ::google::protobuf::int32 sell_fee_percent() const;
-  void set_sell_fee_percent(::google::protobuf::int32 value);
-
-  // optional int32 buy_fee_percent = 7;
-  void clear_buy_fee_percent();
-  static const int kBuyFeePercentFieldNumber = 7;
-  ::google::protobuf::int32 buy_fee_percent() const;
-  void set_buy_fee_percent(::google::protobuf::int32 value);
+  // optional int32 fee_percent = 6;
+  void clear_fee_percent();
+  static const int kFeePercentFieldNumber = 6;
+  ::google::protobuf::int32 fee_percent() const;
+  void set_fee_percent(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:protocol.OperationProcessOrder)
  private:
@@ -2084,8 +2129,7 @@ class OperationProcessOrder : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::int64 amount_;
   ::protocol::Price* price_;
   ::google::protobuf::uint64 order_id_;
-  ::google::protobuf::int32 sell_fee_percent_;
-  ::google::protobuf::int32 buy_fee_percent_;
+  ::google::protobuf::int32 fee_percent_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -2156,18 +2200,29 @@ class Order : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
 
   // accessors -------------------------------------------------------
 
-  // optional .protocol.OperationProcessOrder order = 1;
+  // optional string seller_address = 1;
+  void clear_seller_address();
+  static const int kSellerAddressFieldNumber = 1;
+  const ::std::string& seller_address() const;
+  void set_seller_address(const ::std::string& value);
+  void set_seller_address(const char* value);
+  void set_seller_address(const char* value, size_t size);
+  ::std::string* mutable_seller_address();
+  ::std::string* release_seller_address();
+  void set_allocated_seller_address(::std::string* seller_address);
+
+  // optional .protocol.OperationProcessOrder order = 2;
   bool has_order() const;
   void clear_order();
-  static const int kOrderFieldNumber = 1;
+  static const int kOrderFieldNumber = 2;
   const ::protocol::OperationProcessOrder& order() const;
   ::protocol::OperationProcessOrder* mutable_order();
   ::protocol::OperationProcessOrder* release_order();
   void set_allocated_order(::protocol::OperationProcessOrder* order);
 
-  // optional string system_order_id = 2;
+  // optional string system_order_id = 3;
   void clear_system_order_id();
-  static const int kSystemOrderIdFieldNumber = 2;
+  static const int kSystemOrderIdFieldNumber = 3;
   const ::std::string& system_order_id() const;
   void set_system_order_id(const ::std::string& value);
   void set_system_order_id(const char* value);
@@ -2181,6 +2236,7 @@ class Order : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr seller_address_;
   ::protocol::OperationProcessOrder* order_;
   ::google::protobuf::internal::ArenaStringPtr system_order_id_;
   mutable int _cached_size_;
@@ -2190,6 +2246,134 @@ class Order : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
 
   void InitAsDefaultInstance();
   static Order* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ClaimOrder : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.ClaimOrder) */ {
+ public:
+  ClaimOrder();
+  virtual ~ClaimOrder();
+
+  ClaimOrder(const ClaimOrder& from);
+
+  inline ClaimOrder& operator=(const ClaimOrder& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClaimOrder& default_instance();
+
+  void Swap(ClaimOrder* other);
+
+  // implements Message ----------------------------------------------
+
+  inline ClaimOrder* New() const { return New(NULL); }
+
+  ClaimOrder* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClaimOrder& from);
+  void MergeFrom(const ClaimOrder& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(ClaimOrder* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string seller_id = 1;
+  void clear_seller_id();
+  static const int kSellerIdFieldNumber = 1;
+  const ::std::string& seller_id() const;
+  void set_seller_id(const ::std::string& value);
+  void set_seller_id(const char* value);
+  void set_seller_id(const char* value, size_t size);
+  ::std::string* mutable_seller_id();
+  ::std::string* release_seller_id();
+  void set_allocated_seller_id(::std::string* seller_id);
+
+  // optional uint64 order_id = 2;
+  void clear_order_id();
+  static const int kOrderIdFieldNumber = 2;
+  ::google::protobuf::uint64 order_id() const;
+  void set_order_id(::google::protobuf::uint64 value);
+
+  // optional .protocol.AssetKey asset_sold = 3;
+  bool has_asset_sold() const;
+  void clear_asset_sold();
+  static const int kAssetSoldFieldNumber = 3;
+  const ::protocol::AssetKey& asset_sold() const;
+  ::protocol::AssetKey* mutable_asset_sold();
+  ::protocol::AssetKey* release_asset_sold();
+  void set_allocated_asset_sold(::protocol::AssetKey* asset_sold);
+
+  // optional int64 amount_sold = 4;
+  void clear_amount_sold();
+  static const int kAmountSoldFieldNumber = 4;
+  ::google::protobuf::int64 amount_sold() const;
+  void set_amount_sold(::google::protobuf::int64 value);
+
+  // optional .protocol.AssetKey asset_bought = 5;
+  bool has_asset_bought() const;
+  void clear_asset_bought();
+  static const int kAssetBoughtFieldNumber = 5;
+  const ::protocol::AssetKey& asset_bought() const;
+  ::protocol::AssetKey* mutable_asset_bought();
+  ::protocol::AssetKey* release_asset_bought();
+  void set_allocated_asset_bought(::protocol::AssetKey* asset_bought);
+
+  // optional int64 amount_bought = 6;
+  void clear_amount_bought();
+  static const int kAmountBoughtFieldNumber = 6;
+  ::google::protobuf::int64 amount_bought() const;
+  void set_amount_bought(::google::protobuf::int64 value);
+
+  // @@protoc_insertion_point(class_scope:protocol.ClaimOrder)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr seller_id_;
+  ::google::protobuf::uint64 order_id_;
+  ::protocol::AssetKey* asset_sold_;
+  ::google::protobuf::int64 amount_sold_;
+  ::protocol::AssetKey* asset_bought_;
+  ::google::protobuf::int64 amount_bought_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_chain_2eproto();
+  friend void protobuf_AssignDesc_chain_2eproto();
+  friend void protobuf_ShutdownFile_chain_2eproto();
+
+  void InitAsDefaultInstance();
+  static ClaimOrder* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4409,15 +4593,15 @@ inline void AssetKey::set_allocated_code(::std::string* code) {
   // @@protoc_insertion_point(field_set_allocated:protocol.AssetKey.code)
 }
 
-// optional int32 type = 3;
+// optional .protocol.AssetKey.Type type = 3;
 inline void AssetKey::clear_type() {
   type_ = 0;
 }
-inline ::google::protobuf::int32 AssetKey::type() const {
+inline ::protocol::AssetKey_Type AssetKey::type() const {
   // @@protoc_insertion_point(field_get:protocol.AssetKey.type)
-  return type_;
+  return static_cast< ::protocol::AssetKey_Type >(type_);
 }
-inline void AssetKey::set_type(::google::protobuf::int32 value) {
+inline void AssetKey::set_type(::protocol::AssetKey_Type value) {
   
   type_ = value;
   // @@protoc_insertion_point(field_set:protocol.AssetKey.type)
@@ -5976,39 +6160,69 @@ inline void OperationProcessOrder::set_order_id(::google::protobuf::uint64 value
   // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.order_id)
 }
 
-// optional int32 sell_fee_percent = 6;
-inline void OperationProcessOrder::clear_sell_fee_percent() {
-  sell_fee_percent_ = 0;
+// optional int32 fee_percent = 6;
+inline void OperationProcessOrder::clear_fee_percent() {
+  fee_percent_ = 0;
 }
-inline ::google::protobuf::int32 OperationProcessOrder::sell_fee_percent() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.sell_fee_percent)
-  return sell_fee_percent_;
+inline ::google::protobuf::int32 OperationProcessOrder::fee_percent() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.fee_percent)
+  return fee_percent_;
 }
-inline void OperationProcessOrder::set_sell_fee_percent(::google::protobuf::int32 value) {
+inline void OperationProcessOrder::set_fee_percent(::google::protobuf::int32 value) {
   
-  sell_fee_percent_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.sell_fee_percent)
-}
-
-// optional int32 buy_fee_percent = 7;
-inline void OperationProcessOrder::clear_buy_fee_percent() {
-  buy_fee_percent_ = 0;
-}
-inline ::google::protobuf::int32 OperationProcessOrder::buy_fee_percent() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.buy_fee_percent)
-  return buy_fee_percent_;
-}
-inline void OperationProcessOrder::set_buy_fee_percent(::google::protobuf::int32 value) {
-  
-  buy_fee_percent_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.buy_fee_percent)
+  fee_percent_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.fee_percent)
 }
 
 // -------------------------------------------------------------------
 
 // Order
 
-// optional .protocol.OperationProcessOrder order = 1;
+// optional string seller_address = 1;
+inline void Order::clear_seller_address() {
+  seller_address_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& Order::seller_address() const {
+  // @@protoc_insertion_point(field_get:protocol.Order.seller_address)
+  return seller_address_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Order::set_seller_address(const ::std::string& value) {
+  
+  seller_address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.Order.seller_address)
+}
+inline void Order::set_seller_address(const char* value) {
+  
+  seller_address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.Order.seller_address)
+}
+inline void Order::set_seller_address(const char* value, size_t size) {
+  
+  seller_address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.Order.seller_address)
+}
+inline ::std::string* Order::mutable_seller_address() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.Order.seller_address)
+  return seller_address_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Order::release_seller_address() {
+  // @@protoc_insertion_point(field_release:protocol.Order.seller_address)
+  
+  return seller_address_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Order::set_allocated_seller_address(::std::string* seller_address) {
+  if (seller_address != NULL) {
+    
+  } else {
+    
+  }
+  seller_address_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), seller_address);
+  // @@protoc_insertion_point(field_set_allocated:protocol.Order.seller_address)
+}
+
+// optional .protocol.OperationProcessOrder order = 2;
 inline bool Order::has_order() const {
   return !_is_default_instance_ && order_ != NULL;
 }
@@ -6046,7 +6260,7 @@ inline void Order::set_allocated_order(::protocol::OperationProcessOrder* order)
   // @@protoc_insertion_point(field_set_allocated:protocol.Order.order)
 }
 
-// optional string system_order_id = 2;
+// optional string system_order_id = 3;
 inline void Order::clear_system_order_id() {
   system_order_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -6088,6 +6302,172 @@ inline void Order::set_allocated_system_order_id(::std::string* system_order_id)
   }
   system_order_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), system_order_id);
   // @@protoc_insertion_point(field_set_allocated:protocol.Order.system_order_id)
+}
+
+// -------------------------------------------------------------------
+
+// ClaimOrder
+
+// optional string seller_id = 1;
+inline void ClaimOrder::clear_seller_id() {
+  seller_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ClaimOrder::seller_id() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.seller_id)
+  return seller_id_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ClaimOrder::set_seller_id(const ::std::string& value) {
+  
+  seller_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.seller_id)
+}
+inline void ClaimOrder::set_seller_id(const char* value) {
+  
+  seller_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.ClaimOrder.seller_id)
+}
+inline void ClaimOrder::set_seller_id(const char* value, size_t size) {
+  
+  seller_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.ClaimOrder.seller_id)
+}
+inline ::std::string* ClaimOrder::mutable_seller_id() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.ClaimOrder.seller_id)
+  return seller_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ClaimOrder::release_seller_id() {
+  // @@protoc_insertion_point(field_release:protocol.ClaimOrder.seller_id)
+  
+  return seller_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ClaimOrder::set_allocated_seller_id(::std::string* seller_id) {
+  if (seller_id != NULL) {
+    
+  } else {
+    
+  }
+  seller_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), seller_id);
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.seller_id)
+}
+
+// optional uint64 order_id = 2;
+inline void ClaimOrder::clear_order_id() {
+  order_id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 ClaimOrder::order_id() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.order_id)
+  return order_id_;
+}
+inline void ClaimOrder::set_order_id(::google::protobuf::uint64 value) {
+  
+  order_id_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.order_id)
+}
+
+// optional .protocol.AssetKey asset_sold = 3;
+inline bool ClaimOrder::has_asset_sold() const {
+  return !_is_default_instance_ && asset_sold_ != NULL;
+}
+inline void ClaimOrder::clear_asset_sold() {
+  if (GetArenaNoVirtual() == NULL && asset_sold_ != NULL) delete asset_sold_;
+  asset_sold_ = NULL;
+}
+inline const ::protocol::AssetKey& ClaimOrder::asset_sold() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.asset_sold)
+  return asset_sold_ != NULL ? *asset_sold_ : *default_instance_->asset_sold_;
+}
+inline ::protocol::AssetKey* ClaimOrder::mutable_asset_sold() {
+  
+  if (asset_sold_ == NULL) {
+    asset_sold_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ClaimOrder.asset_sold)
+  return asset_sold_;
+}
+inline ::protocol::AssetKey* ClaimOrder::release_asset_sold() {
+  // @@protoc_insertion_point(field_release:protocol.ClaimOrder.asset_sold)
+  
+  ::protocol::AssetKey* temp = asset_sold_;
+  asset_sold_ = NULL;
+  return temp;
+}
+inline void ClaimOrder::set_allocated_asset_sold(::protocol::AssetKey* asset_sold) {
+  delete asset_sold_;
+  asset_sold_ = asset_sold;
+  if (asset_sold) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.asset_sold)
+}
+
+// optional int64 amount_sold = 4;
+inline void ClaimOrder::clear_amount_sold() {
+  amount_sold_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 ClaimOrder::amount_sold() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.amount_sold)
+  return amount_sold_;
+}
+inline void ClaimOrder::set_amount_sold(::google::protobuf::int64 value) {
+  
+  amount_sold_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_sold)
+}
+
+// optional .protocol.AssetKey asset_bought = 5;
+inline bool ClaimOrder::has_asset_bought() const {
+  return !_is_default_instance_ && asset_bought_ != NULL;
+}
+inline void ClaimOrder::clear_asset_bought() {
+  if (GetArenaNoVirtual() == NULL && asset_bought_ != NULL) delete asset_bought_;
+  asset_bought_ = NULL;
+}
+inline const ::protocol::AssetKey& ClaimOrder::asset_bought() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.asset_bought)
+  return asset_bought_ != NULL ? *asset_bought_ : *default_instance_->asset_bought_;
+}
+inline ::protocol::AssetKey* ClaimOrder::mutable_asset_bought() {
+  
+  if (asset_bought_ == NULL) {
+    asset_bought_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ClaimOrder.asset_bought)
+  return asset_bought_;
+}
+inline ::protocol::AssetKey* ClaimOrder::release_asset_bought() {
+  // @@protoc_insertion_point(field_release:protocol.ClaimOrder.asset_bought)
+  
+  ::protocol::AssetKey* temp = asset_bought_;
+  asset_bought_ = NULL;
+  return temp;
+}
+inline void ClaimOrder::set_allocated_asset_bought(::protocol::AssetKey* asset_bought) {
+  delete asset_bought_;
+  asset_bought_ = asset_bought;
+  if (asset_bought) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.asset_bought)
+}
+
+// optional int64 amount_bought = 6;
+inline void ClaimOrder::clear_amount_bought() {
+  amount_bought_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 ClaimOrder::amount_bought() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.amount_bought)
+  return amount_bought_;
+}
+inline void ClaimOrder::set_amount_bought(::google::protobuf::int64 value) {
+  
+  amount_bought_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_bought)
 }
 
 // -------------------------------------------------------------------
@@ -8135,6 +8515,8 @@ inline void OperationSetMetadata::set_delete_flag(bool value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -8144,6 +8526,11 @@ inline void OperationSetMetadata::set_delete_flag(bool value) {
 namespace google {
 namespace protobuf {
 
+template <> struct is_proto_enum< ::protocol::AssetKey_Type> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::protocol::AssetKey_Type>() {
+  return ::protocol::AssetKey_Type_descriptor();
+}
 template <> struct is_proto_enum< ::protocol::Operation_Type> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::protocol::Operation_Type>() {

@@ -1349,12 +1349,20 @@ public final class Chain {
 
     /**
      * <pre>
-     *0:not limited ammount  1:limited ammount
+     *0:not limited ammount  1:self coin 2:limited ammount 
      * </pre>
      *
-     * <code>optional int32 type = 3;</code>
+     * <code>optional .protocol.AssetKey.Type type = 3;</code>
      */
-    int getType();
+    int getTypeValue();
+    /**
+     * <pre>
+     *0:not limited ammount  1:self coin 2:limited ammount 
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey.Type type = 3;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetKey.Type getType();
   }
   /**
    * Protobuf type {@code protocol.AssetKey}
@@ -1411,8 +1419,9 @@ public final class Chain {
               break;
             }
             case 24: {
+              int rawValue = input.readEnum();
 
-              type_ = input.readInt32();
+              type_ = rawValue;
               break;
             }
           }
@@ -1436,6 +1445,113 @@ public final class Chain {
       return cn.bumo.blockchain.adapter3.Chain.internal_static_protocol_AssetKey_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               cn.bumo.blockchain.adapter3.Chain.AssetKey.class, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code protocol.AssetKey.Type}
+     */
+    public enum Type
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>UNLIMIN = 0;</code>
+       */
+      UNLIMIN(0),
+      /**
+       * <code>SELF_COIN = 1;</code>
+       */
+      SELF_COIN(1),
+      /**
+       * <code>LIMIT = 2;</code>
+       */
+      LIMIT(2),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>UNLIMIN = 0;</code>
+       */
+      public static final int UNLIMIN_VALUE = 0;
+      /**
+       * <code>SELF_COIN = 1;</code>
+       */
+      public static final int SELF_COIN_VALUE = 1;
+      /**
+       * <code>LIMIT = 2;</code>
+       */
+      public static final int LIMIT_VALUE = 2;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static Type valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static Type forNumber(int value) {
+        switch (value) {
+          case 0: return UNLIMIN;
+          case 1: return SELF_COIN;
+          case 2: return LIMIT;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Type>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          Type> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+              public Type findValueByNumber(int number) {
+                return Type.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return cn.bumo.blockchain.adapter3.Chain.AssetKey.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final Type[] VALUES = values();
+
+      public static Type valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private Type(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:protocol.AssetKey.Type)
     }
 
     public static final int ISSUER_FIELD_NUMBER = 1;
@@ -1510,13 +1626,24 @@ public final class Chain {
     private int type_;
     /**
      * <pre>
-     *0:not limited ammount  1:limited ammount
+     *0:not limited ammount  1:self coin 2:limited ammount 
      * </pre>
      *
-     * <code>optional int32 type = 3;</code>
+     * <code>optional .protocol.AssetKey.Type type = 3;</code>
      */
-    public int getType() {
+    public int getTypeValue() {
       return type_;
+    }
+    /**
+     * <pre>
+     *0:not limited ammount  1:self coin 2:limited ammount 
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey.Type type = 3;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetKey.Type getType() {
+      cn.bumo.blockchain.adapter3.Chain.AssetKey.Type result = cn.bumo.blockchain.adapter3.Chain.AssetKey.Type.valueOf(type_);
+      return result == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.Type.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1537,8 +1664,8 @@ public final class Chain {
       if (!getCodeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, code_);
       }
-      if (type_ != 0) {
-        output.writeInt32(3, type_);
+      if (type_ != cn.bumo.blockchain.adapter3.Chain.AssetKey.Type.UNLIMIN.getNumber()) {
+        output.writeEnum(3, type_);
       }
     }
 
@@ -1553,9 +1680,9 @@ public final class Chain {
       if (!getCodeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, code_);
       }
-      if (type_ != 0) {
+      if (type_ != cn.bumo.blockchain.adapter3.Chain.AssetKey.Type.UNLIMIN.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, type_);
+          .computeEnumSize(3, type_);
       }
       memoizedSize = size;
       return size;
@@ -1577,8 +1704,7 @@ public final class Chain {
           .equals(other.getIssuer());
       result = result && getCode()
           .equals(other.getCode());
-      result = result && (getType()
-          == other.getType());
+      result = result && type_ == other.type_;
       return result;
     }
 
@@ -1594,7 +1720,7 @@ public final class Chain {
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode().hashCode();
       hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getType();
+      hash = (53 * hash) + type_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1793,8 +1919,8 @@ public final class Chain {
           code_ = other.code_;
           onChanged();
         }
-        if (other.getType() != 0) {
-          setType(other.getType());
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
         }
         onChanged();
         return this;
@@ -1960,36 +2086,62 @@ public final class Chain {
         return this;
       }
 
-      private int type_ ;
+      private int type_ = 0;
       /**
        * <pre>
-       *0:not limited ammount  1:limited ammount
+       *0:not limited ammount  1:self coin 2:limited ammount 
        * </pre>
        *
-       * <code>optional int32 type = 3;</code>
+       * <code>optional .protocol.AssetKey.Type type = 3;</code>
        */
-      public int getType() {
+      public int getTypeValue() {
         return type_;
       }
       /**
        * <pre>
-       *0:not limited ammount  1:limited ammount
+       *0:not limited ammount  1:self coin 2:limited ammount 
        * </pre>
        *
-       * <code>optional int32 type = 3;</code>
+       * <code>optional .protocol.AssetKey.Type type = 3;</code>
        */
-      public Builder setType(int value) {
-        
+      public Builder setTypeValue(int value) {
         type_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       *0:not limited ammount  1:limited ammount
+       *0:not limited ammount  1:self coin 2:limited ammount 
        * </pre>
        *
-       * <code>optional int32 type = 3;</code>
+       * <code>optional .protocol.AssetKey.Type type = 3;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKey.Type getType() {
+        cn.bumo.blockchain.adapter3.Chain.AssetKey.Type result = cn.bumo.blockchain.adapter3.Chain.AssetKey.Type.valueOf(type_);
+        return result == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.Type.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *0:not limited ammount  1:self coin 2:limited ammount 
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey.Type type = 3;</code>
+       */
+      public Builder setType(cn.bumo.blockchain.adapter3.Chain.AssetKey.Type value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *0:not limited ammount  1:self coin 2:limited ammount 
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey.Type type = 3;</code>
        */
       public Builder clearType() {
         
@@ -13535,14 +13687,13 @@ public final class Chain {
     long getOrderId();
 
     /**
-     * <code>optional int32 sell_fee_percent = 6;</code>
+     * <pre>
+     *for buy
+     * </pre>
+     *
+     * <code>optional int32 fee_percent = 6;</code>
      */
-    int getSellFeePercent();
-
-    /**
-     * <code>optional int32 buy_fee_percent = 7;</code>
-     */
-    int getBuyFeePercent();
+    int getFeePercent();
   }
   /**
    * Protobuf type {@code protocol.OperationProcessOrder}
@@ -13558,8 +13709,7 @@ public final class Chain {
     private OperationProcessOrder() {
       amount_ = 0L;
       orderId_ = 0L;
-      sellFeePercent_ = 0;
-      buyFeePercent_ = 0;
+      feePercent_ = 0;
     }
 
     @java.lang.Override
@@ -13638,12 +13788,7 @@ public final class Chain {
             }
             case 48: {
 
-              sellFeePercent_ = input.readInt32();
-              break;
-            }
-            case 56: {
-
-              buyFeePercent_ = input.readInt32();
+              feePercent_ = input.readInt32();
               break;
             }
           }
@@ -13770,22 +13915,17 @@ public final class Chain {
       return orderId_;
     }
 
-    public static final int SELL_FEE_PERCENT_FIELD_NUMBER = 6;
-    private int sellFeePercent_;
+    public static final int FEE_PERCENT_FIELD_NUMBER = 6;
+    private int feePercent_;
     /**
-     * <code>optional int32 sell_fee_percent = 6;</code>
+     * <pre>
+     *for buy
+     * </pre>
+     *
+     * <code>optional int32 fee_percent = 6;</code>
      */
-    public int getSellFeePercent() {
-      return sellFeePercent_;
-    }
-
-    public static final int BUY_FEE_PERCENT_FIELD_NUMBER = 7;
-    private int buyFeePercent_;
-    /**
-     * <code>optional int32 buy_fee_percent = 7;</code>
-     */
-    public int getBuyFeePercent() {
-      return buyFeePercent_;
+    public int getFeePercent() {
+      return feePercent_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -13815,11 +13955,8 @@ public final class Chain {
       if (orderId_ != 0L) {
         output.writeUInt64(5, orderId_);
       }
-      if (sellFeePercent_ != 0) {
-        output.writeInt32(6, sellFeePercent_);
-      }
-      if (buyFeePercent_ != 0) {
-        output.writeInt32(7, buyFeePercent_);
+      if (feePercent_ != 0) {
+        output.writeInt32(6, feePercent_);
       }
     }
 
@@ -13848,13 +13985,9 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(5, orderId_);
       }
-      if (sellFeePercent_ != 0) {
+      if (feePercent_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, sellFeePercent_);
-      }
-      if (buyFeePercent_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(7, buyFeePercent_);
+          .computeInt32Size(6, feePercent_);
       }
       memoizedSize = size;
       return size;
@@ -13891,10 +14024,8 @@ public final class Chain {
       }
       result = result && (getOrderId()
           == other.getOrderId());
-      result = result && (getSellFeePercent()
-          == other.getSellFeePercent());
-      result = result && (getBuyFeePercent()
-          == other.getBuyFeePercent());
+      result = result && (getFeePercent()
+          == other.getFeePercent());
       return result;
     }
 
@@ -13923,10 +14054,8 @@ public final class Chain {
       hash = (37 * hash) + ORDER_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getOrderId());
-      hash = (37 * hash) + SELL_FEE_PERCENT_FIELD_NUMBER;
-      hash = (53 * hash) + getSellFeePercent();
-      hash = (37 * hash) + BUY_FEE_PERCENT_FIELD_NUMBER;
-      hash = (53 * hash) + getBuyFeePercent();
+      hash = (37 * hash) + FEE_PERCENT_FIELD_NUMBER;
+      hash = (53 * hash) + getFeePercent();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -14067,9 +14196,7 @@ public final class Chain {
         }
         orderId_ = 0L;
 
-        sellFeePercent_ = 0;
-
-        buyFeePercent_ = 0;
+        feePercent_ = 0;
 
         return this;
       }
@@ -14110,8 +14237,7 @@ public final class Chain {
           result.price_ = priceBuilder_.build();
         }
         result.orderId_ = orderId_;
-        result.sellFeePercent_ = sellFeePercent_;
-        result.buyFeePercent_ = buyFeePercent_;
+        result.feePercent_ = feePercent_;
         onBuilt();
         return result;
       }
@@ -14168,11 +14294,8 @@ public final class Chain {
         if (other.getOrderId() != 0L) {
           setOrderId(other.getOrderId());
         }
-        if (other.getSellFeePercent() != 0) {
-          setSellFeePercent(other.getSellFeePercent());
-        }
-        if (other.getBuyFeePercent() != 0) {
-          setBuyFeePercent(other.getBuyFeePercent());
+        if (other.getFeePercent() != 0) {
+          setFeePercent(other.getFeePercent());
         }
         onChanged();
         return this;
@@ -14663,54 +14786,40 @@ public final class Chain {
         return this;
       }
 
-      private int sellFeePercent_ ;
+      private int feePercent_ ;
       /**
-       * <code>optional int32 sell_fee_percent = 6;</code>
+       * <pre>
+       *for buy
+       * </pre>
+       *
+       * <code>optional int32 fee_percent = 6;</code>
        */
-      public int getSellFeePercent() {
-        return sellFeePercent_;
+      public int getFeePercent() {
+        return feePercent_;
       }
       /**
-       * <code>optional int32 sell_fee_percent = 6;</code>
+       * <pre>
+       *for buy
+       * </pre>
+       *
+       * <code>optional int32 fee_percent = 6;</code>
        */
-      public Builder setSellFeePercent(int value) {
+      public Builder setFeePercent(int value) {
         
-        sellFeePercent_ = value;
+        feePercent_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 sell_fee_percent = 6;</code>
+       * <pre>
+       *for buy
+       * </pre>
+       *
+       * <code>optional int32 fee_percent = 6;</code>
        */
-      public Builder clearSellFeePercent() {
+      public Builder clearFeePercent() {
         
-        sellFeePercent_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int buyFeePercent_ ;
-      /**
-       * <code>optional int32 buy_fee_percent = 7;</code>
-       */
-      public int getBuyFeePercent() {
-        return buyFeePercent_;
-      }
-      /**
-       * <code>optional int32 buy_fee_percent = 7;</code>
-       */
-      public Builder setBuyFeePercent(int value) {
-        
-        buyFeePercent_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 buy_fee_percent = 7;</code>
-       */
-      public Builder clearBuyFeePercent() {
-        
-        buyFeePercent_ = 0;
+        feePercent_ = 0;
         onChanged();
         return this;
       }
@@ -14768,32 +14877,40 @@ public final class Chain {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+     * <code>optional string seller_address = 1;</code>
+     */
+    java.lang.String getSellerAddress();
+    /**
+     * <code>optional string seller_address = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getSellerAddressBytes();
+
+    /**
+     * <code>optional .protocol.OperationProcessOrder order = 2;</code>
      */
     boolean hasOrder();
     /**
-     * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+     * <code>optional .protocol.OperationProcessOrder order = 2;</code>
      */
     cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder getOrder();
     /**
-     * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+     * <code>optional .protocol.OperationProcessOrder order = 2;</code>
      */
     cn.bumo.blockchain.adapter3.Chain.OperationProcessOrderOrBuilder getOrderOrBuilder();
 
     /**
      * <pre>
-     *ledger_seq+tran_hash+op_index
      * </pre>
      *
-     * <code>optional string system_order_id = 2;</code>
+     * <code>optional string system_order_id = 3;</code>
      */
     java.lang.String getSystemOrderId();
     /**
      * <pre>
-     *ledger_seq+tran_hash+op_index
      * </pre>
      *
-     * <code>optional string system_order_id = 2;</code>
+     * <code>optional string system_order_id = 3;</code>
      */
     com.google.protobuf.ByteString
         getSystemOrderIdBytes();
@@ -14810,6 +14927,7 @@ public final class Chain {
       super(builder);
     }
     private Order() {
+      sellerAddress_ = "";
       systemOrderId_ = "";
     }
 
@@ -14839,6 +14957,12 @@ public final class Chain {
               break;
             }
             case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              sellerAddress_ = s;
+              break;
+            }
+            case 18: {
               cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder.Builder subBuilder = null;
               if (order_ != null) {
                 subBuilder = order_.toBuilder();
@@ -14851,7 +14975,7 @@ public final class Chain {
 
               break;
             }
-            case 18: {
+            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
               systemOrderId_ = s;
@@ -14880,35 +15004,68 @@ public final class Chain {
               cn.bumo.blockchain.adapter3.Chain.Order.class, cn.bumo.blockchain.adapter3.Chain.Order.Builder.class);
     }
 
-    public static final int ORDER_FIELD_NUMBER = 1;
+    public static final int SELLER_ADDRESS_FIELD_NUMBER = 1;
+    private volatile java.lang.Object sellerAddress_;
+    /**
+     * <code>optional string seller_address = 1;</code>
+     */
+    public java.lang.String getSellerAddress() {
+      java.lang.Object ref = sellerAddress_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sellerAddress_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string seller_address = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSellerAddressBytes() {
+      java.lang.Object ref = sellerAddress_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sellerAddress_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ORDER_FIELD_NUMBER = 2;
     private cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder order_;
     /**
-     * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+     * <code>optional .protocol.OperationProcessOrder order = 2;</code>
      */
     public boolean hasOrder() {
       return order_ != null;
     }
     /**
-     * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+     * <code>optional .protocol.OperationProcessOrder order = 2;</code>
      */
     public cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder getOrder() {
       return order_ == null ? cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder.getDefaultInstance() : order_;
     }
     /**
-     * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+     * <code>optional .protocol.OperationProcessOrder order = 2;</code>
      */
     public cn.bumo.blockchain.adapter3.Chain.OperationProcessOrderOrBuilder getOrderOrBuilder() {
       return getOrder();
     }
 
-    public static final int SYSTEM_ORDER_ID_FIELD_NUMBER = 2;
+    public static final int SYSTEM_ORDER_ID_FIELD_NUMBER = 3;
     private volatile java.lang.Object systemOrderId_;
     /**
      * <pre>
-     *ledger_seq+tran_hash+op_index
      * </pre>
      *
-     * <code>optional string system_order_id = 2;</code>
+     * <code>optional string system_order_id = 3;</code>
      */
     public java.lang.String getSystemOrderId() {
       java.lang.Object ref = systemOrderId_;
@@ -14924,10 +15081,9 @@ public final class Chain {
     }
     /**
      * <pre>
-     *ledger_seq+tran_hash+op_index
      * </pre>
      *
-     * <code>optional string system_order_id = 2;</code>
+     * <code>optional string system_order_id = 3;</code>
      */
     public com.google.protobuf.ByteString
         getSystemOrderIdBytes() {
@@ -14955,11 +15111,14 @@ public final class Chain {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (!getSellerAddressBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sellerAddress_);
+      }
       if (order_ != null) {
-        output.writeMessage(1, getOrder());
+        output.writeMessage(2, getOrder());
       }
       if (!getSystemOrderIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, systemOrderId_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, systemOrderId_);
       }
     }
 
@@ -14968,12 +15127,15 @@ public final class Chain {
       if (size != -1) return size;
 
       size = 0;
+      if (!getSellerAddressBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sellerAddress_);
+      }
       if (order_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getOrder());
+          .computeMessageSize(2, getOrder());
       }
       if (!getSystemOrderIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, systemOrderId_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, systemOrderId_);
       }
       memoizedSize = size;
       return size;
@@ -14991,6 +15153,8 @@ public final class Chain {
       cn.bumo.blockchain.adapter3.Chain.Order other = (cn.bumo.blockchain.adapter3.Chain.Order) obj;
 
       boolean result = true;
+      result = result && getSellerAddress()
+          .equals(other.getSellerAddress());
       result = result && (hasOrder() == other.hasOrder());
       if (hasOrder()) {
         result = result && getOrder()
@@ -15008,6 +15172,8 @@ public final class Chain {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + SELLER_ADDRESS_FIELD_NUMBER;
+      hash = (53 * hash) + getSellerAddress().hashCode();
       if (hasOrder()) {
         hash = (37 * hash) + ORDER_FIELD_NUMBER;
         hash = (53 * hash) + getOrder().hashCode();
@@ -15132,6 +15298,8 @@ public final class Chain {
       }
       public Builder clear() {
         super.clear();
+        sellerAddress_ = "";
+
         if (orderBuilder_ == null) {
           order_ = null;
         } else {
@@ -15162,6 +15330,7 @@ public final class Chain {
 
       public cn.bumo.blockchain.adapter3.Chain.Order buildPartial() {
         cn.bumo.blockchain.adapter3.Chain.Order result = new cn.bumo.blockchain.adapter3.Chain.Order(this);
+        result.sellerAddress_ = sellerAddress_;
         if (orderBuilder_ == null) {
           result.order_ = order_;
         } else {
@@ -15209,6 +15378,10 @@ public final class Chain {
 
       public Builder mergeFrom(cn.bumo.blockchain.adapter3.Chain.Order other) {
         if (other == cn.bumo.blockchain.adapter3.Chain.Order.getDefaultInstance()) return this;
+        if (!other.getSellerAddress().isEmpty()) {
+          sellerAddress_ = other.sellerAddress_;
+          onChanged();
+        }
         if (other.hasOrder()) {
           mergeOrder(other.getOrder());
         }
@@ -15242,17 +15415,86 @@ public final class Chain {
         return this;
       }
 
+      private java.lang.Object sellerAddress_ = "";
+      /**
+       * <code>optional string seller_address = 1;</code>
+       */
+      public java.lang.String getSellerAddress() {
+        java.lang.Object ref = sellerAddress_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          sellerAddress_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string seller_address = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSellerAddressBytes() {
+        java.lang.Object ref = sellerAddress_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sellerAddress_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string seller_address = 1;</code>
+       */
+      public Builder setSellerAddress(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        sellerAddress_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string seller_address = 1;</code>
+       */
+      public Builder clearSellerAddress() {
+        
+        sellerAddress_ = getDefaultInstance().getSellerAddress();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string seller_address = 1;</code>
+       */
+      public Builder setSellerAddressBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        sellerAddress_ = value;
+        onChanged();
+        return this;
+      }
+
       private cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder order_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
           cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder, cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder.Builder, cn.bumo.blockchain.adapter3.Chain.OperationProcessOrderOrBuilder> orderBuilder_;
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public boolean hasOrder() {
         return orderBuilder_ != null || order_ != null;
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder getOrder() {
         if (orderBuilder_ == null) {
@@ -15262,7 +15504,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public Builder setOrder(cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder value) {
         if (orderBuilder_ == null) {
@@ -15278,7 +15520,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public Builder setOrder(
           cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder.Builder builderForValue) {
@@ -15292,7 +15534,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public Builder mergeOrder(cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder value) {
         if (orderBuilder_ == null) {
@@ -15310,7 +15552,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public Builder clearOrder() {
         if (orderBuilder_ == null) {
@@ -15324,7 +15566,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder.Builder getOrderBuilder() {
         
@@ -15332,7 +15574,7 @@ public final class Chain {
         return getOrderFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       public cn.bumo.blockchain.adapter3.Chain.OperationProcessOrderOrBuilder getOrderOrBuilder() {
         if (orderBuilder_ != null) {
@@ -15343,7 +15585,7 @@ public final class Chain {
         }
       }
       /**
-       * <code>optional .protocol.OperationProcessOrder order = 1;</code>
+       * <code>optional .protocol.OperationProcessOrder order = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder, cn.bumo.blockchain.adapter3.Chain.OperationProcessOrder.Builder, cn.bumo.blockchain.adapter3.Chain.OperationProcessOrderOrBuilder> 
@@ -15362,10 +15604,9 @@ public final class Chain {
       private java.lang.Object systemOrderId_ = "";
       /**
        * <pre>
-       *ledger_seq+tran_hash+op_index
        * </pre>
        *
-       * <code>optional string system_order_id = 2;</code>
+       * <code>optional string system_order_id = 3;</code>
        */
       public java.lang.String getSystemOrderId() {
         java.lang.Object ref = systemOrderId_;
@@ -15381,10 +15622,9 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ledger_seq+tran_hash+op_index
        * </pre>
        *
-       * <code>optional string system_order_id = 2;</code>
+       * <code>optional string system_order_id = 3;</code>
        */
       public com.google.protobuf.ByteString
           getSystemOrderIdBytes() {
@@ -15401,10 +15641,9 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ledger_seq+tran_hash+op_index
        * </pre>
        *
-       * <code>optional string system_order_id = 2;</code>
+       * <code>optional string system_order_id = 3;</code>
        */
       public Builder setSystemOrderId(
           java.lang.String value) {
@@ -15418,10 +15657,9 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ledger_seq+tran_hash+op_index
        * </pre>
        *
-       * <code>optional string system_order_id = 2;</code>
+       * <code>optional string system_order_id = 3;</code>
        */
       public Builder clearSystemOrderId() {
         
@@ -15431,10 +15669,9 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ledger_seq+tran_hash+op_index
        * </pre>
        *
-       * <code>optional string system_order_id = 2;</code>
+       * <code>optional string system_order_id = 3;</code>
        */
       public Builder setSystemOrderIdBytes(
           com.google.protobuf.ByteString value) {
@@ -15491,6 +15728,1245 @@ public final class Chain {
     }
 
     public cn.bumo.blockchain.adapter3.Chain.Order getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClaimOrderOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protocol.ClaimOrder)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * emitted to identify the offer
+     * </pre>
+     *
+     * <code>optional string seller_id = 1;</code>
+     */
+    java.lang.String getSellerId();
+    /**
+     * <pre>
+     * emitted to identify the offer
+     * </pre>
+     *
+     * <code>optional string seller_id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getSellerIdBytes();
+
+    /**
+     * <code>optional uint64 order_id = 2;</code>
+     */
+    long getOrderId();
+
+    /**
+     * <pre>
+     * amount and asset taken from the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+     */
+    boolean hasAssetSold();
+    /**
+     * <pre>
+     * amount and asset taken from the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetSold();
+    /**
+     * <pre>
+     * amount and asset taken from the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetSoldOrBuilder();
+
+    /**
+     * <code>optional int64 amount_sold = 4;</code>
+     */
+    long getAmountSold();
+
+    /**
+     * <pre>
+     * amount and asset sent to the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+     */
+    boolean hasAssetBought();
+    /**
+     * <pre>
+     * amount and asset sent to the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetBought();
+    /**
+     * <pre>
+     * amount and asset sent to the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+     */
+    cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetBoughtOrBuilder();
+
+    /**
+     * <code>optional int64 amount_bought = 6;</code>
+     */
+    long getAmountBought();
+  }
+  /**
+   * Protobuf type {@code protocol.ClaimOrder}
+   */
+  public  static final class ClaimOrder extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:protocol.ClaimOrder)
+      ClaimOrderOrBuilder {
+    // Use ClaimOrder.newBuilder() to construct.
+    private ClaimOrder(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClaimOrder() {
+      sellerId_ = "";
+      orderId_ = 0L;
+      amountSold_ = 0L;
+      amountBought_ = 0L;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private ClaimOrder(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              sellerId_ = s;
+              break;
+            }
+            case 16: {
+
+              orderId_ = input.readUInt64();
+              break;
+            }
+            case 26: {
+              cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder subBuilder = null;
+              if (assetSold_ != null) {
+                subBuilder = assetSold_.toBuilder();
+              }
+              assetSold_ = input.readMessage(cn.bumo.blockchain.adapter3.Chain.AssetKey.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(assetSold_);
+                assetSold_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 32: {
+
+              amountSold_ = input.readInt64();
+              break;
+            }
+            case 42: {
+              cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder subBuilder = null;
+              if (assetBought_ != null) {
+                subBuilder = assetBought_.toBuilder();
+              }
+              assetBought_ = input.readMessage(cn.bumo.blockchain.adapter3.Chain.AssetKey.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(assetBought_);
+                assetBought_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 48: {
+
+              amountBought_ = input.readInt64();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return cn.bumo.blockchain.adapter3.Chain.internal_static_protocol_ClaimOrder_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return cn.bumo.blockchain.adapter3.Chain.internal_static_protocol_ClaimOrder_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              cn.bumo.blockchain.adapter3.Chain.ClaimOrder.class, cn.bumo.blockchain.adapter3.Chain.ClaimOrder.Builder.class);
+    }
+
+    public static final int SELLER_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object sellerId_;
+    /**
+     * <pre>
+     * emitted to identify the offer
+     * </pre>
+     *
+     * <code>optional string seller_id = 1;</code>
+     */
+    public java.lang.String getSellerId() {
+      java.lang.Object ref = sellerId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sellerId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * emitted to identify the offer
+     * </pre>
+     *
+     * <code>optional string seller_id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSellerIdBytes() {
+      java.lang.Object ref = sellerId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sellerId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ORDER_ID_FIELD_NUMBER = 2;
+    private long orderId_;
+    /**
+     * <code>optional uint64 order_id = 2;</code>
+     */
+    public long getOrderId() {
+      return orderId_;
+    }
+
+    public static final int ASSET_SOLD_FIELD_NUMBER = 3;
+    private cn.bumo.blockchain.adapter3.Chain.AssetKey assetSold_;
+    /**
+     * <pre>
+     * amount and asset taken from the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+     */
+    public boolean hasAssetSold() {
+      return assetSold_ != null;
+    }
+    /**
+     * <pre>
+     * amount and asset taken from the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetSold() {
+      return assetSold_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetSold_;
+    }
+    /**
+     * <pre>
+     * amount and asset taken from the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetSoldOrBuilder() {
+      return getAssetSold();
+    }
+
+    public static final int AMOUNT_SOLD_FIELD_NUMBER = 4;
+    private long amountSold_;
+    /**
+     * <code>optional int64 amount_sold = 4;</code>
+     */
+    public long getAmountSold() {
+      return amountSold_;
+    }
+
+    public static final int ASSET_BOUGHT_FIELD_NUMBER = 5;
+    private cn.bumo.blockchain.adapter3.Chain.AssetKey assetBought_;
+    /**
+     * <pre>
+     * amount and asset sent to the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+     */
+    public boolean hasAssetBought() {
+      return assetBought_ != null;
+    }
+    /**
+     * <pre>
+     * amount and asset sent to the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetBought() {
+      return assetBought_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetBought_;
+    }
+    /**
+     * <pre>
+     * amount and asset sent to the owner
+     * </pre>
+     *
+     * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+     */
+    public cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetBoughtOrBuilder() {
+      return getAssetBought();
+    }
+
+    public static final int AMOUNT_BOUGHT_FIELD_NUMBER = 6;
+    private long amountBought_;
+    /**
+     * <code>optional int64 amount_bought = 6;</code>
+     */
+    public long getAmountBought() {
+      return amountBought_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getSellerIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sellerId_);
+      }
+      if (orderId_ != 0L) {
+        output.writeUInt64(2, orderId_);
+      }
+      if (assetSold_ != null) {
+        output.writeMessage(3, getAssetSold());
+      }
+      if (amountSold_ != 0L) {
+        output.writeInt64(4, amountSold_);
+      }
+      if (assetBought_ != null) {
+        output.writeMessage(5, getAssetBought());
+      }
+      if (amountBought_ != 0L) {
+        output.writeInt64(6, amountBought_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getSellerIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sellerId_);
+      }
+      if (orderId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(2, orderId_);
+      }
+      if (assetSold_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getAssetSold());
+      }
+      if (amountSold_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(4, amountSold_);
+      }
+      if (assetBought_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getAssetBought());
+      }
+      if (amountBought_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, amountBought_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof cn.bumo.blockchain.adapter3.Chain.ClaimOrder)) {
+        return super.equals(obj);
+      }
+      cn.bumo.blockchain.adapter3.Chain.ClaimOrder other = (cn.bumo.blockchain.adapter3.Chain.ClaimOrder) obj;
+
+      boolean result = true;
+      result = result && getSellerId()
+          .equals(other.getSellerId());
+      result = result && (getOrderId()
+          == other.getOrderId());
+      result = result && (hasAssetSold() == other.hasAssetSold());
+      if (hasAssetSold()) {
+        result = result && getAssetSold()
+            .equals(other.getAssetSold());
+      }
+      result = result && (getAmountSold()
+          == other.getAmountSold());
+      result = result && (hasAssetBought() == other.hasAssetBought());
+      if (hasAssetBought()) {
+        result = result && getAssetBought()
+            .equals(other.getAssetBought());
+      }
+      result = result && (getAmountBought()
+          == other.getAmountBought());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + SELLER_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getSellerId().hashCode();
+      hash = (37 * hash) + ORDER_ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getOrderId());
+      if (hasAssetSold()) {
+        hash = (37 * hash) + ASSET_SOLD_FIELD_NUMBER;
+        hash = (53 * hash) + getAssetSold().hashCode();
+      }
+      hash = (37 * hash) + AMOUNT_SOLD_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getAmountSold());
+      if (hasAssetBought()) {
+        hash = (37 * hash) + ASSET_BOUGHT_FIELD_NUMBER;
+        hash = (53 * hash) + getAssetBought().hashCode();
+      }
+      hash = (37 * hash) + AMOUNT_BOUGHT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getAmountBought());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(cn.bumo.blockchain.adapter3.Chain.ClaimOrder prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code protocol.ClaimOrder}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:protocol.ClaimOrder)
+        cn.bumo.blockchain.adapter3.Chain.ClaimOrderOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return cn.bumo.blockchain.adapter3.Chain.internal_static_protocol_ClaimOrder_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return cn.bumo.blockchain.adapter3.Chain.internal_static_protocol_ClaimOrder_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                cn.bumo.blockchain.adapter3.Chain.ClaimOrder.class, cn.bumo.blockchain.adapter3.Chain.ClaimOrder.Builder.class);
+      }
+
+      // Construct using cn.bumo.blockchain.adapter3.Chain.ClaimOrder.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        sellerId_ = "";
+
+        orderId_ = 0L;
+
+        if (assetSoldBuilder_ == null) {
+          assetSold_ = null;
+        } else {
+          assetSold_ = null;
+          assetSoldBuilder_ = null;
+        }
+        amountSold_ = 0L;
+
+        if (assetBoughtBuilder_ == null) {
+          assetBought_ = null;
+        } else {
+          assetBought_ = null;
+          assetBoughtBuilder_ = null;
+        }
+        amountBought_ = 0L;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return cn.bumo.blockchain.adapter3.Chain.internal_static_protocol_ClaimOrder_descriptor;
+      }
+
+      public cn.bumo.blockchain.adapter3.Chain.ClaimOrder getDefaultInstanceForType() {
+        return cn.bumo.blockchain.adapter3.Chain.ClaimOrder.getDefaultInstance();
+      }
+
+      public cn.bumo.blockchain.adapter3.Chain.ClaimOrder build() {
+        cn.bumo.blockchain.adapter3.Chain.ClaimOrder result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public cn.bumo.blockchain.adapter3.Chain.ClaimOrder buildPartial() {
+        cn.bumo.blockchain.adapter3.Chain.ClaimOrder result = new cn.bumo.blockchain.adapter3.Chain.ClaimOrder(this);
+        result.sellerId_ = sellerId_;
+        result.orderId_ = orderId_;
+        if (assetSoldBuilder_ == null) {
+          result.assetSold_ = assetSold_;
+        } else {
+          result.assetSold_ = assetSoldBuilder_.build();
+        }
+        result.amountSold_ = amountSold_;
+        if (assetBoughtBuilder_ == null) {
+          result.assetBought_ = assetBought_;
+        } else {
+          result.assetBought_ = assetBoughtBuilder_.build();
+        }
+        result.amountBought_ = amountBought_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof cn.bumo.blockchain.adapter3.Chain.ClaimOrder) {
+          return mergeFrom((cn.bumo.blockchain.adapter3.Chain.ClaimOrder)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(cn.bumo.blockchain.adapter3.Chain.ClaimOrder other) {
+        if (other == cn.bumo.blockchain.adapter3.Chain.ClaimOrder.getDefaultInstance()) return this;
+        if (!other.getSellerId().isEmpty()) {
+          sellerId_ = other.sellerId_;
+          onChanged();
+        }
+        if (other.getOrderId() != 0L) {
+          setOrderId(other.getOrderId());
+        }
+        if (other.hasAssetSold()) {
+          mergeAssetSold(other.getAssetSold());
+        }
+        if (other.getAmountSold() != 0L) {
+          setAmountSold(other.getAmountSold());
+        }
+        if (other.hasAssetBought()) {
+          mergeAssetBought(other.getAssetBought());
+        }
+        if (other.getAmountBought() != 0L) {
+          setAmountBought(other.getAmountBought());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        cn.bumo.blockchain.adapter3.Chain.ClaimOrder parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (cn.bumo.blockchain.adapter3.Chain.ClaimOrder) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object sellerId_ = "";
+      /**
+       * <pre>
+       * emitted to identify the offer
+       * </pre>
+       *
+       * <code>optional string seller_id = 1;</code>
+       */
+      public java.lang.String getSellerId() {
+        java.lang.Object ref = sellerId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          sellerId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * emitted to identify the offer
+       * </pre>
+       *
+       * <code>optional string seller_id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSellerIdBytes() {
+        java.lang.Object ref = sellerId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sellerId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * emitted to identify the offer
+       * </pre>
+       *
+       * <code>optional string seller_id = 1;</code>
+       */
+      public Builder setSellerId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        sellerId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * emitted to identify the offer
+       * </pre>
+       *
+       * <code>optional string seller_id = 1;</code>
+       */
+      public Builder clearSellerId() {
+        
+        sellerId_ = getDefaultInstance().getSellerId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * emitted to identify the offer
+       * </pre>
+       *
+       * <code>optional string seller_id = 1;</code>
+       */
+      public Builder setSellerIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        sellerId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private long orderId_ ;
+      /**
+       * <code>optional uint64 order_id = 2;</code>
+       */
+      public long getOrderId() {
+        return orderId_;
+      }
+      /**
+       * <code>optional uint64 order_id = 2;</code>
+       */
+      public Builder setOrderId(long value) {
+        
+        orderId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint64 order_id = 2;</code>
+       */
+      public Builder clearOrderId() {
+        
+        orderId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private cn.bumo.blockchain.adapter3.Chain.AssetKey assetSold_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder> assetSoldBuilder_;
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public boolean hasAssetSold() {
+        return assetSoldBuilder_ != null || assetSold_ != null;
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetSold() {
+        if (assetSoldBuilder_ == null) {
+          return assetSold_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetSold_;
+        } else {
+          return assetSoldBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public Builder setAssetSold(cn.bumo.blockchain.adapter3.Chain.AssetKey value) {
+        if (assetSoldBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          assetSold_ = value;
+          onChanged();
+        } else {
+          assetSoldBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public Builder setAssetSold(
+          cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder builderForValue) {
+        if (assetSoldBuilder_ == null) {
+          assetSold_ = builderForValue.build();
+          onChanged();
+        } else {
+          assetSoldBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public Builder mergeAssetSold(cn.bumo.blockchain.adapter3.Chain.AssetKey value) {
+        if (assetSoldBuilder_ == null) {
+          if (assetSold_ != null) {
+            assetSold_ =
+              cn.bumo.blockchain.adapter3.Chain.AssetKey.newBuilder(assetSold_).mergeFrom(value).buildPartial();
+          } else {
+            assetSold_ = value;
+          }
+          onChanged();
+        } else {
+          assetSoldBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public Builder clearAssetSold() {
+        if (assetSoldBuilder_ == null) {
+          assetSold_ = null;
+          onChanged();
+        } else {
+          assetSold_ = null;
+          assetSoldBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder getAssetSoldBuilder() {
+        
+        onChanged();
+        return getAssetSoldFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetSoldOrBuilder() {
+        if (assetSoldBuilder_ != null) {
+          return assetSoldBuilder_.getMessageOrBuilder();
+        } else {
+          return assetSold_ == null ?
+              cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetSold_;
+        }
+      }
+      /**
+       * <pre>
+       * amount and asset taken from the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_sold = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder> 
+          getAssetSoldFieldBuilder() {
+        if (assetSoldBuilder_ == null) {
+          assetSoldBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder>(
+                  getAssetSold(),
+                  getParentForChildren(),
+                  isClean());
+          assetSold_ = null;
+        }
+        return assetSoldBuilder_;
+      }
+
+      private long amountSold_ ;
+      /**
+       * <code>optional int64 amount_sold = 4;</code>
+       */
+      public long getAmountSold() {
+        return amountSold_;
+      }
+      /**
+       * <code>optional int64 amount_sold = 4;</code>
+       */
+      public Builder setAmountSold(long value) {
+        
+        amountSold_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 amount_sold = 4;</code>
+       */
+      public Builder clearAmountSold() {
+        
+        amountSold_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private cn.bumo.blockchain.adapter3.Chain.AssetKey assetBought_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder> assetBoughtBuilder_;
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public boolean hasAssetBought() {
+        return assetBoughtBuilder_ != null || assetBought_ != null;
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetBought() {
+        if (assetBoughtBuilder_ == null) {
+          return assetBought_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetBought_;
+        } else {
+          return assetBoughtBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public Builder setAssetBought(cn.bumo.blockchain.adapter3.Chain.AssetKey value) {
+        if (assetBoughtBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          assetBought_ = value;
+          onChanged();
+        } else {
+          assetBoughtBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public Builder setAssetBought(
+          cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder builderForValue) {
+        if (assetBoughtBuilder_ == null) {
+          assetBought_ = builderForValue.build();
+          onChanged();
+        } else {
+          assetBoughtBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public Builder mergeAssetBought(cn.bumo.blockchain.adapter3.Chain.AssetKey value) {
+        if (assetBoughtBuilder_ == null) {
+          if (assetBought_ != null) {
+            assetBought_ =
+              cn.bumo.blockchain.adapter3.Chain.AssetKey.newBuilder(assetBought_).mergeFrom(value).buildPartial();
+          } else {
+            assetBought_ = value;
+          }
+          onChanged();
+        } else {
+          assetBoughtBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public Builder clearAssetBought() {
+        if (assetBoughtBuilder_ == null) {
+          assetBought_ = null;
+          onChanged();
+        } else {
+          assetBought_ = null;
+          assetBoughtBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder getAssetBoughtBuilder() {
+        
+        onChanged();
+        return getAssetBoughtFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      public cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetBoughtOrBuilder() {
+        if (assetBoughtBuilder_ != null) {
+          return assetBoughtBuilder_.getMessageOrBuilder();
+        } else {
+          return assetBought_ == null ?
+              cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetBought_;
+        }
+      }
+      /**
+       * <pre>
+       * amount and asset sent to the owner
+       * </pre>
+       *
+       * <code>optional .protocol.AssetKey asset_bought = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder> 
+          getAssetBoughtFieldBuilder() {
+        if (assetBoughtBuilder_ == null) {
+          assetBoughtBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder>(
+                  getAssetBought(),
+                  getParentForChildren(),
+                  isClean());
+          assetBought_ = null;
+        }
+        return assetBoughtBuilder_;
+      }
+
+      private long amountBought_ ;
+      /**
+       * <code>optional int64 amount_bought = 6;</code>
+       */
+      public long getAmountBought() {
+        return amountBought_;
+      }
+      /**
+       * <code>optional int64 amount_bought = 6;</code>
+       */
+      public Builder setAmountBought(long value) {
+        
+        amountBought_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 amount_bought = 6;</code>
+       */
+      public Builder clearAmountBought() {
+        
+        amountBought_ = 0L;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:protocol.ClaimOrder)
+    }
+
+    // @@protoc_insertion_point(class_scope:protocol.ClaimOrder)
+    private static final cn.bumo.blockchain.adapter3.Chain.ClaimOrder DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new cn.bumo.blockchain.adapter3.Chain.ClaimOrder();
+    }
+
+    public static cn.bumo.blockchain.adapter3.Chain.ClaimOrder getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClaimOrder>
+        PARSER = new com.google.protobuf.AbstractParser<ClaimOrder>() {
+      public ClaimOrder parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ClaimOrder(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClaimOrder> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClaimOrder> getParserForType() {
+      return PARSER;
+    }
+
+    public cn.bumo.blockchain.adapter3.Chain.ClaimOrder getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -31240,6 +32716,11 @@ public final class Chain {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_protocol_Order_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_protocol_ClaimOrder_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_protocol_ClaimOrder_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_protocol_OperationUpdateAssetProperty_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -31328,120 +32809,126 @@ public final class Chain {
       "\003\022(\n\004priv\030\003 \001(\0132\032.protocol.AccountPrivil" +
       "ege\022\026\n\016metadatas_hash\030\004 \001(\014\022\023\n\013assets_ha" +
       "sh\030\005 \001(\014\022$\n\010contract\030\006 \001(\0132\022.protocol.Co" +
-      "ntract\022\017\n\007balance\030\007 \001(\003\"6\n\010AssetKey\022\016\n\006i" +
-      "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"" +
-      "8\n\005Asset\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe" +
-      "y\022\016\n\006amount\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007de" +
-      "cimal\030\001 \001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_",
-      "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013f" +
-      "ee_percent\030\005 \001(\005\"\177\n\nAssetStore\022\037\n\003key\030\001 " +
-      "\001(\0132\022.protocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022" +
-      "\025\n\rfreezn_amount\030\003 \001(\003\022)\n\010property\030\004 \001(\013" +
-      "2\027.protocol.AssetProperty\"\355\001\n\014LedgerHead" +
-      "er\022\013\n\003seq\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rpreviou" +
-      "s_hash\030\003 \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022" +
-      "\022\n\nclose_time\030\005 \001(\003\022\034\n\024consensus_value_h" +
-      "ash\030\006 \001(\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010" +
-      " \001(\003\022\027\n\017validators_hash\030\t \001(\014\022\021\n\tfees_ha",
-      "sh\030\n \001(\014\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006h" +
-      "eader\030\001 \001(\0132\026.protocol.LedgerHeader\0222\n\020t" +
-      "ransaction_envs\030\002 \003(\0132\030.protocol.Transac" +
-      "tionEnv\"W\n\020OperationPayment\022\024\n\014dest_addr" +
-      "ess\030\001 \001(\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asse" +
-      "t\022\r\n\005input\030\003 \001(\t\"S\n\026OperationTypeThresho" +
-      "ld\022&\n\004type\030\001 \001(\0162\030.protocol.Operation.Ty" +
-      "pe\022\021\n\tthreshold\030\002 \001(\003\"|\n\020AccountPrivileg" +
-      "e\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007signers\030\002 \003(" +
-      "\0132\020.protocol.Signer\022.\n\nthresholds\030\003 \001(\0132",
-      "\032.protocol.AccountThreshold\"c\n\020AccountTh" +
-      "reshold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_th" +
-      "resholds\030\002 \003(\0132 .protocol.OperationTypeT" +
-      "hreshold\"l\n\023OperationIssueAsset\022\014\n\004code\030" +
-      "\001 \001(\t\022\016\n\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010p" +
-      "roperty\030\004 \001(\0132\027.protocol.AssetProperty\"G" +
-      "\n\020OperationPayCoin\022\024\n\014dest_address\030\001 \001(\t" +
-      "\022\016\n\006amount\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030Opera" +
-      "tionSetSignerWeight\022\025\n\rmaster_weight\030\001 \001" +
-      "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\",\n",
-      "\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 " +
-      "\003(\t\"\035\n\005Price\022\t\n\001n\030\001 \001(\005\022\t\n\001d\030\002 \001(\005\"\325\001\n\025O" +
-      "perationProcessOrder\022#\n\007selling\030\001 \001(\0132\022." +
-      "protocol.AssetKey\022\"\n\006buying\030\002 \001(\0132\022.prot" +
-      "ocol.AssetKey\022\016\n\006amount\030\003 \001(\003\022\036\n\005price\030\004" +
-      " \001(\0132\017.protocol.Price\022\020\n\010order_id\030\005 \001(\004\022" +
-      "\030\n\020sell_fee_percent\030\006 \001(\005\022\027\n\017buy_fee_per" +
-      "cent\030\007 \001(\005\"P\n\005Order\022.\n\005order\030\001 \001(\0132\037.pro" +
-      "tocol.OperationProcessOrder\022\027\n\017system_or" +
-      "der_id\030\002 \001(\t\"j\n\034OperationUpdateAssetProp",
-      "erty\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKey\022)\n" +
-      "\010property\030\002 \001(\0132\027.protocol.AssetProperty" +
-      "\"\300\006\n\tOperation\022&\n\004type\030\001 \001(\0162\030.protocol." +
-      "Operation.Type\022\026\n\016source_address\030\002 \001(\t\022\020" +
-      "\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004 \001(\013" +
-      "2 .protocol.OperationCreateAccount\0222\n\013is" +
-      "sue_asset\030\005 \001(\0132\035.protocol.OperationIssu" +
-      "eAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.Opera" +
-      "tionPayment\0224\n\014set_metadata\030\007 \001(\0132\036.prot" +
-      "ocol.OperationSetMetadata\022=\n\021set_signer_",
-      "weight\030\010 \001(\0132\".protocol.OperationSetSign" +
-      "erWeight\0226\n\rset_threshold\030\t \001(\0132\037.protoc" +
-      "ol.OperationSetThreshold\022,\n\010pay_coin\030\n \001" +
-      "(\0132\032.protocol.OperationPayCoin\022#\n\003log\030\013 " +
-      "\001(\0132\026.protocol.OperationLog\0226\n\rprocess_o" +
-      "rder\030\014 \001(\0132\037.protocol.OperationProcessOr" +
-      "der\022E\n\025update_asset_property\030\r \001(\0132&.pro" +
-      "tocol.OperationUpdateAssetProperty\"\306\001\n\004T" +
-      "ype\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013" +
-      "ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADA",
-      "TA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRES" +
-      "HOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rPROCESS" +
-      "_ORDER\020\t\022\031\n\025UPDATE_ASSET_PROPERTY\020\n\"h\n\025O" +
-      "perationSetThreshold\022\024\n\014tx_threshold\030\001 \001" +
-      "(\003\0229\n\017type_thresholds\030\004 \003(\0132 .protocol.O" +
-      "perationTypeThreshold\"\274\001\n\013Transaction\022\026\n" +
-      "\016source_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\013\n\003" +
-      "fee\030\003 \001(\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022\020\n\010me" +
-      "tadata\030\005 \001(\014\022\'\n\noperations\030\006 \003(\0132\023.proto" +
-      "col.Operation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nO",
-      "PERATIONS\020\350\007\"O\n\006Signer\022\017\n\007address\030\001 \001(\t\022" +
-      "\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_NONE\020" +
-      "\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020transaction" +
-      "_type\030\001 \001(\0162!.protocol.Trigger.Transacti" +
-      "onType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013transactio" +
-      "n\030\003 \001(\0132\".protocol.Trigger.OperationTrig" +
-      "ger\032/\n\020OperationTrigger\022\014\n\004hash\030\001 \001(\014\022\r\n" +
-      "\005index\030\002 \001(\003\"C\n\017TransactionType\022\026\n\022NORMA" +
-      "L_TRANSACTION\020\000\022\030\n\024CONTRACT_TRANSACTION\020" +
-      "\001\"\211\001\n\016TransactionEnv\022*\n\013transaction\030\001 \001(",
-      "\0132\025.protocol.Transaction\022\'\n\nsignatures\030\002" +
-      " \003(\0132\023.protocol.Signature\022\"\n\007trigger\030\003 \001" +
-      "(\0132\021.protocol.Trigger\"\246\001\n\023TransactionEnv" +
-      "Store\0221\n\017transaction_env\030\001 \001(\0132\030.protoco" +
-      "l.TransactionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\n" +
-      "error_desc\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\n" +
-      "close_time\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\":\n\021Transa" +
-      "ctionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Tran" +
-      "sactionEnv\"G\n\030ConsensusValueValidation\022\025" +
-      "\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 ",
-      "\003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\0132\033." +
-      "protocol.TransactionEnvSet\022\022\n\nclose_time" +
-      "\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledger" +
-      "_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 \001(\014" +
-      "\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol.Ledg" +
-      "erUpgrade\0226\n\nvalidation\030\007 \001(\0132\".protocol" +
-      ".ConsensusValueValidation\"j\n\010Contract\022-\n" +
-      "\004type\030\001 \001(\0162\037.protocol.Contract.Contract" +
-      "Type\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType\022\016\n" +
-      "\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAccount",
-      "\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002 \001(\013" +
-      "2\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032.pro" +
-      "tocol.AccountPrivilege\022$\n\tmetadatas\030\004 \003(" +
-      "\0132\021.protocol.KeyPair\022\024\n\014init_balance\030\005 \001" +
-      "(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationSetMe" +
-      "tadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007ve" +
-      "rsion\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limi" +
-      "t\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.bumo" +
-      ".blockchain.adapter3b\006proto3"
+      "ntract\022\017\n\007balance\030\007 \001(\003\"~\n\010AssetKey\022\016\n\006i" +
+      "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022%\n\004type\030\003 \001(\0162" +
+      "\027.protocol.AssetKey.Type\"-\n\004Type\022\013\n\007UNLI" +
+      "MIN\020\000\022\r\n\tSELF_COIN\020\001\022\t\n\005LIMIT\020\002\"8\n\005Asset" +
+      "\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKey\022\016\n\006amo",
+      "unt\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007decimal\030\001 " +
+      "\001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_supply\030\003" +
+      " \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013fee_perce" +
+      "nt\030\005 \001(\005\"\177\n\nAssetStore\022\037\n\003key\030\001 \001(\0132\022.pr" +
+      "otocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022\025\n\rfreez" +
+      "n_amount\030\003 \001(\003\022)\n\010property\030\004 \001(\0132\027.proto" +
+      "col.AssetProperty\"\355\001\n\014LedgerHeader\022\013\n\003se" +
+      "q\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rprevious_hash\030\003" +
+      " \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022\022\n\nclose" +
+      "_time\030\005 \001(\003\022\034\n\024consensus_value_hash\030\006 \001(",
+      "\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010 \001(\003\022\027\n\017" +
+      "validators_hash\030\t \001(\014\022\021\n\tfees_hash\030\n \001(\014" +
+      "\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006header\030\001 " +
+      "\001(\0132\026.protocol.LedgerHeader\0222\n\020transacti" +
+      "on_envs\030\002 \003(\0132\030.protocol.TransactionEnv\"" +
+      "W\n\020OperationPayment\022\024\n\014dest_address\030\001 \001(" +
+      "\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asset\022\r\n\005inp" +
+      "ut\030\003 \001(\t\"S\n\026OperationTypeThreshold\022&\n\004ty" +
+      "pe\030\001 \001(\0162\030.protocol.Operation.Type\022\021\n\tth" +
+      "reshold\030\002 \001(\003\"|\n\020AccountPrivilege\022\025\n\rmas",
+      "ter_weight\030\001 \001(\003\022!\n\007signers\030\002 \003(\0132\020.prot" +
+      "ocol.Signer\022.\n\nthresholds\030\003 \001(\0132\032.protoc" +
+      "ol.AccountThreshold\"c\n\020AccountThreshold\022" +
+      "\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_thresholds" +
+      "\030\002 \003(\0132 .protocol.OperationTypeThreshold" +
+      "\"l\n\023OperationIssueAsset\022\014\n\004code\030\001 \001(\t\022\016\n" +
+      "\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010property\030" +
+      "\004 \001(\0132\027.protocol.AssetProperty\"G\n\020Operat" +
+      "ionPayCoin\022\024\n\014dest_address\030\001 \001(\t\022\016\n\006amou" +
+      "nt\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030OperationSetS",
+      "ignerWeight\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007si" +
+      "gners\030\002 \003(\0132\020.protocol.Signer\",\n\014Operati" +
+      "onLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 \003(\t\"\035\n\005P" +
+      "rice\022\t\n\001n\030\001 \001(\005\022\t\n\001d\030\002 \001(\005\"\267\001\n\025Operation" +
+      "ProcessOrder\022#\n\007selling\030\001 \001(\0132\022.protocol" +
+      ".AssetKey\022\"\n\006buying\030\002 \001(\0132\022.protocol.Ass" +
+      "etKey\022\016\n\006amount\030\003 \001(\003\022\036\n\005price\030\004 \001(\0132\017.p" +
+      "rotocol.Price\022\020\n\010order_id\030\005 \001(\004\022\023\n\013fee_p" +
+      "ercent\030\006 \001(\005\"h\n\005Order\022\026\n\016seller_address\030" +
+      "\001 \001(\t\022.\n\005order\030\002 \001(\0132\037.protocol.Operatio",
+      "nProcessOrder\022\027\n\017system_order_id\030\003 \001(\t\"\257" +
+      "\001\n\nClaimOrder\022\021\n\tseller_id\030\001 \001(\t\022\020\n\010orde" +
+      "r_id\030\002 \001(\004\022&\n\nasset_sold\030\003 \001(\0132\022.protoco" +
+      "l.AssetKey\022\023\n\013amount_sold\030\004 \001(\003\022(\n\014asset" +
+      "_bought\030\005 \001(\0132\022.protocol.AssetKey\022\025\n\ramo" +
+      "unt_bought\030\006 \001(\003\"j\n\034OperationUpdateAsset" +
+      "Property\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe" +
+      "y\022)\n\010property\030\002 \001(\0132\027.protocol.AssetProp" +
+      "erty\"\300\006\n\tOperation\022&\n\004type\030\001 \001(\0162\030.proto" +
+      "col.Operation.Type\022\026\n\016source_address\030\002 \001",
+      "(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004" +
+      " \001(\0132 .protocol.OperationCreateAccount\0222" +
+      "\n\013issue_asset\030\005 \001(\0132\035.protocol.Operation" +
+      "IssueAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.O" +
+      "perationPayment\0224\n\014set_metadata\030\007 \001(\0132\036." +
+      "protocol.OperationSetMetadata\022=\n\021set_sig" +
+      "ner_weight\030\010 \001(\0132\".protocol.OperationSet" +
+      "SignerWeight\0226\n\rset_threshold\030\t \001(\0132\037.pr" +
+      "otocol.OperationSetThreshold\022,\n\010pay_coin" +
+      "\030\n \001(\0132\032.protocol.OperationPayCoin\022#\n\003lo",
+      "g\030\013 \001(\0132\026.protocol.OperationLog\0226\n\rproce" +
+      "ss_order\030\014 \001(\0132\037.protocol.OperationProce" +
+      "ssOrder\022E\n\025update_asset_property\030\r \001(\0132&" +
+      ".protocol.OperationUpdateAssetProperty\"\306" +
+      "\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001" +
+      "\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_ME" +
+      "TADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_T" +
+      "HRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rPRO" +
+      "CESS_ORDER\020\t\022\031\n\025UPDATE_ASSET_PROPERTY\020\n\"" +
+      "h\n\025OperationSetThreshold\022\024\n\014tx_threshold",
+      "\030\001 \001(\003\0229\n\017type_thresholds\030\004 \003(\0132 .protoc" +
+      "ol.OperationTypeThreshold\"\274\001\n\013Transactio" +
+      "n\022\026\n\016source_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003" +
+      "\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022\020" +
+      "\n\010metadata\030\005 \001(\014\022\'\n\noperations\030\006 \003(\0132\023.p" +
+      "rotocol.Operation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000\022" +
+      "\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007address\030\001 " +
+      "\001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_N" +
+      "ONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020transac" +
+      "tion_type\030\001 \001(\0162!.protocol.Trigger.Trans",
+      "actionType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013transa" +
+      "ction\030\003 \001(\0132\".protocol.Trigger.Operation" +
+      "Trigger\032/\n\020OperationTrigger\022\014\n\004hash\030\001 \001(" +
+      "\014\022\r\n\005index\030\002 \001(\003\"C\n\017TransactionType\022\026\n\022N" +
+      "ORMAL_TRANSACTION\020\000\022\030\n\024CONTRACT_TRANSACT" +
+      "ION\020\001\"\211\001\n\016TransactionEnv\022*\n\013transaction\030" +
+      "\001 \001(\0132\025.protocol.Transaction\022\'\n\nsignatur" +
+      "es\030\002 \003(\0132\023.protocol.Signature\022\"\n\007trigger" +
+      "\030\003 \001(\0132\021.protocol.Trigger\"\246\001\n\023Transactio" +
+      "nEnvStore\0221\n\017transaction_env\030\001 \001(\0132\030.pro",
+      "tocol.TransactionEnv\022\022\n\nerror_code\030\002 \001(\005" +
+      "\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003" +
+      "\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\":\n\021Tr" +
+      "ansactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol." +
+      "TransactionEnv\"G\n\030ConsensusValueValidati" +
+      "on\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_id" +
+      "s\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(" +
+      "\0132\033.protocol.TransactionEnvSet\022\022\n\nclose_" +
+      "time\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nle" +
+      "dger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005",
+      " \001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol." +
+      "LedgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".prot" +
+      "ocol.ConsensusValueValidation\"j\n\010Contrac" +
+      "t\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Cont" +
+      "ractType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractTyp" +
+      "e\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAcc" +
+      "ount\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002" +
+      " \001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032" +
+      ".protocol.AccountPrivilege\022$\n\tmetadatas\030" +
+      "\004 \003(\0132\021.protocol.KeyPair\022\024\n\014init_balance",
+      "\030\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationS" +
+      "etMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017" +
+      "\n\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005" +
+      "Limit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn." +
+      "bumo.blockchain.adapter3b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -31557,45 +33044,51 @@ public final class Chain {
     internal_static_protocol_OperationProcessOrder_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationProcessOrder_descriptor,
-        new java.lang.String[] { "Selling", "Buying", "Amount", "Price", "OrderId", "SellFeePercent", "BuyFeePercent", });
+        new java.lang.String[] { "Selling", "Buying", "Amount", "Price", "OrderId", "FeePercent", });
     internal_static_protocol_Order_descriptor =
       getDescriptor().getMessageTypes().get(17);
     internal_static_protocol_Order_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Order_descriptor,
-        new java.lang.String[] { "Order", "SystemOrderId", });
-    internal_static_protocol_OperationUpdateAssetProperty_descriptor =
+        new java.lang.String[] { "SellerAddress", "Order", "SystemOrderId", });
+    internal_static_protocol_ClaimOrder_descriptor =
       getDescriptor().getMessageTypes().get(18);
+    internal_static_protocol_ClaimOrder_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_protocol_ClaimOrder_descriptor,
+        new java.lang.String[] { "SellerId", "OrderId", "AssetSold", "AmountSold", "AssetBought", "AmountBought", });
+    internal_static_protocol_OperationUpdateAssetProperty_descriptor =
+      getDescriptor().getMessageTypes().get(19);
     internal_static_protocol_OperationUpdateAssetProperty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationUpdateAssetProperty_descriptor,
         new java.lang.String[] { "Key", "Property", });
     internal_static_protocol_Operation_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_protocol_Operation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Operation_descriptor,
         new java.lang.String[] { "Type", "SourceAddress", "Metadata", "CreateAccount", "IssueAsset", "Payment", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", "ProcessOrder", "UpdateAssetProperty", });
     internal_static_protocol_OperationSetThreshold_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_protocol_OperationSetThreshold_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetThreshold_descriptor,
         new java.lang.String[] { "TxThreshold", "TypeThresholds", });
     internal_static_protocol_Transaction_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_protocol_Transaction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Transaction_descriptor,
         new java.lang.String[] { "SourceAddress", "Nonce", "Fee", "CeilLedgerSeq", "Metadata", "Operations", });
     internal_static_protocol_Signer_descriptor =
-      getDescriptor().getMessageTypes().get(22);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_protocol_Signer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Signer_descriptor,
         new java.lang.String[] { "Address", "Weight", });
     internal_static_protocol_Trigger_descriptor =
-      getDescriptor().getMessageTypes().get(23);
+      getDescriptor().getMessageTypes().get(24);
     internal_static_protocol_Trigger_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Trigger_descriptor,
@@ -31607,49 +33100,49 @@ public final class Chain {
         internal_static_protocol_Trigger_OperationTrigger_descriptor,
         new java.lang.String[] { "Hash", "Index", });
     internal_static_protocol_TransactionEnv_descriptor =
-      getDescriptor().getMessageTypes().get(24);
+      getDescriptor().getMessageTypes().get(25);
     internal_static_protocol_TransactionEnv_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnv_descriptor,
         new java.lang.String[] { "Transaction", "Signatures", "Trigger", });
     internal_static_protocol_TransactionEnvStore_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(26);
     internal_static_protocol_TransactionEnvStore_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnvStore_descriptor,
         new java.lang.String[] { "TransactionEnv", "ErrorCode", "ErrorDesc", "LedgerSeq", "CloseTime", "Hash", });
     internal_static_protocol_TransactionEnvSet_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(27);
     internal_static_protocol_TransactionEnvSet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnvSet_descriptor,
         new java.lang.String[] { "Txs", });
     internal_static_protocol_ConsensusValueValidation_descriptor =
-      getDescriptor().getMessageTypes().get(27);
+      getDescriptor().getMessageTypes().get(28);
     internal_static_protocol_ConsensusValueValidation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ConsensusValueValidation_descriptor,
         new java.lang.String[] { "ExpireTxIds", "ErrorTxIds", });
     internal_static_protocol_ConsensusValue_descriptor =
-      getDescriptor().getMessageTypes().get(28);
+      getDescriptor().getMessageTypes().get(29);
     internal_static_protocol_ConsensusValue_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ConsensusValue_descriptor,
         new java.lang.String[] { "Txset", "CloseTime", "PreviousProof", "LedgerSeq", "PreviousLedgerHash", "LedgerUpgrade", "Validation", });
     internal_static_protocol_Contract_descriptor =
-      getDescriptor().getMessageTypes().get(29);
+      getDescriptor().getMessageTypes().get(30);
     internal_static_protocol_Contract_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Contract_descriptor,
         new java.lang.String[] { "Type", "Payload", });
     internal_static_protocol_OperationCreateAccount_descriptor =
-      getDescriptor().getMessageTypes().get(30);
+      getDescriptor().getMessageTypes().get(31);
     internal_static_protocol_OperationCreateAccount_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationCreateAccount_descriptor,
         new java.lang.String[] { "DestAddress", "Contract", "Priv", "Metadatas", "InitBalance", "InitInput", });
     internal_static_protocol_OperationSetMetadata_descriptor =
-      getDescriptor().getMessageTypes().get(31);
+      getDescriptor().getMessageTypes().get(32);
     internal_static_protocol_OperationSetMetadata_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetMetadata_descriptor,

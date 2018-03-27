@@ -27,6 +27,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* AssetKey_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   AssetKey_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* AssetKey_Type_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* Asset_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Asset_reflection_ = NULL;
@@ -75,6 +76,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Order_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Order_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ClaimOrder_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ClaimOrder_reflection_ = NULL;
 const ::google::protobuf::Descriptor* OperationUpdateAssetProperty_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   OperationUpdateAssetProperty_reflection_ = NULL;
@@ -175,6 +179,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(AssetKey),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AssetKey, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AssetKey, _is_default_instance_));
+  AssetKey_Type_descriptor_ = AssetKey_descriptor_->enum_type(0);
   Asset_descriptor_ = file->message_type(2);
   static const int Asset_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Asset, key_),
@@ -419,14 +424,13 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Price, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Price, _is_default_instance_));
   OperationProcessOrder_descriptor_ = file->message_type(16);
-  static const int OperationProcessOrder_offsets_[7] = {
+  static const int OperationProcessOrder_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, selling_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, buying_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, amount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, price_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, order_id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, sell_fee_percent_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, buy_fee_percent_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, fee_percent_),
   };
   OperationProcessOrder_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -440,7 +444,8 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationProcessOrder, _is_default_instance_));
   Order_descriptor_ = file->message_type(17);
-  static const int Order_offsets_[2] = {
+  static const int Order_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, seller_address_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, order_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, system_order_id_),
   };
@@ -455,7 +460,27 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(Order),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, _is_default_instance_));
-  OperationUpdateAssetProperty_descriptor_ = file->message_type(18);
+  ClaimOrder_descriptor_ = file->message_type(18);
+  static const int ClaimOrder_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, seller_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, order_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, asset_sold_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, amount_sold_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, asset_bought_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, amount_bought_),
+  };
+  ClaimOrder_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      ClaimOrder_descriptor_,
+      ClaimOrder::default_instance_,
+      ClaimOrder_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(ClaimOrder),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, _internal_metadata_),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, _is_default_instance_));
+  OperationUpdateAssetProperty_descriptor_ = file->message_type(19);
   static const int OperationUpdateAssetProperty_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationUpdateAssetProperty, key_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationUpdateAssetProperty, property_),
@@ -471,7 +496,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(OperationUpdateAssetProperty),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationUpdateAssetProperty, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationUpdateAssetProperty, _is_default_instance_));
-  Operation_descriptor_ = file->message_type(19);
+  Operation_descriptor_ = file->message_type(20);
   static const int Operation_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Operation, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Operation, source_address_),
@@ -499,7 +524,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Operation, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Operation, _is_default_instance_));
   Operation_Type_descriptor_ = Operation_descriptor_->enum_type(0);
-  OperationSetThreshold_descriptor_ = file->message_type(20);
+  OperationSetThreshold_descriptor_ = file->message_type(21);
   static const int OperationSetThreshold_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationSetThreshold, tx_threshold_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationSetThreshold, type_thresholds_),
@@ -515,7 +540,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(OperationSetThreshold),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationSetThreshold, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationSetThreshold, _is_default_instance_));
-  Transaction_descriptor_ = file->message_type(21);
+  Transaction_descriptor_ = file->message_type(22);
   static const int Transaction_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Transaction, source_address_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Transaction, nonce_),
@@ -536,7 +561,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Transaction, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Transaction, _is_default_instance_));
   Transaction_Limit_descriptor_ = Transaction_descriptor_->enum_type(0);
-  Signer_descriptor_ = file->message_type(22);
+  Signer_descriptor_ = file->message_type(23);
   static const int Signer_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Signer, address_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Signer, weight_),
@@ -553,7 +578,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Signer, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Signer, _is_default_instance_));
   Signer_Limit_descriptor_ = Signer_descriptor_->enum_type(0);
-  Trigger_descriptor_ = file->message_type(23);
+  Trigger_descriptor_ = file->message_type(24);
   static const int Trigger_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Trigger, transaction_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Trigger, ledger_seq_),
@@ -587,7 +612,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Trigger_OperationTrigger, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Trigger_OperationTrigger, _is_default_instance_));
   Trigger_TransactionType_descriptor_ = Trigger_descriptor_->enum_type(0);
-  TransactionEnv_descriptor_ = file->message_type(24);
+  TransactionEnv_descriptor_ = file->message_type(25);
   static const int TransactionEnv_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnv, transaction_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnv, signatures_),
@@ -604,7 +629,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(TransactionEnv),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnv, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnv, _is_default_instance_));
-  TransactionEnvStore_descriptor_ = file->message_type(25);
+  TransactionEnvStore_descriptor_ = file->message_type(26);
   static const int TransactionEnvStore_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvStore, transaction_env_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvStore, error_code_),
@@ -624,7 +649,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(TransactionEnvStore),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvStore, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvStore, _is_default_instance_));
-  TransactionEnvSet_descriptor_ = file->message_type(26);
+  TransactionEnvSet_descriptor_ = file->message_type(27);
   static const int TransactionEnvSet_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvSet, txs_),
   };
@@ -639,7 +664,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(TransactionEnvSet),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvSet, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TransactionEnvSet, _is_default_instance_));
-  ConsensusValueValidation_descriptor_ = file->message_type(27);
+  ConsensusValueValidation_descriptor_ = file->message_type(28);
   static const int ConsensusValueValidation_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValueValidation, expire_tx_ids_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValueValidation, error_tx_ids_),
@@ -655,7 +680,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(ConsensusValueValidation),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValueValidation, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValueValidation, _is_default_instance_));
-  ConsensusValue_descriptor_ = file->message_type(28);
+  ConsensusValue_descriptor_ = file->message_type(29);
   static const int ConsensusValue_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValue, txset_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValue, close_time_),
@@ -676,7 +701,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(ConsensusValue),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValue, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ConsensusValue, _is_default_instance_));
-  Contract_descriptor_ = file->message_type(29);
+  Contract_descriptor_ = file->message_type(30);
   static const int Contract_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Contract, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Contract, payload_),
@@ -693,7 +718,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Contract, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Contract, _is_default_instance_));
   Contract_ContractType_descriptor_ = Contract_descriptor_->enum_type(0);
-  OperationCreateAccount_descriptor_ = file->message_type(30);
+  OperationCreateAccount_descriptor_ = file->message_type(31);
   static const int OperationCreateAccount_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationCreateAccount, dest_address_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationCreateAccount, contract_),
@@ -713,7 +738,7 @@ void protobuf_AssignDesc_chain_2eproto() {
       sizeof(OperationCreateAccount),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationCreateAccount, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationCreateAccount, _is_default_instance_));
-  OperationSetMetadata_descriptor_ = file->message_type(31);
+  OperationSetMetadata_descriptor_ = file->message_type(32);
   static const int OperationSetMetadata_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationSetMetadata, key_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(OperationSetMetadata, value_),
@@ -781,6 +806,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
       OperationProcessOrder_descriptor_, &OperationProcessOrder::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       Order_descriptor_, &Order::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      ClaimOrder_descriptor_, &ClaimOrder::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       OperationUpdateAssetProperty_descriptor_, &OperationUpdateAssetProperty::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -852,6 +879,8 @@ void protobuf_ShutdownFile_chain_2eproto() {
   delete OperationProcessOrder_reflection_;
   delete Order::default_instance_;
   delete Order_reflection_;
+  delete ClaimOrder::default_instance_;
+  delete ClaimOrder_reflection_;
   delete OperationUpdateAssetProperty::default_instance_;
   delete OperationUpdateAssetProperty_reflection_;
   delete Operation::default_instance_;
@@ -898,120 +927,126 @@ void protobuf_AddDesc_chain_2eproto() {
     "\003\022(\n\004priv\030\003 \001(\0132\032.protocol.AccountPrivil"
     "ege\022\026\n\016metadatas_hash\030\004 \001(\014\022\023\n\013assets_ha"
     "sh\030\005 \001(\014\022$\n\010contract\030\006 \001(\0132\022.protocol.Co"
-    "ntract\022\017\n\007balance\030\007 \001(\003\"6\n\010AssetKey\022\016\n\006i"
-    "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\""
-    "8\n\005Asset\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe"
-    "y\022\016\n\006amount\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007de"
-    "cimal\030\001 \001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_"
-    "supply\030\003 \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013f"
-    "ee_percent\030\005 \001(\005\"\177\n\nAssetStore\022\037\n\003key\030\001 "
-    "\001(\0132\022.protocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022"
-    "\025\n\rfreezn_amount\030\003 \001(\003\022)\n\010property\030\004 \001(\013"
-    "2\027.protocol.AssetProperty\"\355\001\n\014LedgerHead"
-    "er\022\013\n\003seq\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rpreviou"
-    "s_hash\030\003 \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022"
-    "\022\n\nclose_time\030\005 \001(\003\022\034\n\024consensus_value_h"
-    "ash\030\006 \001(\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010"
-    " \001(\003\022\027\n\017validators_hash\030\t \001(\014\022\021\n\tfees_ha"
-    "sh\030\n \001(\014\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006h"
-    "eader\030\001 \001(\0132\026.protocol.LedgerHeader\0222\n\020t"
-    "ransaction_envs\030\002 \003(\0132\030.protocol.Transac"
-    "tionEnv\"W\n\020OperationPayment\022\024\n\014dest_addr"
-    "ess\030\001 \001(\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asse"
-    "t\022\r\n\005input\030\003 \001(\t\"S\n\026OperationTypeThresho"
-    "ld\022&\n\004type\030\001 \001(\0162\030.protocol.Operation.Ty"
-    "pe\022\021\n\tthreshold\030\002 \001(\003\"|\n\020AccountPrivileg"
-    "e\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007signers\030\002 \003("
-    "\0132\020.protocol.Signer\022.\n\nthresholds\030\003 \001(\0132"
-    "\032.protocol.AccountThreshold\"c\n\020AccountTh"
-    "reshold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_th"
-    "resholds\030\002 \003(\0132 .protocol.OperationTypeT"
-    "hreshold\"l\n\023OperationIssueAsset\022\014\n\004code\030"
-    "\001 \001(\t\022\016\n\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010p"
-    "roperty\030\004 \001(\0132\027.protocol.AssetProperty\"G"
-    "\n\020OperationPayCoin\022\024\n\014dest_address\030\001 \001(\t"
-    "\022\016\n\006amount\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030Opera"
-    "tionSetSignerWeight\022\025\n\rmaster_weight\030\001 \001"
-    "(\003\022!\n\007signers\030\002 \003(\0132\020.protocol.Signer\",\n"
-    "\014OperationLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 "
-    "\003(\t\"\035\n\005Price\022\t\n\001n\030\001 \001(\005\022\t\n\001d\030\002 \001(\005\"\325\001\n\025O"
-    "perationProcessOrder\022#\n\007selling\030\001 \001(\0132\022."
-    "protocol.AssetKey\022\"\n\006buying\030\002 \001(\0132\022.prot"
-    "ocol.AssetKey\022\016\n\006amount\030\003 \001(\003\022\036\n\005price\030\004"
-    " \001(\0132\017.protocol.Price\022\020\n\010order_id\030\005 \001(\004\022"
-    "\030\n\020sell_fee_percent\030\006 \001(\005\022\027\n\017buy_fee_per"
-    "cent\030\007 \001(\005\"P\n\005Order\022.\n\005order\030\001 \001(\0132\037.pro"
-    "tocol.OperationProcessOrder\022\027\n\017system_or"
-    "der_id\030\002 \001(\t\"j\n\034OperationUpdateAssetProp"
-    "erty\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKey\022)\n"
-    "\010property\030\002 \001(\0132\027.protocol.AssetProperty"
-    "\"\300\006\n\tOperation\022&\n\004type\030\001 \001(\0162\030.protocol."
-    "Operation.Type\022\026\n\016source_address\030\002 \001(\t\022\020"
-    "\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004 \001(\013"
-    "2 .protocol.OperationCreateAccount\0222\n\013is"
-    "sue_asset\030\005 \001(\0132\035.protocol.OperationIssu"
-    "eAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.Opera"
-    "tionPayment\0224\n\014set_metadata\030\007 \001(\0132\036.prot"
-    "ocol.OperationSetMetadata\022=\n\021set_signer_"
-    "weight\030\010 \001(\0132\".protocol.OperationSetSign"
-    "erWeight\0226\n\rset_threshold\030\t \001(\0132\037.protoc"
-    "ol.OperationSetThreshold\022,\n\010pay_coin\030\n \001"
-    "(\0132\032.protocol.OperationPayCoin\022#\n\003log\030\013 "
-    "\001(\0132\026.protocol.OperationLog\0226\n\rprocess_o"
-    "rder\030\014 \001(\0132\037.protocol.OperationProcessOr"
-    "der\022E\n\025update_asset_property\030\r \001(\0132&.pro"
-    "tocol.OperationUpdateAssetProperty\"\306\001\n\004T"
-    "ype\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013"
-    "ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADA"
-    "TA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRES"
-    "HOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rPROCESS"
-    "_ORDER\020\t\022\031\n\025UPDATE_ASSET_PROPERTY\020\n\"h\n\025O"
-    "perationSetThreshold\022\024\n\014tx_threshold\030\001 \001"
-    "(\003\0229\n\017type_thresholds\030\004 \003(\0132 .protocol.O"
-    "perationTypeThreshold\"\274\001\n\013Transaction\022\026\n"
-    "\016source_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\013\n\003"
-    "fee\030\003 \001(\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022\020\n\010me"
-    "tadata\030\005 \001(\014\022\'\n\noperations\030\006 \003(\0132\023.proto"
-    "col.Operation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nO"
-    "PERATIONS\020\350\007\"O\n\006Signer\022\017\n\007address\030\001 \001(\t\022"
-    "\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_NONE\020"
-    "\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020transaction"
-    "_type\030\001 \001(\0162!.protocol.Trigger.Transacti"
-    "onType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013transactio"
-    "n\030\003 \001(\0132\".protocol.Trigger.OperationTrig"
-    "ger\032/\n\020OperationTrigger\022\014\n\004hash\030\001 \001(\014\022\r\n"
-    "\005index\030\002 \001(\003\"C\n\017TransactionType\022\026\n\022NORMA"
-    "L_TRANSACTION\020\000\022\030\n\024CONTRACT_TRANSACTION\020"
-    "\001\"\211\001\n\016TransactionEnv\022*\n\013transaction\030\001 \001("
-    "\0132\025.protocol.Transaction\022\'\n\nsignatures\030\002"
-    " \003(\0132\023.protocol.Signature\022\"\n\007trigger\030\003 \001"
-    "(\0132\021.protocol.Trigger\"\246\001\n\023TransactionEnv"
-    "Store\0221\n\017transaction_env\030\001 \001(\0132\030.protoco"
-    "l.TransactionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\n"
-    "error_desc\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\n"
-    "close_time\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\":\n\021Transa"
-    "ctionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Tran"
-    "sactionEnv\"G\n\030ConsensusValueValidation\022\025"
-    "\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 "
-    "\003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\0132\033."
-    "protocol.TransactionEnvSet\022\022\n\nclose_time"
-    "\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledger"
-    "_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 \001(\014"
-    "\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol.Ledg"
-    "erUpgrade\0226\n\nvalidation\030\007 \001(\0132\".protocol"
-    ".ConsensusValueValidation\"j\n\010Contract\022-\n"
-    "\004type\030\001 \001(\0162\037.protocol.Contract.Contract"
-    "Type\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType\022\016\n"
-    "\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAccount"
-    "\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002 \001(\013"
-    "2\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032.pro"
-    "tocol.AccountPrivilege\022$\n\tmetadatas\030\004 \003("
-    "\0132\021.protocol.KeyPair\022\024\n\014init_balance\030\005 \001"
-    "(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationSetMe"
-    "tadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007ve"
-    "rsion\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limi"
-    "t\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.bumo"
-    ".blockchain.adapter3b\006proto3", 4748);
+    "ntract\022\017\n\007balance\030\007 \001(\003\"~\n\010AssetKey\022\016\n\006i"
+    "ssuer\030\001 \001(\t\022\014\n\004code\030\002 \001(\t\022%\n\004type\030\003 \001(\0162"
+    "\027.protocol.AssetKey.Type\"-\n\004Type\022\013\n\007UNLI"
+    "MIN\020\000\022\r\n\tSELF_COIN\020\001\022\t\n\005LIMIT\020\002\"8\n\005Asset"
+    "\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKey\022\016\n\006amo"
+    "unt\030\002 \001(\003\"u\n\rAssetProperty\022\017\n\007decimal\030\001 "
+    "\001(\005\022\023\n\013description\030\002 \001(\t\022\022\n\nmax_supply\030\003"
+    " \001(\003\022\025\n\rissued_amount\030\004 \001(\003\022\023\n\013fee_perce"
+    "nt\030\005 \001(\005\"\177\n\nAssetStore\022\037\n\003key\030\001 \001(\0132\022.pr"
+    "otocol.AssetKey\022\016\n\006amount\030\002 \001(\003\022\025\n\rfreez"
+    "n_amount\030\003 \001(\003\022)\n\010property\030\004 \001(\0132\027.proto"
+    "col.AssetProperty\"\355\001\n\014LedgerHeader\022\013\n\003se"
+    "q\030\001 \001(\003\022\014\n\004hash\030\002 \001(\014\022\025\n\rprevious_hash\030\003"
+    " \001(\014\022\031\n\021account_tree_hash\030\004 \001(\014\022\022\n\nclose"
+    "_time\030\005 \001(\003\022\034\n\024consensus_value_hash\030\006 \001("
+    "\014\022\017\n\007version\030\007 \001(\003\022\020\n\010tx_count\030\010 \001(\003\022\027\n\017"
+    "validators_hash\030\t \001(\014\022\021\n\tfees_hash\030\n \001(\014"
+    "\022\017\n\007reserve\030\013 \001(\t\"d\n\006Ledger\022&\n\006header\030\001 "
+    "\001(\0132\026.protocol.LedgerHeader\0222\n\020transacti"
+    "on_envs\030\002 \003(\0132\030.protocol.TransactionEnv\""
+    "W\n\020OperationPayment\022\024\n\014dest_address\030\001 \001("
+    "\t\022\036\n\005asset\030\002 \001(\0132\017.protocol.Asset\022\r\n\005inp"
+    "ut\030\003 \001(\t\"S\n\026OperationTypeThreshold\022&\n\004ty"
+    "pe\030\001 \001(\0162\030.protocol.Operation.Type\022\021\n\tth"
+    "reshold\030\002 \001(\003\"|\n\020AccountPrivilege\022\025\n\rmas"
+    "ter_weight\030\001 \001(\003\022!\n\007signers\030\002 \003(\0132\020.prot"
+    "ocol.Signer\022.\n\nthresholds\030\003 \001(\0132\032.protoc"
+    "ol.AccountThreshold\"c\n\020AccountThreshold\022"
+    "\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_thresholds"
+    "\030\002 \003(\0132 .protocol.OperationTypeThreshold"
+    "\"l\n\023OperationIssueAsset\022\014\n\004code\030\001 \001(\t\022\016\n"
+    "\006amount\030\002 \001(\003\022\014\n\004type\030\003 \001(\005\022)\n\010property\030"
+    "\004 \001(\0132\027.protocol.AssetProperty\"G\n\020Operat"
+    "ionPayCoin\022\024\n\014dest_address\030\001 \001(\t\022\016\n\006amou"
+    "nt\030\002 \001(\003\022\r\n\005input\030\003 \001(\t\"T\n\030OperationSetS"
+    "ignerWeight\022\025\n\rmaster_weight\030\001 \001(\003\022!\n\007si"
+    "gners\030\002 \003(\0132\020.protocol.Signer\",\n\014Operati"
+    "onLog\022\r\n\005topic\030\001 \001(\t\022\r\n\005datas\030\002 \003(\t\"\035\n\005P"
+    "rice\022\t\n\001n\030\001 \001(\005\022\t\n\001d\030\002 \001(\005\"\267\001\n\025Operation"
+    "ProcessOrder\022#\n\007selling\030\001 \001(\0132\022.protocol"
+    ".AssetKey\022\"\n\006buying\030\002 \001(\0132\022.protocol.Ass"
+    "etKey\022\016\n\006amount\030\003 \001(\003\022\036\n\005price\030\004 \001(\0132\017.p"
+    "rotocol.Price\022\020\n\010order_id\030\005 \001(\004\022\023\n\013fee_p"
+    "ercent\030\006 \001(\005\"h\n\005Order\022\026\n\016seller_address\030"
+    "\001 \001(\t\022.\n\005order\030\002 \001(\0132\037.protocol.Operatio"
+    "nProcessOrder\022\027\n\017system_order_id\030\003 \001(\t\"\257"
+    "\001\n\nClaimOrder\022\021\n\tseller_id\030\001 \001(\t\022\020\n\010orde"
+    "r_id\030\002 \001(\004\022&\n\nasset_sold\030\003 \001(\0132\022.protoco"
+    "l.AssetKey\022\023\n\013amount_sold\030\004 \001(\003\022(\n\014asset"
+    "_bought\030\005 \001(\0132\022.protocol.AssetKey\022\025\n\ramo"
+    "unt_bought\030\006 \001(\003\"j\n\034OperationUpdateAsset"
+    "Property\022\037\n\003key\030\001 \001(\0132\022.protocol.AssetKe"
+    "y\022)\n\010property\030\002 \001(\0132\027.protocol.AssetProp"
+    "erty\"\300\006\n\tOperation\022&\n\004type\030\001 \001(\0162\030.proto"
+    "col.Operation.Type\022\026\n\016source_address\030\002 \001"
+    "(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_account\030\004"
+    " \001(\0132 .protocol.OperationCreateAccount\0222"
+    "\n\013issue_asset\030\005 \001(\0132\035.protocol.Operation"
+    "IssueAsset\022+\n\007payment\030\006 \001(\0132\032.protocol.O"
+    "perationPayment\0224\n\014set_metadata\030\007 \001(\0132\036."
+    "protocol.OperationSetMetadata\022=\n\021set_sig"
+    "ner_weight\030\010 \001(\0132\".protocol.OperationSet"
+    "SignerWeight\0226\n\rset_threshold\030\t \001(\0132\037.pr"
+    "otocol.OperationSetThreshold\022,\n\010pay_coin"
+    "\030\n \001(\0132\032.protocol.OperationPayCoin\022#\n\003lo"
+    "g\030\013 \001(\0132\026.protocol.OperationLog\0226\n\rproce"
+    "ss_order\030\014 \001(\0132\037.protocol.OperationProce"
+    "ssOrder\022E\n\025update_asset_property\030\r \001(\0132&"
+    ".protocol.OperationUpdateAssetProperty\"\306"
+    "\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001"
+    "\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_ME"
+    "TADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_T"
+    "HRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rPRO"
+    "CESS_ORDER\020\t\022\031\n\025UPDATE_ASSET_PROPERTY\020\n\""
+    "h\n\025OperationSetThreshold\022\024\n\014tx_threshold"
+    "\030\001 \001(\003\0229\n\017type_thresholds\030\004 \003(\0132 .protoc"
+    "ol.OperationTypeThreshold\"\274\001\n\013Transactio"
+    "n\022\026\n\016source_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003"
+    "\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022\020"
+    "\n\010metadata\030\005 \001(\014\022\'\n\noperations\030\006 \003(\0132\023.p"
+    "rotocol.Operation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000\022"
+    "\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007address\030\001 "
+    "\001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_N"
+    "ONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020transac"
+    "tion_type\030\001 \001(\0162!.protocol.Trigger.Trans"
+    "actionType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013transa"
+    "ction\030\003 \001(\0132\".protocol.Trigger.Operation"
+    "Trigger\032/\n\020OperationTrigger\022\014\n\004hash\030\001 \001("
+    "\014\022\r\n\005index\030\002 \001(\003\"C\n\017TransactionType\022\026\n\022N"
+    "ORMAL_TRANSACTION\020\000\022\030\n\024CONTRACT_TRANSACT"
+    "ION\020\001\"\211\001\n\016TransactionEnv\022*\n\013transaction\030"
+    "\001 \001(\0132\025.protocol.Transaction\022\'\n\nsignatur"
+    "es\030\002 \003(\0132\023.protocol.Signature\022\"\n\007trigger"
+    "\030\003 \001(\0132\021.protocol.Trigger\"\246\001\n\023Transactio"
+    "nEnvStore\0221\n\017transaction_env\030\001 \001(\0132\030.pro"
+    "tocol.TransactionEnv\022\022\n\nerror_code\030\002 \001(\005"
+    "\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003"
+    "\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\":\n\021Tr"
+    "ansactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol."
+    "TransactionEnv\"G\n\030ConsensusValueValidati"
+    "on\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_id"
+    "s\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001("
+    "\0132\033.protocol.TransactionEnvSet\022\022\n\nclose_"
+    "time\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nle"
+    "dger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005"
+    " \001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol."
+    "LedgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".prot"
+    "ocol.ConsensusValueValidation\"j\n\010Contrac"
+    "t\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Cont"
+    "ractType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractTyp"
+    "e\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAcc"
+    "ount\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002"
+    " \001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032"
+    ".protocol.AccountPrivilege\022$\n\tmetadatas\030"
+    "\004 \003(\0132\021.protocol.KeyPair\022\024\n\014init_balance"
+    "\030\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationS"
+    "etMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017"
+    "\n\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005"
+    "Limit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn."
+    "bumo.blockchain.adapter3b\006proto3", 4992);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "chain.proto", &protobuf_RegisterTypes);
   Account::default_instance_ = new Account();
@@ -1032,6 +1067,7 @@ void protobuf_AddDesc_chain_2eproto() {
   Price::default_instance_ = new Price();
   OperationProcessOrder::default_instance_ = new OperationProcessOrder();
   Order::default_instance_ = new Order();
+  ClaimOrder::default_instance_ = new ClaimOrder();
   OperationUpdateAssetProperty::default_instance_ = new OperationUpdateAssetProperty();
   Operation::default_instance_ = new Operation();
   OperationSetThreshold::default_instance_ = new OperationSetThreshold();
@@ -1065,6 +1101,7 @@ void protobuf_AddDesc_chain_2eproto() {
   Price::default_instance_->InitAsDefaultInstance();
   OperationProcessOrder::default_instance_->InitAsDefaultInstance();
   Order::default_instance_->InitAsDefaultInstance();
+  ClaimOrder::default_instance_->InitAsDefaultInstance();
   OperationUpdateAssetProperty::default_instance_->InitAsDefaultInstance();
   Operation::default_instance_->InitAsDefaultInstance();
   OperationSetThreshold::default_instance_->InitAsDefaultInstance();
@@ -1830,6 +1867,29 @@ void Account::clear_balance() {
 
 // ===================================================================
 
+const ::google::protobuf::EnumDescriptor* AssetKey_Type_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return AssetKey_Type_descriptor_;
+}
+bool AssetKey_Type_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const AssetKey_Type AssetKey::UNLIMIN;
+const AssetKey_Type AssetKey::SELF_COIN;
+const AssetKey_Type AssetKey::LIMIT;
+const AssetKey_Type AssetKey::Type_MIN;
+const AssetKey_Type AssetKey::Type_MAX;
+const int AssetKey::Type_ARRAYSIZE;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int AssetKey::kIssuerFieldNumber;
 const int AssetKey::kCodeFieldNumber;
@@ -1950,14 +2010,15 @@ bool AssetKey::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 type = 3;
+      // optional .protocol.AssetKey.Type type = 3;
       case 3: {
         if (tag == 24) {
          parse_type:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &type_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_type(static_cast< ::protocol::AssetKey_Type >(value));
         } else {
           goto handle_unusual;
         }
@@ -2009,9 +2070,10 @@ void AssetKey::SerializeWithCachedSizes(
       2, this->code(), output);
   }
 
-  // optional int32 type = 3;
+  // optional .protocol.AssetKey.Type type = 3;
   if (this->type() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->type(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:protocol.AssetKey)
@@ -2042,9 +2104,10 @@ void AssetKey::SerializeWithCachedSizes(
         2, this->code(), target);
   }
 
-  // optional int32 type = 3;
+  // optional .protocol.AssetKey.Type type = 3;
   if (this->type() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      3, this->type(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:protocol.AssetKey)
@@ -2069,11 +2132,10 @@ int AssetKey::ByteSize() const {
         this->code());
   }
 
-  // optional int32 type = 3;
+  // optional .protocol.AssetKey.Type type = 3;
   if (this->type() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->type());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -2247,15 +2309,15 @@ void AssetKey::clear_code() {
   // @@protoc_insertion_point(field_set_allocated:protocol.AssetKey.code)
 }
 
-// optional int32 type = 3;
+// optional .protocol.AssetKey.Type type = 3;
 void AssetKey::clear_type() {
   type_ = 0;
 }
- ::google::protobuf::int32 AssetKey::type() const {
+ ::protocol::AssetKey_Type AssetKey::type() const {
   // @@protoc_insertion_point(field_get:protocol.AssetKey.type)
-  return type_;
+  return static_cast< ::protocol::AssetKey_Type >(type_);
 }
- void AssetKey::set_type(::google::protobuf::int32 value) {
+ void AssetKey::set_type(::protocol::AssetKey_Type value) {
   
   type_ = value;
   // @@protoc_insertion_point(field_set:protocol.AssetKey.type)
@@ -8335,8 +8397,7 @@ const int OperationProcessOrder::kBuyingFieldNumber;
 const int OperationProcessOrder::kAmountFieldNumber;
 const int OperationProcessOrder::kPriceFieldNumber;
 const int OperationProcessOrder::kOrderIdFieldNumber;
-const int OperationProcessOrder::kSellFeePercentFieldNumber;
-const int OperationProcessOrder::kBuyFeePercentFieldNumber;
+const int OperationProcessOrder::kFeePercentFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 OperationProcessOrder::OperationProcessOrder()
@@ -8368,8 +8429,7 @@ void OperationProcessOrder::SharedCtor() {
   amount_ = GOOGLE_LONGLONG(0);
   price_ = NULL;
   order_id_ = GOOGLE_ULONGLONG(0);
-  sell_fee_percent_ = 0;
-  buy_fee_percent_ = 0;
+  fee_percent_ = 0;
 }
 
 OperationProcessOrder::~OperationProcessOrder() {
@@ -8428,7 +8488,7 @@ void OperationProcessOrder::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(order_id_, buy_fee_percent_);
+  ZR_(order_id_, fee_percent_);
   if (GetArenaNoVirtual() == NULL && selling_ != NULL) delete selling_;
   selling_ = NULL;
   if (GetArenaNoVirtual() == NULL && buying_ != NULL) delete buying_;
@@ -8516,32 +8576,17 @@ bool OperationProcessOrder::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_sell_fee_percent;
+        if (input->ExpectTag(48)) goto parse_fee_percent;
         break;
       }
 
-      // optional int32 sell_fee_percent = 6;
+      // optional int32 fee_percent = 6;
       case 6: {
         if (tag == 48) {
-         parse_sell_fee_percent:
+         parse_fee_percent:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &sell_fee_percent_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(56)) goto parse_buy_fee_percent;
-        break;
-      }
-
-      // optional int32 buy_fee_percent = 7;
-      case 7: {
-        if (tag == 56) {
-         parse_buy_fee_percent:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &buy_fee_percent_)));
+                 input, &fee_percent_)));
 
         } else {
           goto handle_unusual;
@@ -8602,14 +8647,9 @@ void OperationProcessOrder::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->order_id(), output);
   }
 
-  // optional int32 sell_fee_percent = 6;
-  if (this->sell_fee_percent() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->sell_fee_percent(), output);
-  }
-
-  // optional int32 buy_fee_percent = 7;
-  if (this->buy_fee_percent() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->buy_fee_percent(), output);
+  // optional int32 fee_percent = 6;
+  if (this->fee_percent() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->fee_percent(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:protocol.OperationProcessOrder)
@@ -8649,14 +8689,9 @@ void OperationProcessOrder::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(5, this->order_id(), target);
   }
 
-  // optional int32 sell_fee_percent = 6;
-  if (this->sell_fee_percent() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->sell_fee_percent(), target);
-  }
-
-  // optional int32 buy_fee_percent = 7;
-  if (this->buy_fee_percent() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->buy_fee_percent(), target);
+  // optional int32 fee_percent = 6;
+  if (this->fee_percent() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->fee_percent(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:protocol.OperationProcessOrder)
@@ -8702,18 +8737,11 @@ int OperationProcessOrder::ByteSize() const {
         this->order_id());
   }
 
-  // optional int32 sell_fee_percent = 6;
-  if (this->sell_fee_percent() != 0) {
+  // optional int32 fee_percent = 6;
+  if (this->fee_percent() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->sell_fee_percent());
-  }
-
-  // optional int32 buy_fee_percent = 7;
-  if (this->buy_fee_percent() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->buy_fee_percent());
+        this->fee_percent());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -8759,11 +8787,8 @@ void OperationProcessOrder::MergeFrom(const OperationProcessOrder& from) {
   if (from.order_id() != 0) {
     set_order_id(from.order_id());
   }
-  if (from.sell_fee_percent() != 0) {
-    set_sell_fee_percent(from.sell_fee_percent());
-  }
-  if (from.buy_fee_percent() != 0) {
-    set_buy_fee_percent(from.buy_fee_percent());
+  if (from.fee_percent() != 0) {
+    set_fee_percent(from.fee_percent());
   }
 }
 
@@ -8796,8 +8821,7 @@ void OperationProcessOrder::InternalSwap(OperationProcessOrder* other) {
   std::swap(amount_, other->amount_);
   std::swap(price_, other->price_);
   std::swap(order_id_, other->order_id_);
-  std::swap(sell_fee_percent_, other->sell_fee_percent_);
-  std::swap(buy_fee_percent_, other->buy_fee_percent_);
+  std::swap(fee_percent_, other->fee_percent_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -8955,32 +8979,18 @@ void OperationProcessOrder::clear_order_id() {
   // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.order_id)
 }
 
-// optional int32 sell_fee_percent = 6;
-void OperationProcessOrder::clear_sell_fee_percent() {
-  sell_fee_percent_ = 0;
+// optional int32 fee_percent = 6;
+void OperationProcessOrder::clear_fee_percent() {
+  fee_percent_ = 0;
 }
- ::google::protobuf::int32 OperationProcessOrder::sell_fee_percent() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.sell_fee_percent)
-  return sell_fee_percent_;
+ ::google::protobuf::int32 OperationProcessOrder::fee_percent() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.fee_percent)
+  return fee_percent_;
 }
- void OperationProcessOrder::set_sell_fee_percent(::google::protobuf::int32 value) {
+ void OperationProcessOrder::set_fee_percent(::google::protobuf::int32 value) {
   
-  sell_fee_percent_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.sell_fee_percent)
-}
-
-// optional int32 buy_fee_percent = 7;
-void OperationProcessOrder::clear_buy_fee_percent() {
-  buy_fee_percent_ = 0;
-}
- ::google::protobuf::int32 OperationProcessOrder::buy_fee_percent() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationProcessOrder.buy_fee_percent)
-  return buy_fee_percent_;
-}
- void OperationProcessOrder::set_buy_fee_percent(::google::protobuf::int32 value) {
-  
-  buy_fee_percent_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.buy_fee_percent)
+  fee_percent_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationProcessOrder.fee_percent)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -8988,6 +8998,7 @@ void OperationProcessOrder::clear_buy_fee_percent() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Order::kSellerAddressFieldNumber;
 const int Order::kOrderFieldNumber;
 const int Order::kSystemOrderIdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -9015,6 +9026,7 @@ void Order::SharedCtor() {
     _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  seller_address_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   order_ = NULL;
   system_order_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -9025,6 +9037,7 @@ Order::~Order() {
 }
 
 void Order::SharedDtor() {
+  seller_address_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   system_order_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
     delete order_;
@@ -9058,6 +9071,7 @@ Order* Order::New(::google::protobuf::Arena* arena) const {
 
 void Order::Clear() {
 // @@protoc_insertion_point(message_clear_start:protocol.Order)
+  seller_address_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && order_ != NULL) delete order_;
   order_ = NULL;
   system_order_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -9073,21 +9087,38 @@ bool Order::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .protocol.OperationProcessOrder order = 1;
+      // optional string seller_address = 1;
       case 1: {
         if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_seller_address()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->seller_address().data(), this->seller_address().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "protocol.Order.seller_address"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_order;
+        break;
+      }
+
+      // optional .protocol.OperationProcessOrder order = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_order:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_order()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_system_order_id;
+        if (input->ExpectTag(26)) goto parse_system_order_id;
         break;
       }
 
-      // optional string system_order_id = 2;
-      case 2: {
-        if (tag == 18) {
+      // optional string system_order_id = 3;
+      case 3: {
+        if (tag == 26) {
          parse_system_order_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_system_order_id()));
@@ -9126,20 +9157,30 @@ failure:
 void Order::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:protocol.Order)
-  // optional .protocol.OperationProcessOrder order = 1;
-  if (this->has_order()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, *this->order_, output);
+  // optional string seller_address = 1;
+  if (this->seller_address().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->seller_address().data(), this->seller_address().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "protocol.Order.seller_address");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->seller_address(), output);
   }
 
-  // optional string system_order_id = 2;
+  // optional .protocol.OperationProcessOrder order = 2;
+  if (this->has_order()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, *this->order_, output);
+  }
+
+  // optional string system_order_id = 3;
   if (this->system_order_id().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->system_order_id().data(), this->system_order_id().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "protocol.Order.system_order_id");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->system_order_id(), output);
+      3, this->system_order_id(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:protocol.Order)
@@ -9148,14 +9189,25 @@ void Order::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Order::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:protocol.Order)
-  // optional .protocol.OperationProcessOrder order = 1;
+  // optional string seller_address = 1;
+  if (this->seller_address().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->seller_address().data(), this->seller_address().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "protocol.Order.seller_address");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->seller_address(), target);
+  }
+
+  // optional .protocol.OperationProcessOrder order = 2;
   if (this->has_order()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        1, *this->order_, false, target);
+        2, *this->order_, false, target);
   }
 
-  // optional string system_order_id = 2;
+  // optional string system_order_id = 3;
   if (this->system_order_id().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->system_order_id().data(), this->system_order_id().length(),
@@ -9163,7 +9215,7 @@ void Order::SerializeWithCachedSizes(
       "protocol.Order.system_order_id");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->system_order_id(), target);
+        3, this->system_order_id(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:protocol.Order)
@@ -9174,14 +9226,21 @@ int Order::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:protocol.Order)
   int total_size = 0;
 
-  // optional .protocol.OperationProcessOrder order = 1;
+  // optional string seller_address = 1;
+  if (this->seller_address().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->seller_address());
+  }
+
+  // optional .protocol.OperationProcessOrder order = 2;
   if (this->has_order()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->order_);
   }
 
-  // optional string system_order_id = 2;
+  // optional string system_order_id = 3;
   if (this->system_order_id().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -9216,6 +9275,10 @@ void Order::MergeFrom(const Order& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
+  if (from.seller_address().size() > 0) {
+
+    seller_address_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.seller_address_);
+  }
   if (from.has_order()) {
     mutable_order()->::protocol::OperationProcessOrder::MergeFrom(from.order());
   }
@@ -9249,6 +9312,7 @@ void Order::Swap(Order* other) {
   InternalSwap(other);
 }
 void Order::InternalSwap(Order* other) {
+  seller_address_.Swap(&other->seller_address_);
   std::swap(order_, other->order_);
   system_order_id_.Swap(&other->system_order_id_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -9266,7 +9330,51 @@ void Order::InternalSwap(Order* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // Order
 
-// optional .protocol.OperationProcessOrder order = 1;
+// optional string seller_address = 1;
+void Order::clear_seller_address() {
+  seller_address_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ const ::std::string& Order::seller_address() const {
+  // @@protoc_insertion_point(field_get:protocol.Order.seller_address)
+  return seller_address_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void Order::set_seller_address(const ::std::string& value) {
+  
+  seller_address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.Order.seller_address)
+}
+ void Order::set_seller_address(const char* value) {
+  
+  seller_address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.Order.seller_address)
+}
+ void Order::set_seller_address(const char* value, size_t size) {
+  
+  seller_address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.Order.seller_address)
+}
+ ::std::string* Order::mutable_seller_address() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.Order.seller_address)
+  return seller_address_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* Order::release_seller_address() {
+  // @@protoc_insertion_point(field_release:protocol.Order.seller_address)
+  
+  return seller_address_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void Order::set_allocated_seller_address(::std::string* seller_address) {
+  if (seller_address != NULL) {
+    
+  } else {
+    
+  }
+  seller_address_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), seller_address);
+  // @@protoc_insertion_point(field_set_allocated:protocol.Order.seller_address)
+}
+
+// optional .protocol.OperationProcessOrder order = 2;
 bool Order::has_order() const {
   return !_is_default_instance_ && order_ != NULL;
 }
@@ -9304,7 +9412,7 @@ void Order::set_allocated_order(::protocol::OperationProcessOrder* order) {
   // @@protoc_insertion_point(field_set_allocated:protocol.Order.order)
 }
 
-// optional string system_order_id = 2;
+// optional string system_order_id = 3;
 void Order::clear_system_order_id() {
   system_order_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -9346,6 +9454,611 @@ void Order::clear_system_order_id() {
   }
   system_order_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), system_order_id);
   // @@protoc_insertion_point(field_set_allocated:protocol.Order.system_order_id)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int ClaimOrder::kSellerIdFieldNumber;
+const int ClaimOrder::kOrderIdFieldNumber;
+const int ClaimOrder::kAssetSoldFieldNumber;
+const int ClaimOrder::kAmountSoldFieldNumber;
+const int ClaimOrder::kAssetBoughtFieldNumber;
+const int ClaimOrder::kAmountBoughtFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+ClaimOrder::ClaimOrder()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:protocol.ClaimOrder)
+}
+
+void ClaimOrder::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+  asset_sold_ = const_cast< ::protocol::AssetKey*>(&::protocol::AssetKey::default_instance());
+  asset_bought_ = const_cast< ::protocol::AssetKey*>(&::protocol::AssetKey::default_instance());
+}
+
+ClaimOrder::ClaimOrder(const ClaimOrder& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:protocol.ClaimOrder)
+}
+
+void ClaimOrder::SharedCtor() {
+    _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  seller_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_id_ = GOOGLE_ULONGLONG(0);
+  asset_sold_ = NULL;
+  amount_sold_ = GOOGLE_LONGLONG(0);
+  asset_bought_ = NULL;
+  amount_bought_ = GOOGLE_LONGLONG(0);
+}
+
+ClaimOrder::~ClaimOrder() {
+  // @@protoc_insertion_point(destructor:protocol.ClaimOrder)
+  SharedDtor();
+}
+
+void ClaimOrder::SharedDtor() {
+  seller_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != default_instance_) {
+    delete asset_sold_;
+    delete asset_bought_;
+  }
+}
+
+void ClaimOrder::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* ClaimOrder::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ClaimOrder_descriptor_;
+}
+
+const ClaimOrder& ClaimOrder::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_chain_2eproto();
+  return *default_instance_;
+}
+
+ClaimOrder* ClaimOrder::default_instance_ = NULL;
+
+ClaimOrder* ClaimOrder::New(::google::protobuf::Arena* arena) const {
+  ClaimOrder* n = new ClaimOrder;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void ClaimOrder::Clear() {
+// @@protoc_insertion_point(message_clear_start:protocol.ClaimOrder)
+  seller_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  order_id_ = GOOGLE_ULONGLONG(0);
+  if (GetArenaNoVirtual() == NULL && asset_sold_ != NULL) delete asset_sold_;
+  asset_sold_ = NULL;
+  amount_sold_ = GOOGLE_LONGLONG(0);
+  if (GetArenaNoVirtual() == NULL && asset_bought_ != NULL) delete asset_bought_;
+  asset_bought_ = NULL;
+  amount_bought_ = GOOGLE_LONGLONG(0);
+}
+
+bool ClaimOrder::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:protocol.ClaimOrder)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string seller_id = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_seller_id()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->seller_id().data(), this->seller_id().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "protocol.ClaimOrder.seller_id"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_order_id;
+        break;
+      }
+
+      // optional uint64 order_id = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_order_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &order_id_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_asset_sold;
+        break;
+      }
+
+      // optional .protocol.AssetKey asset_sold = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_asset_sold:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_asset_sold()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_amount_sold;
+        break;
+      }
+
+      // optional int64 amount_sold = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_amount_sold:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &amount_sold_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_asset_bought;
+        break;
+      }
+
+      // optional .protocol.AssetKey asset_bought = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_asset_bought:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_asset_bought()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_amount_bought;
+        break;
+      }
+
+      // optional int64 amount_bought = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_amount_bought:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &amount_bought_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:protocol.ClaimOrder)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:protocol.ClaimOrder)
+  return false;
+#undef DO_
+}
+
+void ClaimOrder::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:protocol.ClaimOrder)
+  // optional string seller_id = 1;
+  if (this->seller_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->seller_id().data(), this->seller_id().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "protocol.ClaimOrder.seller_id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->seller_id(), output);
+  }
+
+  // optional uint64 order_id = 2;
+  if (this->order_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->order_id(), output);
+  }
+
+  // optional .protocol.AssetKey asset_sold = 3;
+  if (this->has_asset_sold()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, *this->asset_sold_, output);
+  }
+
+  // optional int64 amount_sold = 4;
+  if (this->amount_sold() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->amount_sold(), output);
+  }
+
+  // optional .protocol.AssetKey asset_bought = 5;
+  if (this->has_asset_bought()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, *this->asset_bought_, output);
+  }
+
+  // optional int64 amount_bought = 6;
+  if (this->amount_bought() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->amount_bought(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:protocol.ClaimOrder)
+}
+
+::google::protobuf::uint8* ClaimOrder::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:protocol.ClaimOrder)
+  // optional string seller_id = 1;
+  if (this->seller_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->seller_id().data(), this->seller_id().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "protocol.ClaimOrder.seller_id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->seller_id(), target);
+  }
+
+  // optional uint64 order_id = 2;
+  if (this->order_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->order_id(), target);
+  }
+
+  // optional .protocol.AssetKey asset_sold = 3;
+  if (this->has_asset_sold()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        3, *this->asset_sold_, false, target);
+  }
+
+  // optional int64 amount_sold = 4;
+  if (this->amount_sold() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->amount_sold(), target);
+  }
+
+  // optional .protocol.AssetKey asset_bought = 5;
+  if (this->has_asset_bought()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        5, *this->asset_bought_, false, target);
+  }
+
+  // optional int64 amount_bought = 6;
+  if (this->amount_bought() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(6, this->amount_bought(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:protocol.ClaimOrder)
+  return target;
+}
+
+int ClaimOrder::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:protocol.ClaimOrder)
+  int total_size = 0;
+
+  // optional string seller_id = 1;
+  if (this->seller_id().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->seller_id());
+  }
+
+  // optional uint64 order_id = 2;
+  if (this->order_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->order_id());
+  }
+
+  // optional .protocol.AssetKey asset_sold = 3;
+  if (this->has_asset_sold()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->asset_sold_);
+  }
+
+  // optional int64 amount_sold = 4;
+  if (this->amount_sold() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->amount_sold());
+  }
+
+  // optional .protocol.AssetKey asset_bought = 5;
+  if (this->has_asset_bought()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->asset_bought_);
+  }
+
+  // optional int64 amount_bought = 6;
+  if (this->amount_bought() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->amount_bought());
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ClaimOrder::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:protocol.ClaimOrder)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  const ClaimOrder* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const ClaimOrder>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:protocol.ClaimOrder)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:protocol.ClaimOrder)
+    MergeFrom(*source);
+  }
+}
+
+void ClaimOrder::MergeFrom(const ClaimOrder& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:protocol.ClaimOrder)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  if (from.seller_id().size() > 0) {
+
+    seller_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.seller_id_);
+  }
+  if (from.order_id() != 0) {
+    set_order_id(from.order_id());
+  }
+  if (from.has_asset_sold()) {
+    mutable_asset_sold()->::protocol::AssetKey::MergeFrom(from.asset_sold());
+  }
+  if (from.amount_sold() != 0) {
+    set_amount_sold(from.amount_sold());
+  }
+  if (from.has_asset_bought()) {
+    mutable_asset_bought()->::protocol::AssetKey::MergeFrom(from.asset_bought());
+  }
+  if (from.amount_bought() != 0) {
+    set_amount_bought(from.amount_bought());
+  }
+}
+
+void ClaimOrder::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:protocol.ClaimOrder)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ClaimOrder::CopyFrom(const ClaimOrder& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:protocol.ClaimOrder)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ClaimOrder::IsInitialized() const {
+
+  return true;
+}
+
+void ClaimOrder::Swap(ClaimOrder* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void ClaimOrder::InternalSwap(ClaimOrder* other) {
+  seller_id_.Swap(&other->seller_id_);
+  std::swap(order_id_, other->order_id_);
+  std::swap(asset_sold_, other->asset_sold_);
+  std::swap(amount_sold_, other->amount_sold_);
+  std::swap(asset_bought_, other->asset_bought_);
+  std::swap(amount_bought_, other->amount_bought_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata ClaimOrder::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ClaimOrder_descriptor_;
+  metadata.reflection = ClaimOrder_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// ClaimOrder
+
+// optional string seller_id = 1;
+void ClaimOrder::clear_seller_id() {
+  seller_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ const ::std::string& ClaimOrder::seller_id() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.seller_id)
+  return seller_id_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void ClaimOrder::set_seller_id(const ::std::string& value) {
+  
+  seller_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.seller_id)
+}
+ void ClaimOrder::set_seller_id(const char* value) {
+  
+  seller_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.ClaimOrder.seller_id)
+}
+ void ClaimOrder::set_seller_id(const char* value, size_t size) {
+  
+  seller_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.ClaimOrder.seller_id)
+}
+ ::std::string* ClaimOrder::mutable_seller_id() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.ClaimOrder.seller_id)
+  return seller_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* ClaimOrder::release_seller_id() {
+  // @@protoc_insertion_point(field_release:protocol.ClaimOrder.seller_id)
+  
+  return seller_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void ClaimOrder::set_allocated_seller_id(::std::string* seller_id) {
+  if (seller_id != NULL) {
+    
+  } else {
+    
+  }
+  seller_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), seller_id);
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.seller_id)
+}
+
+// optional uint64 order_id = 2;
+void ClaimOrder::clear_order_id() {
+  order_id_ = GOOGLE_ULONGLONG(0);
+}
+ ::google::protobuf::uint64 ClaimOrder::order_id() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.order_id)
+  return order_id_;
+}
+ void ClaimOrder::set_order_id(::google::protobuf::uint64 value) {
+  
+  order_id_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.order_id)
+}
+
+// optional .protocol.AssetKey asset_sold = 3;
+bool ClaimOrder::has_asset_sold() const {
+  return !_is_default_instance_ && asset_sold_ != NULL;
+}
+void ClaimOrder::clear_asset_sold() {
+  if (GetArenaNoVirtual() == NULL && asset_sold_ != NULL) delete asset_sold_;
+  asset_sold_ = NULL;
+}
+const ::protocol::AssetKey& ClaimOrder::asset_sold() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.asset_sold)
+  return asset_sold_ != NULL ? *asset_sold_ : *default_instance_->asset_sold_;
+}
+::protocol::AssetKey* ClaimOrder::mutable_asset_sold() {
+  
+  if (asset_sold_ == NULL) {
+    asset_sold_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ClaimOrder.asset_sold)
+  return asset_sold_;
+}
+::protocol::AssetKey* ClaimOrder::release_asset_sold() {
+  // @@protoc_insertion_point(field_release:protocol.ClaimOrder.asset_sold)
+  
+  ::protocol::AssetKey* temp = asset_sold_;
+  asset_sold_ = NULL;
+  return temp;
+}
+void ClaimOrder::set_allocated_asset_sold(::protocol::AssetKey* asset_sold) {
+  delete asset_sold_;
+  asset_sold_ = asset_sold;
+  if (asset_sold) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.asset_sold)
+}
+
+// optional int64 amount_sold = 4;
+void ClaimOrder::clear_amount_sold() {
+  amount_sold_ = GOOGLE_LONGLONG(0);
+}
+ ::google::protobuf::int64 ClaimOrder::amount_sold() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.amount_sold)
+  return amount_sold_;
+}
+ void ClaimOrder::set_amount_sold(::google::protobuf::int64 value) {
+  
+  amount_sold_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_sold)
+}
+
+// optional .protocol.AssetKey asset_bought = 5;
+bool ClaimOrder::has_asset_bought() const {
+  return !_is_default_instance_ && asset_bought_ != NULL;
+}
+void ClaimOrder::clear_asset_bought() {
+  if (GetArenaNoVirtual() == NULL && asset_bought_ != NULL) delete asset_bought_;
+  asset_bought_ = NULL;
+}
+const ::protocol::AssetKey& ClaimOrder::asset_bought() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.asset_bought)
+  return asset_bought_ != NULL ? *asset_bought_ : *default_instance_->asset_bought_;
+}
+::protocol::AssetKey* ClaimOrder::mutable_asset_bought() {
+  
+  if (asset_bought_ == NULL) {
+    asset_bought_ = new ::protocol::AssetKey;
+  }
+  // @@protoc_insertion_point(field_mutable:protocol.ClaimOrder.asset_bought)
+  return asset_bought_;
+}
+::protocol::AssetKey* ClaimOrder::release_asset_bought() {
+  // @@protoc_insertion_point(field_release:protocol.ClaimOrder.asset_bought)
+  
+  ::protocol::AssetKey* temp = asset_bought_;
+  asset_bought_ = NULL;
+  return temp;
+}
+void ClaimOrder::set_allocated_asset_bought(::protocol::AssetKey* asset_bought) {
+  delete asset_bought_;
+  asset_bought_ = asset_bought;
+  if (asset_bought) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.asset_bought)
+}
+
+// optional int64 amount_bought = 6;
+void ClaimOrder::clear_amount_bought() {
+  amount_bought_ = GOOGLE_LONGLONG(0);
+}
+ ::google::protobuf::int64 ClaimOrder::amount_bought() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.amount_bought)
+  return amount_bought_;
+}
+ void ClaimOrder::set_amount_bought(::google::protobuf::int64 value) {
+  
+  amount_bought_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_bought)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

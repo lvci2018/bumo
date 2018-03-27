@@ -15,9 +15,14 @@ message Account{
 }
 
 message AssetKey{
-	 string issuer = 1;
-	 string code = 2;
-	 int32 type = 3;		//0:not limited ammount  1:limited ammount
+	enum Type {
+			UNLIMIN 			= 0;
+			SELF_COIN 			= 1;
+			LIMIT				= 2;
+	};
+	 string issuer	= 1;
+	 string code	= 2;
+	 Type type		= 3;		//0:not limited ammount  1:self coin 2:limited ammount 
 }
 
 //payment
@@ -124,15 +129,29 @@ message OperationProcessOrder{
 	
 	// 0=create a new offer, otherwise edit an existing offer
 	uint64 order_id		=5;
-	int32 sell_fee_percent	=6;
-	int32 buy_fee_percent	=7;
+	int32 fee_percent	=6; //for buy
 }
 
 message Order{
-	OperationProcessOrder order=1;
-	string system_order_id =2; //ledger_seq+tran_hash+op_index
+	string seller_address =1;
+	OperationProcessOrder order=2;
+	string system_order_id =3; //
 }
 
+message ClaimOrder
+{
+	// emitted to identify the offer
+	string seller_id	=1; // Account that owns the offer
+	uint64 order_id		=2;
+
+	// amount and asset taken from the owner
+	AssetKey asset_sold	=3;
+	int64 amount_sold	=4;
+
+	// amount and asset sent to the owner
+	AssetKey asset_bought	=5;
+	int64 amount_bought		=6;
+};
 
 message OperationUpdateAssetProperty{
 	AssetKey key = 1;
