@@ -32,19 +32,19 @@ namespace bumo {
 	struct ExchangeResult
 	{
 		int64_t num_wheat_received_;
-		int64_t num_sheep_send;
-		bool reduced;
+		int64_t num_sheep_send_;
+		bool reduced_;
 
 		ExchangeResultType	Type() const
 		{
-			if (num_wheat_received_ != 0 && num_sheep_send != 0)
+			if (num_wheat_received_ != 0 && num_sheep_send_ != 0)
 				return ExchangeResultType::NORMAL;
 			else
-				return reduced ? ExchangeResultType::REDUCED_TO_ZERO : ExchangeResultType::BOGUS;
+				return reduced_ ? ExchangeResultType::REDUCED_TO_ZERO : ExchangeResultType::BOGUS;
 		}
 	};
 
-	ExchangeResult Exchange(int64_t wheatReceived, protocol::Price price,
+	ExchangeResult Exchange(int64_t wheatReceived, const protocol::Price& price,
 		int64_t maxWheatReceive, int64_t maxSheepSend);
 
 	class OrderExchange
