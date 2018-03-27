@@ -414,12 +414,7 @@ namespace bumo {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
 				result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type()));
 				break;
-			}
-			if (operation_process_order.sell_fee_percent() < asset_s.property().fee_percent()){
-				result.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-				result.set_desc(utils::String::Format("asset(%s:%s:%d) fee percent is lower(%d)", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type(), asset_s.property().fee_percent()));
-				break;
-			}
+			}			
 
 			AccountFrm::pointer buyer;
 			if (!Environment::AccountFromDB(operation_process_order.buying().issuer(), buyer)) {
@@ -435,7 +430,7 @@ namespace bumo {
 				result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type()));
 				break;
 			}
-			if (operation_process_order.buy_fee_percent() < asset_b.property().fee_percent()){
+			if (operation_process_order.fee_percent() < asset_b.property().fee_percent()){
 				result.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
 				result.set_desc(utils::String::Format("asset(%s:%s:%d) fee percent is lower(%d)", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type(), asset_s.property().fee_percent()));
 				break;

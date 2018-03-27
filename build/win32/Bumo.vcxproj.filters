@@ -132,6 +132,12 @@
     <ClCompile Include="..\..\src\glue\transaction_queue.cpp">
       <Filter>glue</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\ledger\order_frm.cpp">
+      <Filter>ledger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ledger\order_exchange.cpp">
+      <Filter>ledger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\overlay\peer_manager.h">
@@ -229,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\glue\transaction_queue.h">
       <Filter>glue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ledger\order_exchange.h">
+      <Filter>ledger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ledger\order_frm.h">
+      <Filter>ledger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
