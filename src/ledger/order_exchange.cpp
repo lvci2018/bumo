@@ -22,7 +22,7 @@ namespace bumo {
 	ExchangeResult Exchange(int64_t wheatReceived, const protocol::Price& price, int64_t maxWheatReceive, int64_t maxSheepSend){
 		auto result = ExchangeResult{};
 		result.reduced_ = wheatReceived > maxWheatReceive;
-		result.num_wheat_received_ = std::min(wheatReceived,maxWheatReceive);
+		result.num_wheat_received_ = (std::min)(wheatReceived, maxWheatReceive);
 
 		// this guy can get X wheat to you. How many sheep does that get him?
 		// bias towards seller
@@ -33,14 +33,14 @@ namespace bumo {
 		}
 
 		result.reduced_ = result.reduced_ || (result.num_sheep_send_ > maxSheepSend);
-		result.num_sheep_send_ = std::min(result.num_sheep_send_,maxSheepSend);
+		result.num_sheep_send_ = (std::min)(result.num_sheep_send_,maxSheepSend);
 
 		auto newWheatReceived = int64_t{};
 		if (!utils::bigDivide(newWheatReceived, result.num_sheep_send_, price.d(), price.n(),utils::Rounding::eRoundDown)){
 			newWheatReceived = INT64_MAX;
 		}
 
-		result.num_wheat_received_ =std::min(result.numWheatReceived,newWheatReceived);
+		result.num_wheat_received_ = (std::min)(result.num_wheat_received_, newWheatReceived);
 		return result;
 	}
 
