@@ -501,10 +501,15 @@ namespace utils {
 	typedef base_uint<256>  uint256;
 	uint256 CryptoUint256(const std::string &input);
 
+	enum class Rounding{
+		eRoundDown,
+		eRoundUp
+	};
+
 	//int
 	int hex_to_decimal(char a);
-	bool bigDivide(int64_t& result, int64_t A, int64_t B, int64_t C);
-	bool bigDivide(uint64_t& result, uint64_t A, uint64_t B, uint64_t C);
-	int64_t  bigDivide(int64_t A, int64_t B, int64_t C);
+	bool bigDivide(int64_t& result, int64_t A, int64_t B, int64_t C, Rounding rounding);
+	bool bigDivide(uint64_t& result, uint64_t A, uint64_t B, uint64_t C, Rounding rounding);
+	int64_t  bigDivide(int64_t A, int64_t B, int64_t C, Rounding rounding);
 }
 #endif

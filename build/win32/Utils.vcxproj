@@ -36,6 +36,7 @@
     <ClInclude Include="..\..\src\utils\utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\utils\base_int.cpp" />
     <ClCompile Include="..\..\src\utils\crypto.cpp" />
     <ClCompile Include="..\..\src\utils\ecc_sm2.cpp" />
     <ClCompile Include="..\..\src\utils\exprparser.cpp" />
