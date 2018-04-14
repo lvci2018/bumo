@@ -180,7 +180,7 @@ namespace bumo {
 				*set.add_txs() = tx->GetProtoTxEnv();
 
 				i++;
-				LOG_TRACE("top:(%u) addr:(%s), tx:(%s), nonce:(" FMT_I64 "), fee:(" FMT_I64 ")", i, tx->GetSourceAddress().c_str(), utils::String::BinToHexString(tx->GetContentHash()).c_str(), tx->GetNonce(), tx->GetFee());
+				//LOG_TRACE("TopTransaction:(%u) addr:(%s), tx:(%s), nonce:(" FMT_I64 "), fee:(" FMT_I64 ")", i, tx->GetSourceAddress().c_str(), utils::String::BinToHexString(tx->GetContentHash()).c_str(), tx->GetNonce(), tx->GetFee());
 			}
 		}
 

@@ -39,7 +39,7 @@ namespace bumo {
 		}
 	};
 
-
+	class Environment;
 	class AccountFrm {
 	public:
 
@@ -107,8 +107,11 @@ namespace bumo {
 		void UpdateHash(std::shared_ptr<WRITE_BATCH> batch);
 		void NonceIncrease();
 		int64_t GetAccountBalance() const;
+		int64_t GetBalanceAboveReserve() const;
 		bool AddBalance(int64_t amount);
 		static AccountFrm::pointer CreatAccountFrm(const std::string& account_address, int64_t balance);
+		static bool PayIssuerFee(std::shared_ptr<Environment> environment, const protocol::AssetKey& asset_key, int64_t fee);
+		bool TransferAsset(const protocol::AssetKey& asset_key, int64_t amount);
 	public:
 
 		template <class T>

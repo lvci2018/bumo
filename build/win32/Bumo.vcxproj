@@ -99,6 +99,15 @@
     <ProjectReference Include="LibHttp.vcxproj">
       <Project>{b12f7a91-bcf7-4c11-ae27-23f11dc72096}</Project>
     </ProjectReference>
+    <ProjectReference Include="libsoci.vcxproj">
+      <Project>{bbd512eb-db2a-4fa1-bdb8-3ba3d2fcf51b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="libsoci_sqlite3.vcxproj">
+      <Project>{ae4b5814-d3d5-431f-9792-88689d1bc708}</Project>
+    </ProjectReference>
+    <ProjectReference Include="libsqlite.vcxproj">
+      <Project>{d16ee391-36cc-4a74-8f91-c6de95ab1cc5}</Project>
+    </ProjectReference>
     <ProjectReference Include="Utils.vcxproj">
       <Project>{85f7a975-b30b-487e-8f7b-90a19d775459}</Project>
     </ProjectReference>
@@ -162,16 +171,19 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http;../../src/3rd/basic/include/v8;../../src/3rd/basic/include/soci/core</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http;../../src/3rd/basic/include/v8;../../src/3rd/soci/src/core</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;ASIO_STANDALONE;_WEBSOCKETPP_CPP11_STL_;WIN32_LEAN_AND_MEAN;_SHARED_PTR_H;PCRE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>leveldb_d.lib;json_d.lib;sqlite3_d.lib;iphlpapi.lib;libprotobuf_d.lib;libeay32.lib;ssleay32.lib;pcre_d.lib;winmm.lib;gdi32.lib;v8.lib;icui18n.lib;v8_libplatform.lib;icuuc.lib;v8_libbase.lib;libscrypt.lib;libsqlite.lib;libsoci_sqlite3.lib;libsoci.lib</AdditionalDependencies>
+      <AdditionalDependencies>leveldb_d.lib;json_d.lib;sqlite3_d.lib;iphlpapi.lib;libprotobuf_d.lib;libeay32.lib;ssleay32.lib;pcre_d.lib;winmm.lib;gdi32.lib;v8.lib;icui18n.lib;v8_libplatform.lib;icuuc.lib;v8_libbase.lib;libscrypt.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../src/3rd/basic/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <StackReserveSize>5000000</StackReserveSize>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

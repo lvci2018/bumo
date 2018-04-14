@@ -12,11 +12,12 @@ message Account{
 	bytes assets_hash = 5;    //assets_hash = merkelhash(assets)
 	Contract contract = 6;
 	int64 balance = 7;
+	//int64 freezn_balance = 8;
 }
 
 message AssetKey{
 	enum Type {
-			UNLIMIN 			= 0;
+			UNLIMIT 			= 0;
 			SELF_COIN 			= 1;
 			LIMIT				= 2;
 	};
@@ -124,38 +125,42 @@ message Price{
 message OperationProcessOrder{
 	AssetKey selling	=1;
 	AssetKey buying		=2;
-	int64 amount		=3; // amount being sold. if set to 0, delete the offer
+	int64 amount		=3; // amount being sold. if set to 0, delete the order
 	Price price			=4; // price of thing being sold in terms of what you are buying
 	
 	// 0=create a new offer, otherwise edit an existing offer
-	uint64 order_id		=5;
+	string order_id		=5;
 	int32 fee_percent	=6; //for buy
 }
 
 message Order{
-	string seller_address =1;
-	OperationProcessOrder order=2;
-	string system_order_id =3; //
+	string seller_address					=1;
+	OperationProcessOrder remain_order		=2;
+	uint32 flags							=3;
+	int64	last_modified_ledger_seq		=4;
+	string	tx_hash							=5;
 }
 
 message ClaimOrder
 {
-	// emitted to identify the offer
-	string seller_id	=1; // Account that owns the offer
-	uint64 order_id		=2;
+	// emitted to identify the order
+	string seller_id	=1; // Account that owns the order
+	string order_id		=2;
+	string tx_hash		=3;
+	Price price			=4;
 
 	// amount and asset taken from the owner
-	AssetKey asset_sold	=3;
-	int64 amount_sold	=4;
+	AssetKey asset_sold	=5;
+	int64 amount_sold	=6;
 
 	// amount and asset sent to the owner
-	AssetKey asset_bought	=5;
-	int64 amount_bought		=6;
+	AssetKey asset_bought	=7;
+	int64 amount_bought		=8;
 };
 
-message OperationUpdateAssetProperty{
+message OperationSetAssetFee{
 	AssetKey key = 1;
-	AssetProperty property = 2;
+	int32	fee	 = 2;
 }
 
 
@@ -171,7 +176,8 @@ message Operation {
 			PAY_COIN                = 7;
 			LOG						= 8;
 			PROCESS_ORDER			= 9;
-			UPDATE_ASSET_PROPERTY	= 10;
+			REGISTER_ASSET			= 10;
+			SET_ASSET_FEE			= 11;
 	};
 	Type type = 1;
 	string source_address = 2;
@@ -187,7 +193,8 @@ message Operation {
 	OperationPayCoin			pay_coin           = 10;
 	OperationLog				log				   = 11;
 	OperationProcessOrder		process_order	   = 12;
-	OperationUpdateAssetProperty update_asset_property =13;
+	OperationIssueAsset			register_asset	   = 13;
+	OperationSetAssetFee		set_asset_fee	   = 14;
 }
 
 message OperationSetThreshold{
@@ -251,6 +258,20 @@ message TransactionEnv {
 	Trigger trigger = 3;
 }
 
+message OperationOrderResult {
+	repeated ClaimOrder orders_claimed	=1;
+	enum OrderEffectType{
+		ORDER_UNKNOWN = 0;
+		ORDER_CREATED = 1;
+		ORDER_UPDATED = 2;
+		ORDER_DELETED = 3;
+	};
+
+	OrderEffectType effect				=2;
+	Order			order				=3;
+	int32			code				=4;//error code
+	int32			index				=5;//operation index
+}
 
 message TransactionEnvStore{
 		TransactionEnv transaction_env = 1;
@@ -260,6 +281,7 @@ message TransactionEnvStore{
 		int64 close_time = 5;
 		//for notify
 		bytes hash = 6;
+		repeated OperationOrderResult orders_result = 7;
 }
 
 message TransactionEnvSet{

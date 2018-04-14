@@ -209,7 +209,7 @@ void protobuf_AddDesc_common_2eproto() {
     "\"J\n\tWsMessage\022\014\n\004type\030\001 \001(\003\022\017\n\007request\030\002"
     " \001(\010\022\020\n\010sequence\030\003 \001(\003\022\014\n\004data\030\004 \001(\014\"\025\n\004"
     "Ping\022\r\n\005nonce\030\001 \001(\003\"\025\n\004Pong\022\r\n\005nonce\030\001 \001"
-    "(\003*\372\010\n\tERRORCODE\022\023\n\017ERRCODE_SUCCESS\020\000\022\032\n"
+    "(\003*\267\t\n\tERRORCODE\022\023\n\017ERRCODE_SUCCESS\020\000\022\032\n"
     "\026ERRCODE_INTERNAL_ERROR\020\001\022\035\n\031ERRCODE_INV"
     "ALID_PARAMETER\020\002\022\031\n\025ERRCODE_ALREADY_EXIS"
     "T\020\003\022\025\n\021ERRCODE_NOT_EXIST\020\004\022\026\n\022ERRCODE_TX"
@@ -237,8 +237,10 @@ void protobuf_AddDesc_common_2eproto() {
     "E_CONTRACT_TOO_MANY_RECURSION\020\231\001\022+\n&ERRC"
     "ODE_CONTRACT_TOO_MANY_TRANSACTIONS\020\232\001\022%\n"
     " ERRCODE_CONTRACT_EXECUTE_EXPIRED\020\233\001\022!\n\034"
-    "ERRCODE_TX_INSERT_QUEUE_FAIL\020\240\001B\035\n\033cn.bu"
-    "mo.blockchain.adapter3b\006proto3", 1510);
+    "ERRCODE_TX_INSERT_QUEUE_FAIL\020\240\001\022\034\n\027ERRCO"
+    "DE_ORDER_NOT_FOUNT\020\245\001\022\035\n\030ERRCODE_ORDER_C"
+    "ROSS_SELF\020\246\001B\035\n\033cn.bumo.blockchain.adapt"
+    "er3b\006proto3", 1571);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common.proto", &protobuf_RegisterTypes);
   KeyPair::default_instance_ = new KeyPair();
@@ -303,6 +305,8 @@ bool ERRORCODE_IsValid(int value) {
     case 154:
     case 155:
     case 160:
+    case 165:
+    case 166:
       return true;
     default:
       return false;

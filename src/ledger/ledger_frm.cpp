@@ -86,6 +86,7 @@ namespace bumo {
 			env_store.set_close_time(ledger_.header().close_time());
 			env_store.set_error_code(ptr->GetResult().code());
 			env_store.set_error_desc(ptr->GetResult().desc());
+			ptr->IntegrateOrderResult(&env_store);
 
 			batch.Put(ComposePrefix(General::TRANSACTION_PREFIX, ptr->GetContentHash()), env_store.SerializeAsString());
 			list.add_entry(ptr->GetContentHash());
@@ -404,10 +405,12 @@ namespace bumo {
 			return false;
 		}
 
+		Database& db = Storage::Instance().lite_db();
+
 		for (int i = 0; i < request.txset().txs_size() && enabled_; i++) {
 			auto txproto = request.txset().txs(i);
 			
-			TransactionFrm::pointer tx_frm = std::make_shared<TransactionFrm>(txproto);
+			TransactionFrm::pointer tx_frm = std::make_shared<TransactionFrm>(txproto,i);
 
 			if (!tx_frm->ValidForApply(environment_,!IsTestMode())){
 				LOG_WARN("Should not go hear");
@@ -431,6 +434,7 @@ namespace bumo {
 				tx_frm->ApplyExpireResult();
 			}
 			else {
+				soci::transaction sql_tx(db.GetSession());
 				bool ret = tx_frm->Apply(this, environment_);
 				if (!ret) {
 						LOG_ERROR("transaction(%s) apply failed. %s",
@@ -439,6 +443,7 @@ namespace bumo {
 				}
 				else {
 						tx_frm->environment_->Commit();
+						sql_tx.commit();
 				}
 			}
 
@@ -592,4 +597,9 @@ namespace bumo {
 	bool LedgerFrm::IsTestMode(){
 		return is_test_mode_;
 	}
+
+	int64_t LedgerFrm::GetClosingLedgerSeq() const {
+		return value_->ledger_seq();
+	}
+
 }

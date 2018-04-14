@@ -65,6 +65,8 @@ namespace bumo {
 		const static char *DEFAULT_LEDGER_DB_PATH;
 		const static char *DEFAULT_RATIONAL_DB_PATH;
 
+		const static char *DEFAULT_ORDER_DB_PATH;
+
 		const static char *CONFIG_FILE;
 		const static char *MONITOR_CONFIG_FILE;
 		const static char *CA_CONFIG_FILE;
@@ -106,6 +108,8 @@ namespace bumo {
 
 		const static int64_t REWARD_PERIOD = (5 * 365 * 24 * 60 * 60) / 10;
 		const static int64_t REWARD_INIT_VALUE = 15 * 100000000;
+
+		const static int32_t MATCH_FEE_BASE = 1000;
 
 		typedef enum WARNINGCODE_ {
 			WARNING,

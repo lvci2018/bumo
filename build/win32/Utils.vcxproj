@@ -19,6 +19,7 @@
     <ClInclude Include="..\..\src\utils\exprparser.h" />
     <ClInclude Include="..\..\src\utils\file.h" />
     <ClInclude Include="..\..\src\utils\headers.h" />
+    <ClInclude Include="..\..\src\utils\ledger_range.h" />
     <ClInclude Include="..\..\src\utils\logger.h" />
     <ClInclude Include="..\..\src\utils\net.h" />
     <ClInclude Include="..\..\src\utils\noncopyable.h" />
@@ -41,6 +42,7 @@
     <ClCompile Include="..\..\src\utils\ecc_sm2.cpp" />
     <ClCompile Include="..\..\src\utils\exprparser.cpp" />
     <ClCompile Include="..\..\src\utils\file.cpp" />
+    <ClCompile Include="..\..\src\utils\ledger_range.cpp" />
     <ClCompile Include="..\..\src\utils\logger.cpp" />
     <ClCompile Include="..\..\src\utils\net.cpp" />
     <ClCompile Include="..\..\src\utils\random.cpp" />

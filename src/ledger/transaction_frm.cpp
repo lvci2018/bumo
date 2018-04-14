@@ -41,13 +41,13 @@ namespace bumo {
 		contract_step_(0),
 		contract_memory_usage_(0),
 		contract_stack_usage_(0),
-		enable_check_(false), apply_start_time_(0), apply_use_time_(0),
+		enable_check_(false), apply_start_time_(0), apply_use_time_(0), index_(-1),
 		incoming_time_(utils::Timestamp::HighResolution()) {
 		utils::AtomicInc(&bumo::General::tx_new_count);
 	}
 
 
-	TransactionFrm::TransactionFrm(const protocol::TransactionEnv &env) :
+	TransactionFrm::TransactionFrm(const protocol::TransactionEnv &env,int32_t index) :
 		apply_time_(0),
 		ledger_seq_(0),
 		result_(),
@@ -60,7 +60,7 @@ namespace bumo {
 		contract_step_(0),
 		contract_memory_usage_(0),
 		contract_stack_usage_(0),
-		enable_check_(false), apply_start_time_(0), apply_use_time_(0),
+		enable_check_(false), apply_start_time_(0), apply_use_time_(0), index_(index),
 		incoming_time_(utils::Timestamp::HighResolution()) {
 		Initialize();
 		utils::AtomicInc(&bumo::General::tx_new_count);
@@ -77,6 +77,10 @@ namespace bumo {
 		result["close_time"] = apply_time_;
 		result["ledger_seq"] = ledger_seq_;
 		result["hash"] = utils::String::BinToHexString(hash_);
+		Json::Value &orders_result = result["orders_result"];
+		for (auto it = order_operation_results_.begin(); it != order_operation_results_.end(); it++){
+			orders_result[orders_result.size()] = Proto2Json(*it);
+		}		
 	}
 
 	void TransactionFrm::CacheTxToJson(Json::Value &result){
@@ -561,6 +565,10 @@ namespace bumo {
 		apply_time_ = envstor.close_time();
 		transaction_env_ = envstor.transaction_env();
 
+		for (auto i = 0; i < envstor.orders_result().size(); i++){
+			order_operation_results_.push_back(envstor.orders_result(i));
+		}
+
 		ledger_seq_ = envstor.ledger_seq();
 		Initialize();
 		result_.set_code(envstor.error_code());
@@ -613,46 +621,62 @@ namespace bumo {
 			return bSucess;
 		}
 
-		for (processing_operation_ = 0; processing_operation_ < tran.operations_size(); processing_operation_++) {
-			const protocol::Operation &ope = tran.operations(processing_operation_);
-			std::shared_ptr<OperationFrm> opt = std::make_shared< OperationFrm>(ope, this, processing_operation_);
-			if (opt == nullptr) {
-				LOG_ERROR("Create operation frame failed");
-				result_.set_code(protocol::ERRCODE_INVALID_PARAMETER);
-				bSucess = false;
-				break;
-			}
+		bool error_encountered = false;
+		Database& db = Storage::Instance().lite_db();
+		{
+			soci::transaction sql_tx(db.GetSession());
 
-			if (!bool_contract && !ledger_->IsTestMode()) {
-				if (!opt->CheckSignature(environment_)) {
-					LOG_ERROR("Check signature operation frame failed, txhash(%s)", utils::String::BinToHexString(GetContentHash()).c_str());
-					result_ = opt->GetResult();
+			for (processing_operation_ = 0; processing_operation_ < tran.operations_size(); processing_operation_++) {
+				const protocol::Operation &ope = tran.operations(processing_operation_);
+				std::shared_ptr<OperationFrm> opt = std::make_shared< OperationFrm>(ope, this, processing_operation_);
+				if (opt == nullptr) {
+					LOG_ERROR("Create operation frame failed");
+					result_.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					bSucess = false;
 					break;
 				}
-			}
 
-			//opt->SourceRelationTx();
-			Result result = opt->Apply(environment_);
+				if (!bool_contract && !ledger_->IsTestMode()) {
+					if (!opt->CheckSignature(environment_)) {
+						LOG_ERROR("Check signature operation frame failed, txhash(%s)", utils::String::BinToHexString(GetContentHash()).c_str());
+						result_ = opt->GetResult();
+						bSucess = false;
+						break;
+					}
+				}
 
-			if (result.code() != 0) {
-				result_ = opt->GetResult();
-				bSucess = false;
-				LOG_ERROR_ERRNO("Transaction(%s) operation(%d) apply failed",
-					utils::String::BinToHexString(hash_).c_str(), processing_operation_, result_.code(), result_.desc().c_str());
-				break;
-			}
+				//opt->SourceRelationTx();
+				Result result = opt->Apply(environment_);
 
-			bottom_tx->AddRealFee(opt->GetOpeFee());
-			if (bottom_tx->GetRealFee() > bottom_tx->GetFee()) {
-				result_.set_code(protocol::ERRCODE_FEE_NOT_ENOUGH);
-				std::string error_desc = utils::String::Format("Transaction(%s) Fee(" FMT_I64 ") not enough,current real fee(" FMT_I64 "), Transaction(%s) operation(%d) fee(" FMT_I64 ")",
-					utils::String::BinToHexString(bottom_tx->GetContentHash()).c_str(), bottom_tx->GetFee(), bottom_tx->GetRealFee(),utils::String::BinToHexString(hash_).c_str(), processing_operation_, opt->GetOpeFee());
-				result_.set_desc(error_desc);
-				LOG_ERROR("%s", error_desc.c_str());
-				bSucess = false;
-				break;
-			}
+				if (result.code() != 0) {
+					result_ = opt->GetResult();
+					bSucess = false;
+					LOG_ERROR_ERRNO("Transaction(%s) operation(%d) apply failed",
+						utils::String::BinToHexString(hash_).c_str(), processing_operation_, result_.code(), result_.desc().c_str());
+					//clear all order result
+					order_operation_results_.clear();
+					error_encountered = true;
+					break;
+				}
+				//append order result
+				opt->GetOrderResult(order_operation_results_);
+
+				bottom_tx->AddRealFee(opt->GetOpeFee());
+				if (bottom_tx->GetRealFee() > bottom_tx->GetFee()) {
+					result_.set_code(protocol::ERRCODE_FEE_NOT_ENOUGH);
+					std::string error_desc = utils::String::Format("Transaction(%s) Fee(" FMT_I64 ") not enough,current real fee(" FMT_I64 "), Transaction(%s) operation(%d) fee(" FMT_I64 ")",
+						utils::String::BinToHexString(bottom_tx->GetContentHash()).c_str(), bottom_tx->GetFee(), bottom_tx->GetRealFee(), utils::String::BinToHexString(hash_).c_str(), processing_operation_, opt->GetOpeFee());
+					result_.set_desc(error_desc);
+					LOG_ERROR("%s", error_desc.c_str());
+					bSucess = false;
+					break;
+				}
+
+			}//end for
+
+			if (!error_encountered)
+				sql_tx.commit();
+
 		}
 
 		return bSucess;
@@ -661,6 +685,12 @@ namespace bumo {
 	void TransactionFrm::ApplyExpireResult() // for sync node
 	{
 		result_.set_code(protocol::ERRCODE_CONTRACT_EXECUTE_EXPIRED);
+	}
+
+	void TransactionFrm::IntegrateOrderResult(protocol::TransactionEnvStore* env_store){
+		for (auto it = order_operation_results_.begin(); it != order_operation_results_.end(); it++){
+			env_store->add_orders_result()->CopyFrom(*it);
+		}
 	}
 }
 

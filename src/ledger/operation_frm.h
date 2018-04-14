@@ -20,6 +20,9 @@
 #include <common/general.h>
 #include <ledger/account.h>
 #include "transaction_frm.h"
+#include "order_frm.h"
+#include <proto/cpp/chain.pb.h>
+
 
 #include "environment.h"
 namespace bumo{
@@ -48,6 +51,7 @@ namespace bumo{
 
 		static Result CheckValid(const protocol::Operation& ope, const std::string &source_address);
 		void OptFee(const protocol::Operation_Type type);
+		void GetOrderResult(std::vector<protocol::OperationOrderResult>& order_operation_results);
 	protected:
 		void CreateAccount(std::shared_ptr<Environment> environment);
 		void IssueAsset(std::shared_ptr<Environment> environment);
@@ -61,14 +65,20 @@ namespace bumo{
 		//void OperationDeployContract(Environment *environment);
 		//void InvokeContract(Environment *environment);
 		void ProcessOrder(std::shared_ptr<Environment> environment);
-		void UpdateAssetProperty(std::shared_ptr<Environment> environment);
+		void RegisterAsset(std::shared_ptr<Environment> environment);
+		void SetAssetFee(std::shared_ptr<Environment> environment);
 
 	private:
 		//for order
-		void CancelOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment);
-		void InsertOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment);
+		bool CheckOrderVaild(protocol::OperationProcessOrder const& ope, std::shared_ptr<Environment> environment);
 		void FreeznAsset(protocol::AssetStore& asset,const int64_t& amount);
 		void UnfreeznAsset(protocol::AssetStore& asset, const int64_t& amount);
+		protocol::Order BuildOrder(const std::string& account_address,const std::string& tx_hash, const protocol::OperationProcessOrder& op, uint32_t flags);
+		OrderFrame::pointer sell_sheep_order_;
+		bool passive_;
+		protocol::AssetStore sheep_asset_;
+		protocol::AssetStore wheat_asset_;
+		protocol::OperationOrderResult order_result_;
 	};
 };
 #endif

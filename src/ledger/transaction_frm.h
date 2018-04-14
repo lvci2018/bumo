@@ -38,10 +38,11 @@ namespace bumo {
 		std::set<std::string> involved_accounts_;
 		std::vector<protocol::TransactionEnvStore> instructions_;
 		std::shared_ptr<Environment> environment_;
+		std::vector<protocol::OperationOrderResult> order_operation_results_;
 	public:
 		//only valid when the transaction belongs to a txset
 		TransactionFrm();
-		TransactionFrm(const protocol::TransactionEnv &env);
+		TransactionFrm(const protocol::TransactionEnv &env, int32_t index =-1);
 		
 		virtual ~TransactionFrm();
 		
@@ -112,13 +113,14 @@ namespace bumo {
 		bool IsExpire(std::string &error_info);
 		void EnableChecked();
 		const int64_t GetInComingTime() const;
+		void IntegrateOrderResult(protocol::TransactionEnvStore* env_store);
 
 		uint64_t apply_time_;
 		int64_t ledger_seq_;
 		Result result_;	
 		int32_t processing_operation_;
 		LedgerFrm* ledger_;
-
+		int32_t	index_;
 	private:		
 		protocol::TransactionEnv transaction_env_;
 		std::string hash_;

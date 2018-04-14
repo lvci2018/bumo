@@ -18,7 +18,9 @@
 #include "transaction_frm.h"
 #include "operation_frm.h"
 #include "contract_manager.h"
-
+#include "order_frm.h"
+#include "order_exchange.h"
+#include <common/price.h>
 
 namespace bumo {
 	OperationFrm::OperationFrm(const protocol::Operation &operation, TransactionFrm* tran, int32_t index) :
@@ -140,14 +142,14 @@ namespace bumo {
 					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("Operation type(%u) duplicated", type_thresholds.type()));
 					break;
-				} 
-				
+				}
+
 				duplicate_type.insert(type_thresholds.type());
 			}
 
 			//if it's contract then {master_weight:0 , thresholds:{tx_threshold:1} }
 			if (create_account.contract().payload() != ""){
- 				if (create_account.contract().payload().size() > General::CONTRACT_CODE_LIMIT) {
+				if (create_account.contract().payload().size() > General::CONTRACT_CODE_LIMIT) {
 					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("Contract payload size(" FMT_SIZE ") > limit(%d)",
 						create_account.contract().payload().size(), General::CONTRACT_CODE_LIMIT));
@@ -157,13 +159,13 @@ namespace bumo {
 				if (!(priv.master_weight() == 0 &&
 					priv.signers_size() == 0 &&
 					threshold.tx_threshold() == 1 &&
-					threshold.type_thresholds_size() == 0 
+					threshold.type_thresholds_size() == 0
 					)) {
 					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("Contract account 'priv' config must be({master_weight:0, thresholds:{tx_threshold:1}})"));
 					break;
 				}
-				
+
 				std::string src = create_account.contract().payload();
 				result = ContractManager::Instance().SourceCodeCheck(Contract::TYPE_V8, src);
 			}
@@ -187,9 +189,16 @@ namespace bumo {
 		case protocol::Operation_Type_PAYMENT:
 		{
 			if (payment.has_asset()){
+
+				if ((protocol::AssetKey_Type)payment.asset().key().type() != protocol::AssetKey_Type_UNLIMIT && (protocol::AssetKey_Type)payment.asset().key().type() != protocol::AssetKey_Type_LIMIT){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("Payment asset type must be limit or unlimit"));
+					break;
+				}
+
 				if (payment.asset().amount() <= 0) {
 					result.set_code(protocol::ERRCODE_ASSET_INVALID);
-					result.set_desc(utils::String::Format("amount should be bigger than 0"));
+					result.set_desc(utils::String::Format("payment amount should be bigger than 0"));
 					break;
 				}
 
@@ -218,7 +227,7 @@ namespace bumo {
 				result.set_code(protocol::ERRCODE_ACCOUNT_SOURCEDEST_EQUAL);
 				result.set_desc(utils::String::Format("Source address(%s) equal to dest address", source_address.c_str()));
 				break;
-			} 
+			}
 
 			if (!bumo::PublicKey::IsAddressValid(payment.dest_address())) {
 				result.set_code(protocol::ERRCODE_INVALID_ADDRESS);
@@ -230,12 +239,19 @@ namespace bumo {
 
 		case protocol::Operation_Type_ISSUE_ASSET:
 		{
-			if (issue_asset.amount() <= 0) {
+			if ((protocol::AssetKey_Type)issue_asset.type() != protocol::AssetKey_Type_UNLIMIT){
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("amount should be bigger than 0"));
+				result.set_desc(utils::String::Format("Issue asset type must be unlimit"));
 				break;
 			}
 
+
+			if (issue_asset.amount() <= 0) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("Issue unlimit asset amount should be bigger than 0"));
+				break;
+			}
+			
 			std::string trim_code = issue_asset.code();
 			trim_code = utils::String::Trim(trim_code);
 			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE ||
@@ -244,13 +260,6 @@ namespace bumo {
 				result.set_desc(utils::String::Format("Asset code length should between (0,64]"));
 				break;
 			}
-
-			if ((protocol::AssetKey_Type)issue_asset.type() != protocol::AssetKey_Type_UNLIMIN){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Asset type now must be zero"));
-				break;
-			}
-
 
 			break;
 		}
@@ -376,78 +385,173 @@ namespace bumo {
 		{
 			const protocol::OperationProcessOrder operation_process_order = operation.process_order();
 
-			if (!operation_process_order.has_selling() && !operation_process_order.has_buying()){
+			//cacel order
+			if (!operation_process_order.order_id().empty() && operation_process_order.amount() == 0){
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("order must has selling and buying "));
+				result.set_desc(utils::String::Format("order id(%s) excute cancle ,amount must be zero", operation_process_order.order_id().c_str()));
 				break;
 			}
 
-			std::string trim_code = operation_process_order.selling().code();
-			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+			//insert order
+			if (operation_process_order.order_id().empty()){
+
+				if (operation_process_order.amount() != 0){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("insert order amount must be not zero"));
+					break;
+				}
+
+
+				if (!operation_process_order.has_selling() || !operation_process_order.has_buying()){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("order must has selling and buying "));
+					break;
+				}
+
+				std::string trim_code = operation_process_order.selling().code();
+				if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+					break;
+				}
+
+				if (!bumo::PublicKey::IsAddressValid(operation_process_order.selling().issuer())) {
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+					break;
+				}
+
+				trim_code = operation_process_order.buying().code();
+				if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+					break;
+				}
+
+				if (!bumo::PublicKey::IsAddressValid(operation_process_order.buying().issuer())) {
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+					break;
+				}
+
+				AccountFrm::pointer seller;
+				if (!Environment::AccountFromDB(operation_process_order.selling().issuer(), seller)) {
+					result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
+					result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.selling().issuer().c_str()));
+					LOG_ERROR("%s", result.desc().c_str());
+					break;
+				}
+
+				protocol::AssetStore asset_s;
+				if (!seller->GetAsset(operation_process_order.selling(), asset_s)){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type()));
+					break;
+				}
+
+				AccountFrm::pointer buyer;
+				if (!Environment::AccountFromDB(operation_process_order.buying().issuer(), buyer)) {
+					result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
+					result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.buying().issuer().c_str()));
+					LOG_ERROR("%s", result.desc().c_str());
+					break;
+				}
+
+				protocol::AssetStore asset_b;
+				if (!seller->GetAsset(operation_process_order.buying(), asset_b)){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type()));
+					break;
+				}
+				if (operation_process_order.fee_percent() < asset_b.property().fee_percent()){
+					result.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+					result.set_desc(utils::String::Format("asset(%s:%s:%d) fee percent is lower(%d)", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type(), asset_s.property().fee_percent()));
+					break;
+				}
+
+			}
+
+			break;
+		}
+		case protocol::Operation_Type_REGISTER_ASSET:
+		{
+			if ((protocol::AssetKey_Type)issue_asset.type() != protocol::AssetKey_Type_LIMIT){
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+				result.set_desc(utils::String::Format("Issue asset type must be limit"));
 				break;
 			}
 
-			if (!bumo::PublicKey::IsAddressValid(operation_process_order.selling().issuer())) {
+			if (issue_asset.amount() != 0) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+				result.set_desc(utils::String::Format("Issue limit asset amount must be than 0"));
 				break;
 			}
 
-			trim_code = operation_process_order.buying().code();
-			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+			if (!issue_asset.has_property()){
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+				result.set_desc(utils::String::Format("Issue limit asset should has property feild"));
 				break;
 			}
 
-			if (!bumo::PublicKey::IsAddressValid(operation_process_order.buying().issuer())) {
+			if (issue_asset.property().max_supply() <= 0) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+				result.set_desc(utils::String::Format("max_supply should be bigger than 0"));
 				break;
 			}
 
-			AccountFrm::pointer seller;
-			if (!Environment::AccountFromDB(operation_process_order.selling().issuer(), seller)) {
-				result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
-				result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.selling().issuer().c_str()));
-				LOG_ERROR("%s", result.desc().c_str());
-				break;
-			}
-
-			protocol::AssetStore asset_s;
-			if (!seller->GetAsset(operation_process_order.selling(), asset_s)){
+			std::string trim_code = issue_asset.code();
+			trim_code = utils::String::Trim(trim_code);
+			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE ||
+				trim_code.size() != issue_asset.code().size()) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type()));
-				break;
-			}			
-
-			AccountFrm::pointer buyer;
-			if (!Environment::AccountFromDB(operation_process_order.buying().issuer(), buyer)) {
-				result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
-				result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.buying().issuer().c_str()));
-				LOG_ERROR("%s", result.desc().c_str());
-				break;
-			}
-
-			protocol::AssetStore asset_b;
-			if (!seller->GetAsset(operation_process_order.buying(), asset_b)){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type()));
-				break;
-			}
-			if (operation_process_order.fee_percent() < asset_b.property().fee_percent()){
-				result.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-				result.set_desc(utils::String::Format("asset(%s:%s:%d) fee percent is lower(%d)", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type(), asset_s.property().fee_percent()));
+				result.set_desc(utils::String::Format("Asset code length should between (0,64]"));
 				break;
 			}
 
 			break;
 		}
-		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
-		{
+		case protocol::Operation_Type_SET_ASSET_FEE:
+		{			
+			const protocol::OperationSetAssetFee &asset_fee = operation.set_asset_fee();
 
+			if (source_address != asset_fee.key().issuer()){
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("Set asset fee must be issuer"));
+				break;
+			}
+
+			if (!asset_fee.has_key()){
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("Set asset fee must has key feild"));
+				break;
+			}
+
+			if ((protocol::AssetKey_Type)asset_fee.key().type() != protocol::AssetKey_Type_LIMIT){
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("Set asset fee type must be limit "));
+				break;
+			}
+
+			std::string trim_code = asset_fee.key().code();
+			//utils::String::Trim(trim_code);
+			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset code length should between (0,64]"));
+				break;
+			}
+
+			if (!bumo::PublicKey::IsAddressValid(asset_fee.key().issuer())) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
+				break;
+			}
+
+			if (asset_fee.fee() < 0) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("Set asset fee amount should be bigger than 0"));
+				break;
+			}
+			break;
 		}
 
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
@@ -531,8 +635,11 @@ namespace bumo {
 		case protocol::Operation_Type_PROCESS_ORDER:
 			ProcessOrder(environment);
 			break;
-		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
-			UpdateAssetProperty(environment);
+		case protocol::Operation_Type_REGISTER_ASSET:
+			RegisterAsset(environment);
+			break;
+		case protocol::Operation_Type_SET_ASSET_FEE:
+			SetAssetFee(environment);
 			break;
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;
@@ -605,7 +712,7 @@ namespace bumo {
 
 			environment->AddEntry(dest_account->GetAccountAddress(), dest_account);
 
-			std::string javascript = dest_account->GetProtoAccount().contract().payload();
+			/*std::string javascript = dest_account->GetProtoAccount().contract().payload();
 			if (!javascript.empty()) {
 
 				ContractParameter parameter;
@@ -621,20 +728,18 @@ namespace bumo {
 
 				std::string err_msg;
 				result_ = ContractManager::Instance().Execute(Contract::TYPE_V8, parameter, true);
-			}
+			}*/
 
 		} while (false);
 	}
 
 	void OperationFrm::IssueAsset(std::shared_ptr<Environment> environment) {
 
-
 		const protocol::OperationIssueAsset& ope = operation_.issue_asset();
 		do {
-			//can not issue self coin
-			if ((protocol::AssetKey_Type)ope.type() == protocol::AssetKey_Type_SELF_COIN){
+			if ((protocol::AssetKey_Type)ope.type() != protocol::AssetKey_Type_UNLIMIT){
 				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) can not issue self coin", source_account_->GetAccountAddress().c_str(), ope.code().c_str(), ope.type()));
+				result_.set_desc(utils::String::Format("Issue asset type must be unlimit"));
 				break;
 			}
 
@@ -647,26 +752,18 @@ namespace bumo {
 				protocol::AssetStore asset;
 				asset.mutable_key()->CopyFrom(key);
 				asset.set_amount(ope.amount());
-				asset.mutable_property()->CopyFrom(ope.property());
 				source_account_->SetAsset(asset);
 			}
 			else {
-				if (ope.type() == 0) {
-					int64_t amount = asset_e.amount() + ope.amount();
-					if (amount < asset_e.amount() || amount < ope.amount())
-					{
-						result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
-						result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), (int)key.type(), asset_e.amount(), ope.amount()));
-						break;
-					}
-					asset_e.set_amount(amount);
-					source_account_->SetAsset(asset_e);
-				}
-				else {
-					result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-					result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) repeat issue", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+				int64_t amount = asset_e.amount() + ope.amount();
+				if (amount < asset_e.amount() || amount < ope.amount())
+				{
+					result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
+					result_.set_desc(utils::String::Format("IssueAsset asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", key.issuer().c_str(), key.code().c_str(), (int)key.type(), asset_e.amount(), ope.amount()));
 					break;
 				}
+				asset_e.set_amount(amount);
+				source_account_->SetAsset(asset_e);
 			}
 
 		} while (false);
@@ -676,10 +773,9 @@ namespace bumo {
 		const protocol::OperationPayment& payment = operation_.payment();
 
 		do {
-			//can not pay self coin
-			if ((protocol::AssetKey_Type)payment.asset().key().type() == protocol::AssetKey_Type_SELF_COIN){
+			if ((protocol::AssetKey_Type)payment.asset().key().type() != protocol::AssetKey_Type_UNLIMIT && (protocol::AssetKey_Type)payment.asset().key().type() != protocol::AssetKey_Type_LIMIT){
 				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result_.set_desc(utils::String::Format("Payment asset(%s:%s:%d) can not pay self coin", payment.asset().key().issuer().c_str(), payment.asset().key().code().c_str(), (int)payment.asset().key().type()));
+				result_.set_desc(utils::String::Format("Payment asset type must be limit or unlimit"));
 				break;
 			}
 
@@ -696,16 +792,17 @@ namespace bumo {
 				protocol::AssetKey key = payment.asset().key();
 				if (!source_account_->GetAsset(key, asset_e)) {
 					result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-					result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+					result_.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 					break;
 				}
 
-				if (payment.asset().key().type() == 0 || (payment.asset().key().type() != 0 && source_account_->GetAccountAddress() != payment.asset().key().issuer() && dest_account->GetAccountAddress() != payment.asset().key().issuer() )){
+				if (payment.asset().key().type() == protocol::AssetKey_Type_UNLIMIT ||
+					(payment.asset().key().type() == protocol::AssetKey_Type_LIMIT && source_account_->GetAccountAddress() != payment.asset().key().issuer() && dest_account->GetAccountAddress() != payment.asset().key().issuer())){
 
-					int64_t sender_amount = asset_e.amount() -asset_e.freezn_amount() - payment.asset().amount();
+					int64_t sender_amount = asset_e.amount() - asset_e.freezn_amount() - payment.asset().amount();
 					if (sender_amount < 0) {
 						result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-						result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+						result_.set_desc(utils::String::Format("Asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 						break;
 					}
 					asset_e.set_amount(sender_amount);
@@ -734,7 +831,7 @@ namespace bumo {
 						int64_t left_amount = asset_e.property().max_supply() - asset_e.property().issued_amount() - payment.asset().amount();
 						if (left_amount < 0) {
 							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+							result_.set_desc(utils::String::Format("Asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 							break;
 						}
 						int64_t sender_amount = asset_e.property().issued_amount() + payment.asset().amount();
@@ -764,7 +861,7 @@ namespace bumo {
 						int64_t sender_amount = asset_e.amount() - asset_e.freezn_amount() - payment.asset().amount();
 						if (sender_amount < 0) {
 							result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-							result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+							result_.set_desc(utils::String::Format("Asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 							break;
 						}
 						asset_e.set_amount(sender_amount);
@@ -773,7 +870,7 @@ namespace bumo {
 						protocol::AssetStore dest_asset;
 						if (!dest_account->GetAsset(key, dest_asset)) {
 							result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-							result_.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+							result_.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 							break;
 						}
 						else {
@@ -787,7 +884,7 @@ namespace bumo {
 							int64_t issued_amount = dest_asset.property().issued_amount() - payment.asset().amount();
 							if (issued_amount < 0){
 								result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-								result_.set_desc(utils::String::Format("asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+								result_.set_desc(utils::String::Format("Asset(%s:%s:%d) low reserve", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 								break;
 							}
 							dest_asset.mutable_property()->set_issued_amount(issued_amount);
@@ -799,7 +896,7 @@ namespace bumo {
 				}
 			}
 			
-			std::string javascript = dest_account->GetProtoAccount().contract().payload();
+			/*std::string javascript = dest_account->GetProtoAccount().contract().payload();
 			if (!javascript.empty()){
 				ContractParameter parameter;
 				parameter.code_ = javascript;
@@ -813,7 +910,7 @@ namespace bumo {
 				parameter.pay_asset_amount_ = payment.asset();
 
 				result_ = ContractManager::Instance().Execute(Contract::TYPE_V8, parameter);
-			}
+			}*/
 		} while (false);
 	}
 
@@ -956,7 +1053,7 @@ namespace bumo {
 			proto_source_account.set_balance(new_balance);
 			proto_dest_account.set_balance(proto_dest_account.balance() + ope.amount());
 
-			std::string javascript = dest_account_ptr->GetProtoAccount().contract().payload();
+			/*std::string javascript = dest_account_ptr->GetProtoAccount().contract().payload();
 			if (!javascript.empty()) {
 
 				ContractParameter parameter;
@@ -973,7 +1070,7 @@ namespace bumo {
 				std::string err_msg;
 				result_ = ContractManager::Instance().Execute(Contract::TYPE_V8, parameter);
 
-			}
+			}*/
 		} while (false);
 	}
 
@@ -981,23 +1078,336 @@ namespace bumo {
 
 	void OperationFrm::ProcessOrder(std::shared_ptr<Environment> environment){
 		auto ope = operation_.process_order();
-		if (ope.order_id()==0){
-			CancelOrder(ope, environment);
+
+		do
+		{
+			Database& db = Storage::Instance().lite_db();
+			if (!CheckOrderVaild(ope, environment))
+				return;
+
+			order_result_.set_index(index_);
+			protocol::AssetKey const& sheep = ope.selling();
+			protocol::AssetKey const& wheat = ope.buying();
+
+			passive_ = false;
+			bool creating_new_order = false;
+			std::string order_id = ope.order_id();
+
+
+			if (!order_id.empty()){
+				sell_sheep_order_ = OrderFrame::LoadOrder(source_account_->GetAccountAddress(), order_id, db);
+
+				if (!sell_sheep_order_){
+					std::string error_desc = utils::String::Format("Account(%s) selling(%s:%s:%d) buying(%s:%s:%d) order id(" FMT_U64 ") not exist", 
+						source_account_->GetAccountAddress().c_str(),sheep.issuer().c_str(), sheep.code().c_str(), (int)sheep.type(),
+						wheat.issuer().c_str(), wheat.code().c_str(), (int)wheat.type(),order_id);
+					result_.set_code(protocol::ERRCODE_ORDER_NOT_FOUNT);
+					result_.set_desc(error_desc);
+					LOG_ERROR("%s", error_desc.c_str());
+
+					order_result_.set_code(protocol::ERRCODE_ORDER_NOT_FOUNT);
+					return;
+				}
+
+				sell_sheep_order_->GetOrder().CopyFrom(BuildOrder(source_account_->GetAccountAddress(),utils::String::BinToHexString(transaction_->GetContentHash()), ope, sell_sheep_order_->GetFlags()));
+				passive_ = sell_sheep_order_->GetFlags() & OrderFrame::PASSIVE_FLAG;
+			}
+			else{
+				// create a new order. first match and then storage  if left
+				creating_new_order = true;
+				protocol::Order o = BuildOrder(source_account_->GetAccountAddress(), utils::String::BinToHexString(transaction_->GetContentHash()), ope, passive_ ? OrderFrame::PASSIVE_FLAG : 0);
+				sell_sheep_order_ = std::make_shared<OrderFrame>(o);
+			}
+
+			//本单最大卖
+			int64_t max_sheep_send = sell_sheep_order_->GetAmount();
+			//账号最大可卖
+			int64_t max_amount_sheep_can_sell;
+			order_result_.set_code(protocol::ERRCODE_SUCCESS);
+
+			soci::transaction sql_tx(db.GetSession());
+
+			if (ope.amount() == 0){//for cancel
+				sell_sheep_order_->SetAmount(0);
+			}
+			else{
+
+				if (sheep.type() == protocol::AssetKey_Type_SELF_COIN){
+					max_amount_sheep_can_sell = source_account_->GetBalanceAboveReserve();
+				}
+				else{
+					max_amount_sheep_can_sell = sheep_asset_.amount();
+				}
+
+				int64_t max_wheat_can_buy;//最大可买小麦
+				if (wheat.type() == protocol::AssetKey_Type_SELF_COIN){
+					max_wheat_can_buy = INT64_MAX;
+				}
+				else{
+					max_wheat_can_buy = INT64_MAX;
+				}
+
+				protocol::Price const& sheepPrice = sell_sheep_order_->GetPrice();
+				{
+					int64_t max_sheep_based_wheat=0;
+					if (!utils::bigDivide(max_sheep_based_wheat, max_wheat_can_buy, sheepPrice.d(),
+						sheepPrice.n(),utils::Rounding::eRoundDown))
+						max_sheep_based_wheat = INT64_MAX;
+
+					if (max_amount_sheep_can_sell > max_sheep_based_wheat)
+						max_amount_sheep_can_sell = max_sheep_based_wheat;
+				}
+
+				if (max_amount_sheep_can_sell < max_sheep_send)
+					max_sheep_send = max_amount_sheep_can_sell;
+
+				int64_t sheep_sent=0, wheat_received=0;
+
+				protocol::Price max_wheat_price;
+				max_wheat_price.set_n(sheepPrice.d());
+				max_wheat_price.set_d(sheepPrice.n());
+
+				std::string order_desc = sell_sheep_order_->ToString();
+				LOG_INFO("%s max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ")", order_desc.c_str(), max_sheep_send, max_wheat_can_buy);
+
+				OrderExchange oe(transaction_->ledger_,environment);
+				//执行撮合
+				OrderExchange::ConvertResult r = oe.ConvertWithOrders(
+					sheep, max_sheep_send, sheep_sent, wheat, max_wheat_can_buy,
+					wheat_received, [this, &max_wheat_price](OrderFrame const& o) {
+					if (o.GetOrderID() == sell_sheep_order_->GetOrderID()){
+						// don't let the offer cross itself when updating it
+						return OrderExchange::eSkip;
+					}
+					if ((passive_ && (o.GetPrice() >= max_wheat_price)) ||(o.GetPrice() > max_wheat_price)){
+						return OrderExchange::eStop;
+					}
+					if (o.GetSellerID() == source_account_->GetAccountAddress()){
+						// we are crossing our own offer
+						result_.set_code(protocol::ERRCODE_ORDER_CROSS_SELF);
+						order_result_.set_code(protocol::ERRCODE_ORDER_CROSS_SELF);
+						return OrderExchange::eStop;//这为啥是stop，不应该是skip吗
+					}
+					return OrderExchange::eKeep;
+				});
+
+				LOG_INFO("%s match result: max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ") sheep_sent(" FMT_I64") wheat_received(" FMT_I64 ") ", order_desc.c_str(), max_sheep_send, max_wheat_can_buy, sheep_sent, wheat_received);
+				assert(sheep_sent >= 0);
+
+				switch (r)
+				{
+				case OrderExchange::eOK:
+				case OrderExchange::ePartial:
+					break;
+				case OrderExchange::eFilterStop:// ???????????????????????????????????????????????????????
+					if (order_result_.code() != protocol::ERRCODE_SUCCESS){
+						return;
+					}
+					break;
+				}
+
+				for (auto const& oatom : oe.GetOrderTrail()){
+					order_result_.add_orders_claimed()->CopyFrom(oatom);
+				}
+
+				if (wheat_received > 0){
+					//fee compulate
+					int64_t fee = sell_sheep_order_->GetFee(wheat_received);
+					int64_t wheat_received_after_fee = wheat_received - fee;
+					//AccountFrm::PayIssuerFee(environment,wheat,fee);
+
+					// it's OK to use mSourceAccount, mWheatLineA and mSheepLineA
+					// here as OfferExchange won't cross offers from source account
+					if (wheat.type() == protocol::AssetKey_Type_SELF_COIN){
+						if (!source_account_->AddBalance(wheat_received)){
+
+							std::string error_desc = utils::String::Format("Account(%s) balance(" FMT_I64 ") add(" FMT_I64 ") overflow", source_account_->GetAccountAddress().c_str(), source_account_->GetAccountBalance(), wheat_received);
+							// this would indicate a bug in OrderExchange
+							PROCESS_EXIT("%s", error_desc.c_str());
+						}
+					}
+					else{
+						int64_t new_amount = wheat_asset_.amount() + wheat_received;
+						if (new_amount < wheat_asset_.amount() || new_amount < wheat_received){
+							std::string error_desc = utils::String::Format("Asset(%s:%s:%d) overflow(" FMT_I64 " " FMT_I64 ")", wheat_asset_.key().issuer().c_str(), wheat_asset_.key().code().c_str(), wheat_asset_.key().type(), wheat_asset_.amount(), wheat_received);
+							/*result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
+							result_.set_desc(error_desc);
+							order_result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE);
+							LOG_ERROR("%s", error_desc.c_str());*/
+
+							// this would indicate a bug in OrderExchange
+							PROCESS_EXIT("%s", error_desc.c_str());
+							return;
+						}
+						wheat_asset_.set_amount(new_amount);
+						source_account_->SetAsset(wheat_asset_);
+					}
+
+					if (sheep.type() == protocol::AssetKey_Type_SELF_COIN){
+						int64_t reserve_coin = LedgerManager::Instance().GetCurFeeConfig().base_reserve();
+						if (source_account_->GetAccountBalance() - sheep_sent < reserve_coin){
+							std::string error_desc = utils::String::Format("Account(%s) balance(" FMT_I64 ") not enough for reserve(" FMT_I64 ")", 
+								source_account_->GetAccountAddress().c_str(), source_account_->GetAccountBalance(), reserve_coin);
+
+							/*result_.set_code(protocol::ERRCODE_ACCOUNT_LOW_RESERVE);
+							result_.set_desc(error_desc);
+							order_result_.set_code(protocol::ERRCODE_ACCOUNT_LOW_RESERVE);
+							LOG_FATAL("%s", error_desc.c_str());*/
+
+							// this would indicate a bug in OrderExchange
+							PROCESS_EXIT("%s", error_desc.c_str());
+							return;
+						}
+						source_account_->AddBalance(-sheep_sent);
+					}
+					else{
+						int64_t new_amount = sheep_asset_.amount() - sheep_sent;
+						if (new_amount < 0){
+							std::string error_desc = utils::String::Format("Account(%s) asset(%s:%s:%d) low reserve,order sold more than asset(" FMT_I64 ":" FMT_I64 ")",
+								source_account_->GetAccountAddress().c_str(), sheep.issuer().c_str(), sheep.code().c_str(), (int)sheep.type(),
+								sheep_asset_.amount() , sheep_sent);
+
+							/*result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+							result_.set_desc(error_desc);
+							order_result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+							LOG_FATAL("%s", error_desc.c_str());*/
+
+							// this would indicate a bug in OrderExchange
+							PROCESS_EXIT("%s", error_desc.c_str());
+							return;
+						}
+						sheep_asset_.set_amount(new_amount);
+						source_account_->SetAsset(sheep_asset_);
+					}
+				}
+
+				// recomputes the amount of sheep for sale
+				sell_sheep_order_->SetAmount(max_sheep_send - sheep_sent);
+			}
+
+			//剩余单子数量有
+			if (sell_sheep_order_->GetAmount() > 0){ 
+				// we still have sheep to sell so leave an offer
+
+				if (creating_new_order){
+					std::string order_id_str = utils::generatId(transaction_->ledger_->GetClosingLedgerSeq(), transaction_->index_, index_);
+					sell_sheep_order_->SetOrderID(order_id_str);
+					order_result_.set_effect(protocol::OperationOrderResult_OrderEffectType_ORDER_CREATED);
+					sell_sheep_order_->StoreAdd(transaction_->ledger_,db);//存储剩余数量的单
+				}
+				else{//改单
+					//innerResult().success().offer.effect(MANAGE_OFFER_UPDATED);
+					order_result_.set_effect(protocol::OperationOrderResult_OrderEffectType_ORDER_UPDATED);
+					sell_sheep_order_->StoreChange(transaction_->ledger_, db);
+				}
+				order_result_.mutable_order()->CopyFrom(sell_sheep_order_->GetOrder());
+			}
+			else{//完全成交 或者 撤单
+				//innerResult().success().offer.effect(MANAGE_OFFER_DELETED);
+				order_result_.set_effect(protocol::OperationOrderResult_OrderEffectType_ORDER_DELETED);
+				//撤单
+				if (!creating_new_order)
+					sell_sheep_order_->StoreDelete(db);
+			}
+
+			sql_tx.commit();
+
+		} while (false);
+	}
+
+	bool OperationFrm::CheckOrderVaild(protocol::OperationProcessOrder const& ope, std::shared_ptr<Environment> environment){
+		protocol::AssetKey const& sheep = ope.selling();
+		protocol::AssetKey const& wheat = ope.buying();
+
+		if (ope.amount() == 0)
+			return true;
+
+		if (sheep.type() != protocol::AssetKey_Type_SELF_COIN){
+			if (!source_account_->GetAsset(sheep, sheep_asset_)){
+				std::string error_desc = utils::String::Format("Account(%s) do not hold asset(%s:%s:%d)",source_account_->GetAccountAddress().c_str() ,sheep.issuer().c_str(), sheep.code().c_str(), (int)sheep.type());
+				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result_.set_desc(error_desc);
+				LOG_ERROR("%s", error_desc.c_str());
+				return false;
+			}
+
+			if (sheep_asset_.amount() == 0){
+				std::string error_desc = utils::String::Format("Account(%s) hold asset(%s:%s:%d) witch amount is 0", source_account_->GetAccountAddress().c_str(), sheep.issuer().c_str(), sheep.code().c_str(), (int)sheep.type());
+				result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+				result_.set_desc(error_desc);
+				LOG_ERROR("%s", error_desc.c_str());
+				return false;
+			}
 		}
-		else {
-			InsertOrder(ope, environment);
+
+		if (wheat.type() != protocol::AssetKey_Type_SELF_COIN){
+			source_account_->GetAsset(wheat, wheat_asset_);
 		}
+
+		return true;
 	}
 
-	void OperationFrm::CancelOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment){
-
+	protocol::Order OperationFrm::BuildOrder(const std::string& account_address, const std::string& tx_hash, const protocol::OperationProcessOrder& op, uint32_t flags){
+		protocol::Order o;
+		o.set_seller_address(account_address);
+		o.mutable_remain_order()->CopyFrom(op);
+		o.set_flags(flags);
+		o.set_tx_hash(tx_hash);
+		return o;
 	}
 
-	void OperationFrm::InsertOrder(protocol::OperationProcessOrder& porder, std::shared_ptr<Environment> environment){
+	void OperationFrm::RegisterAsset(std::shared_ptr<Environment> environment){
 
+		const protocol::OperationIssueAsset& ope = operation_.issue_asset();
+		do {
+			if ((protocol::AssetKey_Type)ope.type() != protocol::AssetKey_Type_LIMIT){
+				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result_.set_desc(utils::String::Format("Register asset type must be limit "));
+				break;
+			}
+
+			protocol::AssetStore asset_e;
+			protocol::AssetKey key;
+			key.set_issuer(source_account_->GetAccountAddress());
+			key.set_code(ope.code());
+			key.set_type((protocol::AssetKey_Type)ope.type());
+			if (!source_account_->GetAsset(key, asset_e)) {
+				protocol::AssetStore asset;
+				asset.mutable_key()->CopyFrom(key);
+				asset.set_amount(ope.amount());
+				asset.mutable_property()->CopyFrom(ope.property());
+				source_account_->SetAsset(asset);
+			}
+			else {
+				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result_.set_desc(utils::String::Format("Register asset(%s:%s:%d) repeat", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
+			}
+
+		} while (false);
 	}
+	void OperationFrm::SetAssetFee(std::shared_ptr<Environment> environment){
 
-	void OperationFrm::UpdateAssetProperty(std::shared_ptr<Environment> environment){}
+		const protocol::OperationSetAssetFee &ope = operation_.set_asset_fee();
+		do 
+		{
+			protocol::AssetStore asset;
+			if (!source_account_->GetAsset(ope.key(), asset)){
+				result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
+				result_.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", ope.key().issuer().c_str(), ope.key().code().c_str(), (int)ope.key().type()));
+				break;
+			}
+
+			if (!asset.has_property()){
+				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result_.set_desc(utils::String::Format("Asset(%s:%s:%d) does not have property", ope.key().issuer().c_str(), ope.key().code().c_str(), (int)ope.key().type()));
+				break;
+			}
+
+			asset.mutable_property()->set_fee_percent(ope.fee());
+
+		} while (false);
+		
+	}
 
 	void OperationFrm::FreeznAsset(protocol::AssetStore& asset, const int64_t& amount){
 		int64_t new_amount = asset.freezn_amount() + amount;
@@ -1007,6 +1417,11 @@ namespace bumo {
 	void OperationFrm::UnfreeznAsset(protocol::AssetStore& asset, const int64_t& amount){
 		int64_t new_amount = asset.freezn_amount() - amount;
 		asset.set_freezn_amount(new_amount);
+	}
+
+	void OperationFrm::GetOrderResult(std::vector<protocol::OperationOrderResult>& order_operation_results){
+		if (operation_.type() ==protocol::Operation_Type_PROCESS_ORDER)
+			order_operation_results.push_back(order_result_);
 	}
 	
 	void OperationFrm::OptFee(const protocol::Operation_Type type) {
@@ -1038,8 +1453,11 @@ namespace bumo {
 		case protocol::Operation_Type_PROCESS_ORDER:
 			ope_fee_ = fee_config.process_order_fee();
 			break;
-		case protocol::Operation_Type_UPDATE_ASSET_PROPERTY:
-			ope_fee_ = fee_config.update_asset_property_fee();
+		case protocol::Operation_Type_REGISTER_ASSET:
+			
+			break;
+		case protocol::Operation_Type_SET_ASSET_FEE:
+
 			break;
 		case protocol::Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_:
 			break;

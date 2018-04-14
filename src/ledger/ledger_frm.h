@@ -110,6 +110,7 @@ namespace bumo {
 		void SetTestMode(bool test_mode);
 		bool IsTestMode();
 
+		int64_t GetClosingLedgerSeq() const;
 	private:
 		protocol::Ledger ledger_;
 		bool is_test_mode_;

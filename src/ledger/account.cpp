@@ -58,6 +58,10 @@ namespace bumo {
 		return account_info_.balance();
 	}
 
+	int64_t AccountFrm::GetBalanceAboveReserve() const{
+		return account_info_.balance() - LedgerManager::Instance().GetCurFeeConfig().base_reserve();
+	}
+
 	std::string AccountFrm::GetAccountAddress()const {
 		return account_info_.address();
 	}
@@ -312,10 +316,15 @@ namespace bumo {
 			{
 			case utils::ChangeAction::ADD:
 			case utils::ChangeAction::MOD:
-				if (asset.amount() == 0)
-					trie_asset.Delete(asset.key().SerializeAsString());
-				else
+				if (asset.key().type() == protocol::AssetKey_Type_UNLIMIT){
+					if (asset.amount() == 0)
+						trie_asset.Delete(asset.key().SerializeAsString());
+					else
+						trie_asset.Set(asset.key().SerializeAsString(), asset.SerializeAsString());
+				}
+				if (asset.key().type() == protocol::AssetKey_Type_LIMIT){
 					trie_asset.Set(asset.key().SerializeAsString(), asset.SerializeAsString());
+				}
 				break;
 			case utils::ChangeAction::DEL:
 				trie_asset.Delete(asset.key().SerializeAsString());
@@ -365,6 +374,114 @@ namespace bumo {
 		acc_frm->SetProtoMasterWeight(1);
 		acc_frm->SetProtoTxThreshold(1);
 		return acc_frm;
+	}
+
+	bool AccountFrm::PayIssuerFee(std::shared_ptr<Environment> environment, const protocol::AssetKey& asset_key, int64_t fee){
+		AccountFrm::pointer account;
+		if (!environment->GetEntry(asset_key.issuer(), account)){
+			LOG_ERROR("Account(%s) must be exist,invalid database state", account->GetAccountAddress().c_str());
+			return false;
+		}
+
+		if (asset_key.type() == protocol::AssetKey_Type_LIMIT){
+			protocol::AssetStore asset;
+			if (account->GetAsset(asset_key, asset)){
+				int64_t new_amount = asset.property().issued_amount() - fee;
+				if (new_amount < 0){
+					LOG_ERROR("Asset(%:%s:%d) receive fee(" FMT_I64 ")", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type(), fee);
+					return false;
+				}
+				asset.mutable_property()->set_issued_amount(new_amount);
+				account->SetAsset(asset);
+			}
+		}
+		else if (asset_key.type() == protocol::AssetKey_Type_SELF_COIN){
+			if (!account->AddBalance(fee)){
+				LOG_ERROR("Account(%s) balance(" FMT_I64 ") add (" FMT_I64 ") failed", account->GetAccountAddress().c_str(), account->GetAccountBalance(), fee);
+			}
+		}
+		else{
+			LOG_ERROR("Asset(%:%s:%d) type error", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type());
+			return false;
+		}
+		return true;
+	}
+
+	bool AccountFrm::TransferAsset(const protocol::AssetKey& asset_key, int64_t amount){
+
+		if (asset_key.type() == protocol::AssetKey_Type_LIMIT){
+
+			if (asset_key.issuer() == GetAccountAddress()){
+				protocol::AssetStore asset;
+				if (!GetAsset(asset_key, asset)){
+					LOG_ERROR("Asset(%:%s:%d) not exist", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type());
+					return false;
+				}
+
+				if (amount > 0){//receive
+					int64_t new_issued = asset.property().issued_amount() - amount;
+					if (new_issued > asset.property().max_supply()){
+						LOG_ERROR("Asset(%:%s:%d) max supply(" FMT_I64 ") issued(" FMT_I64 ") ,new issue(" FMT_I64 ")", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type(), (int64_t)asset.property().max_supply(), (int64_t)asset.property().issued_amount(), amount);
+						return false;
+					}
+					asset.mutable_property()->set_issued_amount(new_issued);
+					SetAsset(asset);
+				}
+				else{//amount <0 :pay
+					
+					int64_t new_issued = asset.property().issued_amount() - amount;
+					if (new_issued > asset.property().max_supply()){
+						LOG_ERROR("Asset(%:%s:%d) max supply(" FMT_I64 ") issued(" FMT_I64 ") ,new issue(" FMT_I64 ")", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type(), (int64_t)asset.property().max_supply(), (int64_t)asset.property().issued_amount(), amount);
+						return false;
+					}
+					asset.mutable_property()->set_issued_amount(new_issued);
+					SetAsset(asset);
+				}
+			}
+			else{
+				if (amount > 0){//receive
+					protocol::AssetStore asset;
+					GetAsset(asset_key, asset);
+					int64_t new_issued = asset.amount() + amount;
+					SetAsset(asset);
+				}
+				else{//amount <0 :pay
+					protocol::AssetStore asset;
+					if (!GetAsset(asset_key, asset)){
+						LOG_ERROR("Asset(%:%s:%d) not exist", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type());
+						return false;
+					}
+					int64_t new_issued = asset.amount() + amount;
+					if (new_issued < 0){
+						LOG_ERROR("Asset(%:%s:%d) amount(" FMT_I64 ") not enough for pay(" FMT_I64 ")", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type(), (int64_t)asset.amount(), amount);
+						return false;
+					}
+					SetAsset(asset);
+				}
+			}
+		}
+		else if (asset_key.type() == protocol::AssetKey_Type_SELF_COIN){
+			if (amount > 0){//receive
+				if (!AddBalance(amount)){
+					LOG_ERROR("Account(%s) balance(" FMT_I64 ") add (" FMT_I64 ") failed", GetAccountAddress().c_str(), GetAccountBalance(), amount);
+				}
+			}
+			else{//pay
+				int64_t reserve_coin = LedgerManager::Instance().GetCurFeeConfig().base_reserve();
+
+				int64_t new_balance = GetAccountBalance() + amount;
+				if (new_balance < reserve_coin){
+					LOG_ERROR("Account(%s) balance(" FMT_I64 ") - base_reserve(" FMT_I64 ") not enough for pay (" FMT_I64 ") ", GetAccountBalance(), reserve_coin, amount);
+					return false;
+				}
+				AddBalance(amount);
+			}
+		}
+		else{
+			LOG_ERROR("Asset(%:%s:%d) type error", asset_key.issuer().c_str(), asset_key.code().c_str(), (int)asset_key.type());
+			return false;
+		}
+		return true;
 	}
 }
 

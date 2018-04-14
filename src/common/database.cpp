@@ -16,7 +16,7 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #include "database.h"
 #include <main/configure.h>
 #include <utils/logger.h>
-//#include "../ledger//OfferFrame.h"
+#include <ledger/order_frm.h>
 
 #include <sstream>
 #include <stdexcept>
@@ -40,14 +40,12 @@ namespace bumo
 
 	bool Database::gDriversRegistered = false;
 
-	static unsigned long const SCHEMA_VERSION = 5;
-
-	static void setSerializable(soci::session& sess){
+	static void SetSerializable(soci::session& sess){
 		sess << "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL "
 			"SERIALIZABLE";
 	}
 
-	void Database::registerDrivers() {
+	void Database::RegisterDrivers() {
 		if (!gDriversRegistered)
 		{
 			register_factory_sqlite3();
@@ -59,246 +57,96 @@ namespace bumo
 	}
 
 	Database::Database(const std::string& connect_string) {
-		registerDrivers();
+		RegisterDrivers();
 
-		LOG_INFO("Connecting to: %s", connect_string);
+		LOG_INFO("Connecting to: %s", connect_string.c_str());
 
+		try{
+			std::string connect_str = "sqlite3://" + connect_string;
+			session_.open(connect_str);
+		}
+		catch (std::exception e){
+			PROCESS_EXIT("Sqlite database connect path(%s) error", connect_string.c_str());
+		}
 
-		mSession.open(connect_string);
-		if (isSqlite()){
-			mSession << "PRAGMA journal_mode = WAL";
+		connect_string_ = "sqlite3://" + connect_string;;
+		if (IsSqlite()){
+			session_ << "PRAGMA journal_mode = WAL";
 			// busy_timeout gives room for external processes
 			// that may lock the database for some time
-			mSession << "PRAGMA busy_timeout = 10000";
+			session_ << "PRAGMA busy_timeout = 10000";
 		}
 		else{
-			setSerializable(mSession);
+			SetSerializable(session_);
 		}
 	}
 
-	/*
-	void
-	Database::applySchemaUpgrade(unsigned long vers)
-	{
-	clearPreparedStatementCache();
+	
 
-	switch (vers)
-	{
-	case 2:
-	HerderPersistence::dropAll(*this);
-	break;
-
-	case 3:
-	DataFrame::dropAll(*this);
-	break;
-
-	case 4:
-	BanManager::dropAll(*this);
-	mSession << "CREATE INDEX scpquorumsbyseq ON scpquorums(lastledgerseq)";
-	break;
-
-	case 5:
-	try
-	{
-	mSession << "ALTER TABLE accountdata ADD lastmodified INT NOT NULL "
-	"DEFAULT 0;";
-	}
-	catch (soci::soci_error& e)
-	{
-	if (std::string(e.what()).find("lastmodified") == std::string::npos)
-	{
-	throw;
-	}
-	}
-	break;
-
-	default:
-	throw std::runtime_error("Unknown DB schema version");
-	break;
-	}
-	}
-
-	void
-	Database::upgradeToCurrentSchema()
-	{
-	auto vers = getDBSchemaVersion();
-	if (vers > SCHEMA_VERSION)
-	{
-	std::string s = ("DB schema version " + std::to_string(vers) +
-	" is newer than application schema " +
-	std::to_string(SCHEMA_VERSION));
-	throw std::runtime_error(s);
-	}
-	while (vers < SCHEMA_VERSION)
-	{
-	++vers;
-	CLOG(INFO, "Database")
-	<< "Applying DB schema upgrade to version " << vers;
-	applySchemaUpgrade(vers);
-	putSchemaVersion(vers);
-	}
-	assert(vers == SCHEMA_VERSION);
-	}
-
-	void
-	Database::putSchemaVersion(unsigned long vers)
-	{
-	mApp.getPersistentState().setState(PersistentState::kDatabaseSchema,
-	std::to_string(vers));
-	}
-
-
-	unsigned long
-	Database::getDBSchemaVersion()
-	{
-	auto vstr =
-	mApp.getPersistentState().getState(PersistentState::kDatabaseSchema);
-	unsigned long vers = 0;
-	try
-	{
-	vers = std::stoul(vstr);
-	}
-	catch (...)
-	{
-	}
-	if (vers == 0)
-	{
-	throw std::runtime_error("No DB schema version found, try --newdb");
-	}
-	return vers;
-	}
-
-	unsigned long
-	Database::getAppSchemaVersion()
-	{
-	return SCHEMA_VERSION;
-	}
-	*/
-	/*
-	medida::TimerContext
-	Database::getInsertTimer(std::string const& entityName)
-	{
-	mEntityTypes.insert(entityName);
-	mQueryMeter.Mark();
-	return mApp.getMetrics()
-	.NewTimer({"database", "insert", entityName})
-	.TimeScope();
-	}
-
-	medida::TimerContext
-	Database::getSelectTimer(std::string const& entityName)
-	{
-	mEntityTypes.insert(entityName);
-	mQueryMeter.Mark();
-	return mApp.getMetrics()
-	.NewTimer({"database", "select", entityName})
-	.TimeScope();
-	}
-
-	medida::TimerContext
-	Database::getDeleteTimer(std::string const& entityName)
-	{
-	mEntityTypes.insert(entityName);
-	mQueryMeter.Mark();
-	return mApp.getMetrics()
-	.NewTimer({"database", "delete", entityName})
-	.TimeScope();
-	}
-
-	medida::TimerContext
-	Database::getUpdateTimer(std::string const& entityName)
-	{
-	mEntityTypes.insert(entityName);
-	mQueryMeter.Mark();
-	return mApp.getMetrics()
-	.NewTimer({"database", "update", entityName})
-	.TimeScope();
-	}
-	*/
-	void
-		Database::setCurrentTransactionReadOnly()
-	{
-		if (!isSqlite())
-		{
-			auto prep = getPreparedStatement("SET TRANSACTION READ ONLY");
+	void Database::SetCurrentTransactionReadOnly(){
+		if (!IsSqlite()){
+			auto prep = GetPreparedStatement("SET TRANSACTION READ ONLY");
 			auto& st = prep.statement();
 			st.define_and_bind();
 			st.execute(false);
 		}
 	}
 
-	bool
-		Database::isSqlite() const
-	{
-		return bumo::Configure::Instance().db_configure_.sqlite_.find("sqlite3:") !=
+	bool Database::IsSqlite() const	{
+		return connect_string_.find("sqlite3:") !=
 			std::string::npos;
 	}
 
-	bool
-		Database::canUsePool() const
-	{
-		return !(bumo::Configure::Instance().db_configure_.sqlite_ == ("sqlite3://:memory:"));
+	bool Database::CanUsePool() const {
+		return !(connect_string_ == ("sqlite3://:memory:"));
 	}
 
-	void
-		Database::clearPreparedStatementCache()
-	{
+	void Database::ClearPreparedStatementCache(){
 		// Flush all prepared statements; in sqlite they represent open cursors
 		// and will conflict with any DROP TABLE commands issued below
-		for (auto st : mStatements)
-		{
+		for (auto st : statements_)	{
 			st.second->clean_up(true);
 		}
-		mStatements.clear();
+		statements_.clear();
 		//mStatementsSize.set_count(mStatements.size());
 	}
 
-	void
-		Database::initialize()
-	{
-		clearPreparedStatementCache();
+	void Database::Initialize()	{
+		ClearPreparedStatementCache();
 
-		//OfferFrame::dropAll(*this);		// jin todo
-
+		OrderFrame::DropAll(*this);
+		//OrderFrame::Initialize(*this);
 	}
 
-	soci::session&
-		Database::getSession()
-	{
+	soci::session& Database::GetSession(){
 		// global session can only be used from the main thread
 		//assertThreadIsMain();		// maybe err , todo
-		return mSession;
+		return session_;
 	}
 
-	soci::connection_pool&
-		Database::getPool()
-	{
-		if (!mPool)
-		{
-			auto const& c = bumo::Configure::Instance().db_configure_.sqlite_;
-			if (!canUsePool())
-			{
+	soci::connection_pool&	Database::GetPool()	{
+		if (!pool_){
+			auto const& c = connect_string_;
+			if (!CanUsePool()){
 				std::string s("Can't create connection pool to ");
-				s += bumo::Configure::Instance().db_configure_.sqlite_;
+				s += connect_string_;
 				throw std::runtime_error(s);
 			}
 			size_t n = std::thread::hardware_concurrency();
-			LOG_INFO("Establishing %d -entry connection pool to:%s", bumo::Configure::Instance().db_configure_.sqlite_);
+			LOG_INFO("Establishing %d -entry connection pool to:%s", connect_string_);
 
-			mPool = make_unique<soci::connection_pool>(n);
-			for (size_t i = 0; i < n; ++i)
-			{
+			pool_ = make_unique<soci::connection_pool>(n);
+			for (size_t i = 0; i < n; ++i){
 				LOG_DEBUG("Opening pool entry %d", i);
-				soci::session& sess = mPool->at(i);
+				soci::session& sess = pool_->at(i);
 				sess.open(c);
-				if (!isSqlite())
-				{
-					setSerializable(sess);
+				if (!IsSqlite()){
+					SetSerializable(sess);
 				}
 			}
 		}
-		assert(mPool);
-		return *mPool;
+		assert(pool_);
+		return *pool_;
 	}
 
 	/*
@@ -316,12 +164,11 @@ namespace bumo
 
 	public:
 		SQLLogContext(std::string const& name, soci::session& sess)
-			: mName(name), mSess(sess)
-		{
+			: mName(name), mSess(sess){
 			mSess.set_log_stream(&mCapture);
 		}
-		~SQLLogContext()
-		{
+
+		~SQLLogContext(){
 			mSess.set_log_stream(nullptr);
 			std::string captured = mCapture.str();
 			std::istringstream rd(captured);
@@ -334,8 +181,7 @@ namespace bumo
 			LOG_INFO("Database [SQL] -----------------------");
 
 
-			while (std::getline(rd, buf))
-			{
+			while (std::getline(rd, buf)){
 				LOG_INFO("Database [SQL] %s %s", mName, buf);
 				buf.clear();
 			}
@@ -348,110 +194,24 @@ namespace bumo
 		}
 	};
 
-	StatementContext
-		Database::getPreparedStatement(std::string const& query)
-	{
-		auto i = mStatements.find(query);
+	StatementContext Database::GetPreparedStatement(std::string const& query){
+		auto i = statements_.find(query);
 		std::shared_ptr<soci::statement> p;
-		if (i == mStatements.end())
-		{
-			p = std::make_shared<soci::statement>(mSession);
+		if (i == statements_.end()){
+			p = std::make_shared<soci::statement>(session_);
 			p->alloc();
 			p->prepare(query);
-			mStatements.insert(std::make_pair(query, p));
+			statements_.insert(std::make_pair(query, p));
 			//mStatementsSize.set_count(mStatements.size());
 		}
-		else
-		{
+		else{
 			p = i->second;
 		}
 		StatementContext sc(p);
 		return sc;
 	}
 
-	std::shared_ptr<SQLLogContext>
-		Database::captureAndLogSQL(std::string contextName)
-	{
-		return make_shared<SQLLogContext>(contextName, mSession);
+	std::shared_ptr<SQLLogContext> Database::CaptureAndLogSQL(std::string contextName)	{
+		return make_shared<SQLLogContext>(contextName, session_);
 	}
-	/*
-	medida::Meter&
-	Database::getQueryMeter()
-	{
-	return mQueryMeter;
-	}
-
-	std::chrono::nanoseconds
-	Database::totalQueryTime() const
-	{
-	std::vector<std::string> qtypes = {"insert", "delete", "select", "update"};
-	std::chrono::nanoseconds nsq(0);
-	for (auto const& q : qtypes)
-	{
-	for (auto const& e : mEntityTypes)
-	{
-	auto& timer = mApp.getMetrics().NewTimer({"database", q, e});
-	uint64_t sumns = static_cast<uint64_t>(
-	timer.sum() *
-	static_cast<double>(timer.duration_unit().count()));
-	nsq += std::chrono::nanoseconds(sumns);
-	}
-	}
-	return nsq;
-	}
-
-	void
-	Database::excludeTime(std::chrono::nanoseconds const& queryTime,
-	std::chrono::nanoseconds const& totalTime)
-	{
-	mExcludedQueryTime += queryTime;
-	mExcludedTotalTime += totalTime;
-	}
-
-	uint32_t
-	Database::recentIdleDbPercent()
-	{
-	std::chrono::nanoseconds query = totalQueryTime();
-	query -= mLastIdleQueryTime;
-	query -= mExcludedQueryTime;
-
-	std::chrono::nanoseconds total = mApp.getClock().now() - mLastIdleTotalTime;
-	total -= mExcludedTotalTime;
-
-	uint32_t queryPercent =
-	static_cast<uint32_t>((100 * query.count()) / total.count());
-	uint32_t idlePercent = 100 - queryPercent;
-	if (idlePercent > 100)
-	{
-	// This should never happen, but clocks are not perfectly well behaved.
-	CLOG(WARNING, "Database") << "DB idle percent (" << idlePercent
-	<< ") over 100, limiting to 100";
-	idlePercent = 100;
-	}
-
-	CLOG(DEBUG, "Database") << "Estimated DB idle: " << idlePercent << "%"
-	<< " (query=" << query.count() << "ns"
-	<< ", total=" << total.count() << "ns)";
-
-	mLastIdleQueryTime = totalQueryTime();
-	mLastIdleTotalTime = mApp.getClock().now();
-	mExcludedQueryTime = std::chrono::nanoseconds(0);
-	mExcludedTotalTime = std::chrono::nanoseconds(0);
-	return idlePercent;
-	}
-
-	DBTimeExcluder::DBTimeExcluder(Application& app)
-	: mApp(app)
-	, mStartQueryTime(app.getDatabase().totalQueryTime())
-	, mStartTotalTime(app.getClock().now())
-	{
-	}
-
-	DBTimeExcluder::~DBTimeExcluder()
-	{
-	auto deltaQ = mApp.getDatabase().totalQueryTime() - mStartQueryTime;
-	auto deltaT = mApp.getClock().now() - mStartTotalTime;
-	mApp.getDatabase().excludeTime(deltaQ, deltaT);
-	}
-	*/
 }

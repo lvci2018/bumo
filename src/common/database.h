@@ -49,29 +49,23 @@ namespace bumo
 	 */
 	class StatementContext : utils::NonCopyable
 	{
-		std::shared_ptr<soci::statement> mStmt;
+		std::shared_ptr<soci::statement> stmt_;
 
 	public:
-		StatementContext(std::shared_ptr<soci::statement> stmt) : mStmt(stmt)
-		{
-			mStmt->clean_up(false);
+		StatementContext(std::shared_ptr<soci::statement> stmt) : stmt_(stmt){
+			stmt_->clean_up(false);
 		}
-		StatementContext(StatementContext&& other)
-		{
-			mStmt = other.mStmt;
-			other.mStmt.reset();
+		StatementContext(StatementContext&& other){
+			stmt_ = other.stmt_;
+			other.stmt_.reset();
 		}
-		~StatementContext()
-		{
-			if (mStmt)
-			{
-				mStmt->clean_up(false);
+		~StatementContext(){
+			if (stmt_){
+				stmt_->clean_up(false);
 			}
 		}
-		soci::statement&
-			statement()
-		{
-			return *mStmt;
+		soci::statement& statement(){
+			return *stmt_;
 		}
 	};
 
@@ -102,10 +96,10 @@ namespace bumo
 	class Database : utils::NonMovableOrCopyable
 	{
 		//medida::Meter& mQueryMeter;
-		soci::session mSession;
-		std::unique_ptr<soci::connection_pool> mPool;
+		soci::session session_;
+		std::unique_ptr<soci::connection_pool> pool_;
 
-		std::map<std::string, std::shared_ptr<soci::statement>> mStatements;
+		std::map<std::string, std::shared_ptr<soci::statement>> statements_;
 		//medida::Counter& mStatementsSize;
 
 		//cache::lru_cache<std::string, std::shared_ptr<LedgerEntry const>> mEntryCache;
@@ -119,9 +113,10 @@ namespace bumo
 		//VirtualClock::time_point mLastIdleTotalTime;
 
 		static bool gDriversRegistered;
-		static void registerDrivers();
+		static void RegisterDrivers();
 		//void applySchemaUpgrade(unsigned long vers);
 
+		std::string connect_string_;
 	public:
 		// Instantiate object and connect to app.getConfig().DATABASE;
 		// if there is a connection error, this will throw.
@@ -149,17 +144,17 @@ namespace bumo
 		// Return a logging helper that will capture all SQL statements made
 		// on the main connection while active, and will log those statements
 		// to the process' log for diagnostics. For testing and perf tuning.
-		std::shared_ptr<SQLLogContext> captureAndLogSQL(std::string contextName);
+		std::shared_ptr<SQLLogContext> CaptureAndLogSQL(std::string contextName);
 
 		// Return a helper object that borrows, from the Database, a prepared
 		// statement handle for the provided query. The prepared statement handle
 		// is ceated if necessary before borrowing, and reset (unbound from data)
 		// when the statement context is destroyed.
-		StatementContext getPreparedStatement(std::string const& query);
+		StatementContext GetPreparedStatement(std::string const& query);
 
 		// Purge all cached prepared statements, closing their handles with the
 		// database.
-		void clearPreparedStatementCache();
+		void ClearPreparedStatementCache();
 
 		// Return metric-gathering timers for various families of SQL operation.
 		// These timers automatically count the time they are alive for,
@@ -172,37 +167,25 @@ namespace bumo
 		// If possible (i.e. "on postgres") issue an SQL pragma that marks
 		// the current transaction as read-only. The effects of this last
 		// only as long as the current SQL transaction.
-		void setCurrentTransactionReadOnly();
+		void SetCurrentTransactionReadOnly();
 
 		// Return true if the Database target is SQLite, otherwise false.
-		bool isSqlite() const;
+		bool IsSqlite() const;
 
 		// Return true if a connection pool is available for worker threads
 		// to read from the database through, otherwise false.
-		bool canUsePool() const;
+		bool CanUsePool() const;
 
 		// Drop and recreate all tables in the database target. This is called
 		// by the --newdb command-line flag on stellar-core.
-		void initialize();
-
-		// Save `vers` as schema version.
-		void putSchemaVersion(unsigned long vers);
-
-		// Get current schema version in DB.
-		unsigned long getDBSchemaVersion();
-
-		// Get current schema version of running application.
-		unsigned long getAppSchemaVersion();
-
-		// Check schema version and apply any upgrades if necessary.
-		//void upgradeToCurrentSchema();
+		void Initialize();
 
 		// Access the underlying SOCI session object
-		soci::session& getSession();
+		soci::session& GetSession();
 
 		// Access the optional SOCI connection pool available for worker
 		// threads. Throws an error if !canUsePool().
-		soci::connection_pool& getPool();
+		soci::connection_pool& GetPool();
 
 		// Access the LedgerEntry cache. Note: clients are responsible for
 		// invalidating entries in this cache as they perform statements

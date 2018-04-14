@@ -997,8 +997,8 @@ POST /getTransactionBlob
 |参数|描述
 |:--- | --- 
 |payment.dest_address |  目标账户
-|payment.asset.property.issuer|  资产发行方
-|payment.asset.property.code|  资产代码
+|payment.asset.key.issuer|  资产发行方
+|payment.asset.key.code|  资产代码
 |payment.asset.amount|  要转移的数量
 |payment.input|  触发合约调用的入参
 
@@ -1382,19 +1382,19 @@ function query(input)
 
 - ##### 获取某个账号的资产信息
 
-    `getAccountAsset(account_address, asset_property);`
+    `getAccountAsset(account_address, asset_key);`
 
     - account_address: 账号地址
-    - asset_property: 资产属性
+    - asset_key: 资产属性
 
     例如
     ```javascript
-    let asset_property =
+    let asset_key =
     {
       'issuer' : 'buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY',
       'code' : 'CNY'
     };
-    let bar = getAccountAsset('buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY', asset_property);
+    let bar = getAccountAsset('buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY', asset_key);
 
     /*
      1
@@ -1635,7 +1635,7 @@ function query(input)
 - ##### 本次支付操作的Asset
     thisPayAsset
 
-    为对象类型{"amount": 1000, "property" : {"issuer": "buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY", "code":"CNY"}}
+    为对象类型{"amount": 1000, "key" : {"issuer": "buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY", "code":"CNY"}}
  
 - ##### 当前区块高度
     blockNumber
@@ -1681,7 +1681,7 @@ function query(input)
   function main(inputStr) {
     let recvAsset = trigger.transaction.operations[triggerIndex].payment.asset;
 
-    if (recvAsset.property.code != 'CNY' || recvAsset.property.issuer != 'buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY') {
+    if (recvAsset.key.code != 'CNY' || recvAsset.key.issuer != 'buQsZNDpqHJZ4g5hz47CqVMk5154w1bHKsHY') {
       throw '不支持的资产类型';
     }
     let tx = {
@@ -1690,7 +1690,7 @@ function query(input)
           'payment': {
             'dest_address': sender,
             'asset': {
-              'property': {
+              'key': {
                 'issuer': thisAddress,
                 'code': 'IOU'
               },
@@ -1716,13 +1716,6 @@ function query(input)
 验证节点选举账户创建成功后，才可以进行后续的操作, 且该账户是全局唯一的, 不能重复创建。
 
 - 创建一个合约账户（参见[创建账号](#创建账号)），账户的地址必须是buQtxgoaDrVJGtoPT66YnA2S84yE8FbBqQDJ。
-
->例
-
-```
-"validators_vote_account": "buQtxgoaDrVJGtoPT66YnA2S84yE8FbBqQDJ",
-```
-
 - 将 src\ledger\validators_vote.js 文件中的源码全部拷贝作为账户中 payload 字段的值。
 
 >例
@@ -1739,14 +1732,14 @@ function query(input)
 
  ```
    let validatorSetSize       = 100;
-   let votePassRate           = 0.8;
+   let votePassRate           = 0.7;
    let effectiveVoteInterval  = 15 * 24 * 60 * 60 * 1000 * 1000;
    let minPledgeAmount        = 100 * 100000000;
    let minSuperadditionAmount = 100 * 100000000;
 ```
  
  - validatorSetSize 指定网络内验证节点的个数；
- - votePassRate 设置投票通过值，只有验证节点有投票权限，投票数 / 验证节点总数 >= votePassRate 则投票通过;
+ - votePassRate 设置投票通过率，只有验证节点有投票权限，投票数 >= 四舍五入( 验证节点总数 * votePassRate ) 则投票通过，例如，假设总共有 4 个验证节点，那么 4 * 0.7 = 2.8，四舍五入后为 3，那么投票数必须 >= 3 才能通过, 如果总共有 6 个验证节点，那么 6 * 0.7 = 4.2，四舍五入后为 4，投票数必须 >= 4 才能通过;
  - effectiveVoteInterval 设置投票有效期，单位为微秒，超过有效期，则提案和投票作废；
  - minPledgeAmount 设置最小押金数额，低于该额度则拒绝；
  - minSuperadditionAmount 设置押金最小追加数额，低于该数额将被拒绝。
@@ -2212,6 +2205,8 @@ json格式需转换成字符串形式填写到paycoin接口结构
 ```
 
 #### 费用选取
+
+- votePassRate 设置投票通过率，只有验证节点有投票权限，投票数 >= 四舍五入( 验证节点总数 * votePassRate ) 则投票通过，例如，假设总共有 4 个验证节点，那么 4 * 0.7 = 2.8，四舍五入后为 3，那么投票数必须 >= 3 才能通过, 如果总共有 6 个验证节点，那么 6 * 0.7 = 4.2，四舍五入后为 4，投票数必须 >= 4 才能通过;
 
 通过发送转移资产交易或者付币交易来给合约发起费用选举。合约入参input参数json格式
 

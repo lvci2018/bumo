@@ -526,6 +526,9 @@ namespace bumo {
 			return false;
 		}
 
+		Database& db = Storage::Instance().lite_db();
+		soci::transaction txscope(db.GetSession());
+
 		std::string con_str = consensus_value.SerializeAsString();
 		std::string chash = HashWrapper::Crypto(con_str);
 		LedgerFrm::pointer closing_ledger = context_manager_.SyncProcess(consensus_value);
@@ -616,6 +619,8 @@ namespace bumo {
 			PROCESS_EXIT("Write batch failed: %s", Storage::Instance().account_db()->error_desc().c_str());
 		}
 
+		txscope.commit();
+
 		//write successful, then update the variable
 		last_closed_ledger_ = closing_ledger;
 
@@ -669,6 +674,7 @@ namespace bumo {
 			apply_tx_msg.set_error_code(tx->GetResult().code());
 			apply_tx_msg.set_error_desc(tx->GetResult().desc());
 			apply_tx_msg.set_hash(tx->GetContentHash());
+			tx->IntegrateOrderResult(&apply_tx_msg);
 			WebSocketServer::Instance().BroadcastChainTxMsg(apply_tx_msg);
 
 			if (tx->GetResult().code() == protocol::ERRCODE_SUCCESS)

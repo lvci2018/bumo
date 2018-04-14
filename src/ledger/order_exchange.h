@@ -21,7 +21,9 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #include "order_frm.h"
 
 namespace bumo {
-	
+
+	class Environment;
+
 	enum class ExchangeResultType
 	{
 		NORMAL,
@@ -44,16 +46,17 @@ namespace bumo {
 		}
 	};
 
-	ExchangeResult Exchange(int64_t wheatReceived, const protocol::Price& price,
-		int64_t maxWheatReceive, int64_t maxSheepSend);
+	ExchangeResult Exchange(int64_t wheat_received, const protocol::Price& price,
+		int64_t max_wheat_receive, int64_t max_sheep_send);
 
 	class OrderExchange
 	{
 
 		std::vector<protocol::ClaimOrder> order_trail_;
-
+		std::shared_ptr<Environment> environment_;
+		LedgerFrm* ledger_;
 	public:
-		OrderExchange();
+		OrderExchange(LedgerFrm* ledger,std::shared_ptr<Environment> environment) :ledger_(ledger), environment_(environment){}
 
 		// buys wheat with sheep from a single order //用羊买小麦从一个单子
 		enum CrossOrderResult
@@ -63,10 +66,9 @@ namespace bumo {
 			eOrderCantConvert
 		};
 
-		CrossOrderResult CrossOrder(OrderFrame& sellingWheatOrder,
-			int64_t maxWheatReceived,
-			int64_t& numWheatReceived, int64_t maxSheepSend,
-			int64_t& numSheepSent);
+		CrossOrderResult CrossOrder(OrderFrame& selling_wheat_order,
+			int64_t max_wheat_receive,int64_t& num_wheat_received, 
+			int64_t max_sheep_send,int64_t& num_sheep_sent);
 
 		enum OrderFilterResult
 		{
@@ -83,13 +85,14 @@ namespace bumo {
 		};
 		// buys wheat with sheep, crossing as many offers as necessary
 		ConvertResult ConvertWithOrders(
-			protocol::AssetKey const& sheep, int64_t maxSheepSent, int64_t& sheepSend,
-			protocol::AssetKey const& wheat, int64_t maxWheatReceive, int64_t& weatReceived,
+			protocol::AssetKey const& sheep, int64_t max_sheep_send, int64_t& sheep_sent,
+			protocol::AssetKey const& wheat, int64_t max_wheat_receive, int64_t& wheat_received,
 			std::function<OrderFilterResult(OrderFrame const&)> filter);
 
 		std::vector<protocol::ClaimOrder> const& GetOrderTrail() const{
 			return order_trail_;
 		}
+
 	};
 
 }

@@ -39,31 +39,41 @@ GTEST_PATH = gtest
 PCRE = pcre-8.39/.libs/libpcre.a
 PCRE_PATH = pcre-8.39
 
+LIBSQLITE = sqlite/lib/libsqlite.a
+LIBSQLITE_PATH = sqlite
+
+LIBSOCI = soci/lib/libsoci.a
+LIBSOCI_PATH =soci
+
+
 CUR_DIR = $(shell pwd)
 
 #default libraries target list
 $(MONGOC): \
     $(LIBBSON)
 
-all:add_permission\
-    $(ROCKSDB) \
-    $(PROTOBUF) \
-    $(LIBSSL) \
-    $(LIBCRYPTO) \
-    $(LIBBZ2) \
-    $(LIBZ) \
-    $(LIBSCRYPT) \
-    $(JSONCPP) \
-    $(PCRE) \
-	$(CURL) \
-	$(GTEST)
+#all:add_permission\
+#    $(ROCKSDB) \
+#    $(PROTOBUF) \
+#    $(LIBSSL) \
+#    $(LIBCRYPTO) \
+#    $(LIBBZ2) \
+#    $(LIBZ) \
+#    $(LIBSCRYPT) \
+#    $(JSONCPP) \
+#    $(PCRE) \
+#	$(CURL) \
+#	$(GTEST)
+
+all:$(LIBSQLITE)\
+	$(LIBSOCI)
 
 .PHONY:add_permission
 add_permission:
 	chmod +x ./protobuf/autogen.sh; \
 	chmod +x ./jsoncpp/automake.sh; \
 	chmod +x ./rocksdb/build_tools/*; \
-	chmod +x ./sqlite/configure; \
+	#chmod +x ./sqlite/configure; 
 	chmod +x ./openssl/config; \
 	[-d ./openssl/include] || cd openssl && ./config;
 
@@ -90,6 +100,10 @@ $(PCRE):
 	@echo "***************building pcre now****************" && cd $(PCRE_PATH) && autoreconf -f -i && chmod +x configure && ./configure --enable-shared=no --enable-static=yes && $(MAKE) -j 4
 $(GTEST):
 	@echo "**************building gtest now***************" && cd $(GTEST_PATH) && $(MAKE) -j 4
+$(LIBSQLITE):
+	@echo "**************building sqlite now***************" && cd $(LIBSQLITE_PATH) && [ -d build ] || mkdir build && cd build && cmake .. && $(MAKE) -j 4
+$(LIBSOCI):
+	@echo "**************building soci now***************" && cd $(LIBSOCI_PATH) && [ -d build ] || mkdir build && cd build && cmake .. && $(MAKE) -j 4
 
 clean:
 	@echo "******************skip clean 3rd, you can use 'clean_3rd' if you need******************"
@@ -113,15 +127,15 @@ install:
 ROCKSDB_clean:
 	@echo "******************Cleaning rocksdb now*************" && cd $(ROCKSDB_PATH) && make clean
 PROTOBUF_clean:
-	@echo "******************Cleaning rocksdb now*************" && cd $(PROTOBUF_PATH) && make clean
+	@echo "******************Cleaning protobuf now*************" && cd $(PROTOBUF_PATH) && make clean
 LIBSSL_clean:
-	@echo "******************Cleaning rocksdb now*************" && cd $(LIBSSL_PATH) && make clean
+	@echo "******************Cleaning openssl now*************" && cd $(LIBSSL_PATH) && make clean
 LIBCRYPTO_clean:
-	@echo "******************Cleaning rocksdb now*************" && cd $(LIBSSL_PATH) && make clean
+	@echo "******************Cleaning crypto now*************" && cd $(LIBSSL_PATH) && make clean
 LIBBZ2_clean:
-	@echo "******************Cleaning rocksdb now*************" && cd $(LIBBZ2_PATH) && make clean
+	@echo "******************Cleaning bz2 now*************" && cd $(LIBBZ2_PATH) && make clean
 LIBZ_clean:
-	@echo "******************Cleaning rocksdb now*************" && cd $(LIBZ_PATH) && make clean
+	@echo "******************Cleaning bz now*************" && cd $(LIBZ_PATH) && make clean
 LIBSCRYPT_clean:
 	@echo "******************Cleaning libscrypt now*************" && cd $(LIBSCRYPT_PATH) && make clean
 CURL_clean:
@@ -133,5 +147,5 @@ GTEST_clean:
 
 #scon -c may complains error
 JSONCPP_clean: 
-	@echo "******************Cleaning rocksdb now*************" && cd $(JSONCPP_PATH) && ./automake.sh -c || true   
+	@echo "******************Cleaning jsoncpp now*************" && cd $(JSONCPP_PATH) && ./automake.sh -c || true   
     

@@ -23,6 +23,7 @@ namespace bumo {
 		keyvalue_db_path_ = General::DEFAULT_KEYVALUE_DB_PATH;
 		ledger_db_path_ = General::DEFAULT_LEDGER_DB_PATH;
 		account_db_path_ = General::DEFAULT_ACCOUNT_DB_PATH;
+		order_db_path_ = General::DEFAULT_ORDER_DB_PATH;
 		tmp_path_ = "tmp";
 		async_write_sql_ = false; //default sync write sql
 		async_write_kv_ = false; //default sync write kv
@@ -34,6 +35,7 @@ namespace bumo {
 		ConfigureBase::GetValue(value, "keyvalue_path", keyvalue_db_path_);
 		ConfigureBase::GetValue(value, "ledger_path", ledger_db_path_);
 		ConfigureBase::GetValue(value, "account_path", account_db_path_);
+		ConfigureBase::GetValue(value, "order_path", order_db_path_);
 		
 		ConfigureBase::GetValue(value, "rational_string", rational_string_);
 		ConfigureBase::GetValue(value, "rational_db_type", rational_db_type_);
@@ -67,6 +69,12 @@ namespace bumo {
 
 		if (!utils::File::IsAbsolute(account_db_path_)) {
 			account_db_path_ = utils::String::Format("%s/%s", utils::File::GetBinHome().c_str(), account_db_path_.c_str());
+		}
+
+		if (order_db_path_ != ":memory:"){
+			if (!utils::File::IsAbsolute(order_db_path_)) {
+				order_db_path_ = utils::String::Format("%s/%s", utils::File::GetBinHome().c_str(), order_db_path_.c_str());
+			}
 		}
 
 		if (!utils::File::IsAbsolute(tmp_path_)) {

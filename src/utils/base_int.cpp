@@ -420,4 +420,29 @@ int64_t  utils::bigDivide(int64_t A, int64_t B, int64_t C, Rounding rounding) {
 	return res;
 }
 
+std::string utils::generatId(int64_t block_num, int32_t tx_index, int32_t op_index){
+	assert(tx_index >= 0);
+	assert(op_index >= 0);
+	uint128_t a(block_num);
+	a <<= 64;
+	uint128_t b(tx_index+1);
+	b <<= 32;
+	uint128_t c(op_index+1);
+	uint128_t d = a+b+c;
+	return d.str(16, 128);
+}
+
+//void utils::parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index){
+//	std::string s_block_seq = id.substr(0, 64);
+//	std::string s_tx_index = id.substr(64, 32);
+//	std::string s_op_index = id.substr(96, 32);
+//
+//	block_num = std::stoll(s_block_seq, nullptr, 2)-1;
+//	assert(block_num >= 0);
+//	tx_index = std::stoi(s_tx_index, nullptr, 2)-1;
+//	assert(tx_index >= 0);
+//	op_index = std::stoi(s_op_index, nullptr, 2)-1;	
+//	assert(op_index >= 0);
+//}
+
 

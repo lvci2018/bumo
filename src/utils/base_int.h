@@ -511,5 +511,7 @@ namespace utils {
 	bool bigDivide(int64_t& result, int64_t A, int64_t B, int64_t C, Rounding rounding);
 	bool bigDivide(uint64_t& result, uint64_t A, uint64_t B, uint64_t C, Rounding rounding);
 	int64_t  bigDivide(int64_t A, int64_t B, int64_t C, Rounding rounding);
+	std::string generatId(int64_t block_num,int32_t tx_index,int32_t op_index);
+	//void parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index);
 }
 #endif

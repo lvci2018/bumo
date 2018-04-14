@@ -19,6 +19,7 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #include <proto/cpp/chain.pb.h>
 #include <common/database.h>
 #include <unordered_map>
+#include <utils/ledger_range.h>
 
 namespace soci
 {
@@ -27,6 +28,7 @@ namespace soci
 
 namespace bumo
 {
+	class LedgerFrm;
 
 	class OrderFrame{
 	protected:
@@ -35,13 +37,20 @@ namespace bumo
 		struct OrderKey
 		{
 			std::string account_address;
-			int64_t order_id;
+			std::string order_id;
 		};
 
 		double ComputePrice() const;
-		void StoreUpdateHelper(Database& db, bool insert);
+		void StoreUpdateHelper(LedgerFrm* ledger, Database& db, bool insert);
+		void Touch(LedgerFrm* ledger);
+		
 	public:
 		typedef std::shared_ptr<OrderFrame> pointer;
+
+		enum OrderFlags
+		{
+			PASSIVE_FLAG = 1
+		};
 
 		OrderFrame();
 		OrderFrame(protocol::Order const& from);
@@ -54,10 +63,20 @@ namespace bumo
 
 		protocol::Price const& GetPrice() const;
 		int64_t GetAmount() const;
+		void SetAmount(int64_t amount);
 		std::string const& GetSellerID() const;
+		void SetSellerID(const std::string& account_address);
 		protocol::AssetKey const& GetBuying() const;
 		protocol::AssetKey const& GetSelling() const;
-		uint64_t GetOrderID() const;
+		std::string GetOrderID() const;
+		void SetOrderID(const std::string& order_id);
+		uint32_t GetFlags() const;
+		int64_t GetLastModified();
+		std::string GetTxHash() const;
+		int32_t GetFeePercent();
+		int64_t GetFee(const int64_t& received);
+		int64_t GetBoughtAfterFee(const int64_t& received);
+		std::string ToString();
 
 		protocol::Order const&	GetOrder() const{
 			return order_;
@@ -67,21 +86,25 @@ namespace bumo
 		}
 
 		void StoreDelete(Database& db) const;
-		void StoreChange(Database& db);
-		void StoreAdd(Database& db);
+		void StoreChange(LedgerFrm* ledger,Database& db);
+		void StoreAdd(LedgerFrm* ledger,Database& db);
 		static bool Exists(Database& db, OrderKey const& key);
-		static uint64_t CuntObjects(soci::session& sess);
-		//static void deleteOffersModifiedOnOrAfterLedger(Database& db,uint32_t oldestLedger);
-		static OrderFrame::pointer LoadOffer(std::string const& account_address, uint64_t order_id, Database& db);
-		static void	LoadOffers(StatementContext& prep, std::function<void(protocol::Order const&)> OrderProcessor);
+		
+		static uint64_t CountObjects(soci::session& sess);
+		static uint64_t CountObjects(soci::session& sess, utils::LedgerRange const& ledgers);
+		static void DeleteOffersModifiedOnOrAfterLedger(Database& db,int64_t oldestLedger);
 
-		static void LoadBestOffers(size_t num_orders, size_t offset, protocol::AssetKey const& pays, protocol::AssetKey const& gets, 
+		static OrderFrame::pointer LoadOrder(std::string const& account_address, const std::string& order_id, Database& db);
+		static void	LoadOrders(StatementContext& prep, std::function<void(protocol::Order const&)> OrderProcessor);
+
+		static void LoadBestOrders(size_t num_orders, size_t offset, protocol::AssetKey const& pays, protocol::AssetKey const& gets, 
 			std::vector<OrderFrame::pointer>& return_orders, Database& db);
 
 		// load all offers from the database (very slow) ; key AccountID
-		static std::unordered_map<std::string, std::vector<OrderFrame::pointer>> LoadAllOffers(Database& db);
+		static std::unordered_map<std::string, std::vector<OrderFrame::pointer>> LoadAllOrders(Database& db);
 
 		static void DropAll(Database& db);
+		static void Initialize(Database& db);
 	private:
 		static const char* kSQLCreateStatement1;
 		static const char* kSQLCreateStatement2;

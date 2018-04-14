@@ -142,46 +142,46 @@ namespace bumo {
 				}
 			}
 
-			ProposeTxsResult propose_result;
-			LedgerManager::Instance().context_manager_.SyncPreProcess(propose_value, true, propose_result);
+// 			ProposeTxsResult propose_result;
+// 			LedgerManager::Instance().context_manager_.SyncPreProcess(propose_value, true, propose_result);
+// 
+// 			if (propose_result.block_timeout_) {
+// 				//remove the time out tx
+// 				//reduct to 1/2
+// 				protocol::TransactionEnvSet tmp_raw;
+// 				for (int32_t i = 0; i < txset_raw.txs_size() / 2; i ++) {
+// 					*tmp_raw.add_txs() = txset_raw.txs(i);
+// 				}
+// 
+// 				txset_raw = tmp_raw;
+// 
+// 				continue;
+// 			}
+// 
+// 			//need drop some tx
+// 			if (propose_result.need_dropped_tx_.size()) {
+// 				protocol::TransactionEnvSet *txs = propose_value.mutable_txset();
+// 				txs->clear_txs();
+// 
+// 				protocol::TransactionEnvSet tmp_raw;
+// 				for (int32_t i = 0; i < txset_raw.txs_size(); i++) {
+// 					if (propose_result.need_dropped_tx_.find(i) != propose_result.need_dropped_tx_.end()) {
+// 						//remove from the cache
+// 						*tmp_raw.add_txs() = txset_raw.txs(i);
+// 					} else{
+// 						*txs->add_txs() = txset_raw.txs(i);
+// 					}
+// 				}
+// 				tx_pool_->RemoveTxs(tmp_raw);
+// 			} 
+// 
+// 			if (propose_result.cons_validation_.error_tx_ids_size() > 0 ||
+// 				propose_result.cons_validation_.expire_tx_ids_size() > 0) {
+// 				*propose_value.mutable_validation() = propose_result.cons_validation_;
+// 			}
 
-			if (propose_result.block_timeout_) {
-				//remove the time out tx
-				//reduct to 1/2
-				protocol::TransactionEnvSet tmp_raw;
-				for (int32_t i = 0; i < txset_raw.txs_size() / 2; i ++) {
-					*tmp_raw.add_txs() = txset_raw.txs(i);
-				}
-
-				txset_raw = tmp_raw;
-
-				continue;
-			}
-
-			//need drop some tx
-			if (propose_result.need_dropped_tx_.size()) {
-				protocol::TransactionEnvSet *txs = propose_value.mutable_txset();
-				txs->clear_txs();
-
-				protocol::TransactionEnvSet tmp_raw;
-				for (int32_t i = 0; i < txset_raw.txs_size(); i++) {
-					if (propose_result.need_dropped_tx_.find(i) != propose_result.need_dropped_tx_.end()) {
-						//remove from the cache
-						*tmp_raw.add_txs() = txset_raw.txs(i);
-					} else{
-						*txs->add_txs() = txset_raw.txs(i);
-					}
-				}
-				tx_pool_->RemoveTxs(tmp_raw);
-			} 
-
-			if (propose_result.cons_validation_.error_tx_ids_size() > 0 ||
-				propose_result.cons_validation_.expire_tx_ids_size() > 0) {
-				*propose_value.mutable_validation() = propose_result.cons_validation_;
-			}
-
-			LOG_INFO("Check validation, validation(%d,%d) ",
-				propose_result.cons_validation_.expire_tx_ids_size(), propose_result.cons_validation_.error_tx_ids_size());
+//			LOG_INFO("Check validation, validation(%d,%d) ",
+//				propose_result.cons_validation_.expire_tx_ids_size(), propose_result.cons_validation_.error_tx_ids_size());
 
 			break;
 		} while (true);
@@ -365,13 +365,13 @@ namespace bumo {
 			return check_helper_ret;
 		}
 
-		ProposeTxsResult ignor_cons_validation;
-		if (!LedgerManager::Instance().context_manager_.SyncPreProcess(consensus_value,
-			false,
-			ignor_cons_validation)) {
-			LOG_ERROR("Pre process consvalue failed");
-			return Consensus::CHECK_VALUE_MAYVALID;
-		}
+// 		ProposeTxsResult ignor_cons_validation;
+// 		if (!LedgerManager::Instance().context_manager_.SyncPreProcess(consensus_value,
+// 			false,
+// 			ignor_cons_validation)) {
+// 			LOG_ERROR("Pre process consvalue failed");
+// 			return Consensus::CHECK_VALUE_MAYVALID;
+// 		}
 
 		return Consensus::CHECK_VALUE_VALID;
 	}
@@ -388,7 +388,7 @@ namespace bumo {
 
 		//check previous ledger sequence
 		if (consensus_value.ledger_seq() != lcl.seq() + 1) {
-			LOG_ERROR("Check value failed, previous ledger seq(" FMT_I64 ") not equal to consensus message ledger seq( " FMT_I64 ")",
+			LOG_ERROR("Check value failed, previous ledger seq(" FMT_I64 ") + 1 not equal to consensus message ledger seq( " FMT_I64 ")",
 				lcl.seq(),
 				consensus_value.ledger_seq());
 			return Consensus::CHECK_VALUE_MAYVALID;
