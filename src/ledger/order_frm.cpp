@@ -38,6 +38,7 @@ namespace bumo {
 		"flags            INT              NOT NULL,"
 		"lastmodified     INT              NOT NULL,"
 		"txhash           VARCHAR(64)      NOT NULL,"
+		"opindex		  INT			   NOT NULL,"
 		"PRIMARY KEY      (orderid)"
 		");";
 
@@ -53,7 +54,7 @@ namespace bumo {
 	static const char* orderColumnSelector =
 		"SELECT sellerid,orderid,sellingassettype,sellingassetcode,sellingissuer,"
 		"buyingassettype,buyingassetcode,buyingissuer,amount,pricen,priced,"
-		"flags,lastmodified,txhash "
+		"flags,lastmodified,txhash,opindex "
 		"FROM orders";
 
 
@@ -132,6 +133,10 @@ namespace bumo {
 		return received - GetFee(received);
 	}
 
+	int32_t OrderFrame::GetOperationIndex(){
+		return order_.op_index();
+	}
+
 	void OrderFrame::StoreDelete(Database& db) const{
 		auto prep = db.GetPreparedStatement("DELETE FROM orders WHERE orderid=:s");
 		auto& st = prep.statement();
@@ -169,15 +174,15 @@ namespace bumo {
 			sql = "INSERT INTO orders (sellerid,orderid,"
 				"sellingassettype,sellingassetcode,sellingissuer,"
 				"buyingassettype,buyingassetcode,buyingissuer,"
-				"amount,pricen,priced,price,flags,lastmodified,txhash) VALUES "
-				"(:sid,:oid,:sat,:sac,:si,:bat,:bac,:bi,:a,:pn,:pd,:p,:f,:l,:ha)";
+				"amount,pricen,priced,price,flags,lastmodified,txhash,opindex) VALUES "
+				"(:sid,:oid,:sat,:sac,:si,:bat,:bac,:bi,:a,:pn,:pd,:p,:f,:l,:ha,opi)";
 		}
 		else{
 			sql = "UPDATE orders SET sellingassettype=:sat "
 				",sellingassetcode=:sac,sellingissuer=:si,"
 				"buyingassettype=:bat,buyingassetcode=:bac,buyingissuer=:bi,"
 				"amount=:a,pricen=:pn,priced=:pd,price=:p,flags=:f,"
-				"lastmodified=:l,txhash=:ha WHERE orderid=:oid";
+				"lastmodified=:l,txhash=:ha,opindex:opi WHERE orderid=:oid";
 		}
 
 		auto prep = db.GetPreparedStatement(sql);
@@ -202,6 +207,7 @@ namespace bumo {
 		st.exchange(use(flags, "f"));
 		st.exchange(use(GetLastModified(), "l"));
 		st.exchange(use(order_.tx_hash(), "ha"));
+		st.exchange(use(order_.op_index(), "opi"));
 		st.define_and_bind();
 
 		//auto timer =insert ? db.getInsertTimer("offer") : db.getUpdateTimer("offer");
@@ -433,9 +439,13 @@ namespace bumo {
 	}
 
 	std::string OrderFrame::ToString(){
-		std::string str = utils::String::Format("order seller(%s) order_id(%s) selling(%s:%s:%d) buying(%s:%s:%d) amount(" FMT_I64 ") price(%d/%d) fee_percent(%d) tx_hash(%s) flag(%d) last_modify_ledger(" FMT_I64 ")",
+		int64_t ledger_seq = 0;
+		int32_t tx_index = 0, op_index = 0;
+		utils::parseId(order_.remain_order().order_id(), ledger_seq, tx_index, op_index);
+
+		std::string str = utils::String::Format("order seller(%s) order_id(" FMT_I64 ":%d:%d) selling(%s:%s:%d) buying(%s:%s:%d) amount(" FMT_I64 ") price(%d/%d) fee_percent(%d) tx_hash(%s) flag(%d) last_modify_ledger(" FMT_I64 ")",
 			order_.seller_address().c_str(),
-			order_.remain_order().order_id().c_str(),
+			ledger_seq,tx_index,op_index,
 			order_.remain_order().selling().issuer().c_str(),
 			order_.remain_order().selling().code().c_str(), 
 			order_.remain_order().selling().type(), 

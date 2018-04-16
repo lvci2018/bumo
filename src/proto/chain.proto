@@ -142,6 +142,7 @@ message Order{
 	uint32 flags							=3;
 	int64	last_modified_ledger_seq		=4;
 	string	tx_hash							=5;
+	int32	op_index						=6;
 }
 
 message ClaimOrder
@@ -159,6 +160,8 @@ message ClaimOrder
 	// amount and asset sent to the owner
 	AssetKey asset_bought	=7;
 	int64 amount_bought		=8;
+
+	int32 op_index		=9;
 }
 
 message OperationSetAssetFee{
@@ -273,7 +276,7 @@ message OperationOrderResult {
 	OrderEffectType effect				=2;
 	Order			order				=3;
 	int32			code				=4;//error code
-	int32			index				=5;//operation index
+	int32			op_index			=5;//operation index
 }
 
 message TransactionEnvStore{

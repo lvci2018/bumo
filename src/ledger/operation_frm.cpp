@@ -1037,7 +1037,7 @@ namespace bumo {
 			if (!CheckOrderVaild(ope, environment))
 				return;
 
-			order_result_.set_index(index_);
+			order_result_.set_op_index(index_);
 			protocol::AssetKey const& sheep = ope.selling();
 			protocol::AssetKey const& wheat = ope.buying();
 
@@ -1061,13 +1061,13 @@ namespace bumo {
 					return;
 				}
 
-				sell_sheep_order_->GetOrder().CopyFrom(BuildOrder(source_account_->GetAccountAddress(),utils::String::BinToHexString(transaction_->GetContentHash()), ope, sell_sheep_order_->GetFlags()));
+				sell_sheep_order_->GetOrder().CopyFrom(BuildOrder(source_account_->GetAccountAddress(), utils::String::BinToHexString(transaction_->GetContentHash()), ope, sell_sheep_order_->GetFlags(), sell_sheep_order_->GetOperationIndex()));
 				passive_ = sell_sheep_order_->GetFlags() & OrderFrame::PASSIVE_FLAG;
 			}
 			else{
 				// create a new order. first match and then storage  if left
 				creating_new_order = true;
-				protocol::Order o = BuildOrder(source_account_->GetAccountAddress(), utils::String::BinToHexString(transaction_->GetContentHash()), ope, passive_ ? OrderFrame::PASSIVE_FLAG : 0);
+				protocol::Order o = BuildOrder(source_account_->GetAccountAddress(), utils::String::BinToHexString(transaction_->GetContentHash()), ope, passive_ ? OrderFrame::PASSIVE_FLAG : 0, index_);
 				sell_sheep_order_ = std::make_shared<OrderFrame>(o);
 			}
 
@@ -1299,12 +1299,13 @@ namespace bumo {
 		return true;
 	}
 
-	protocol::Order OperationFrm::BuildOrder(const std::string& account_address, const std::string& tx_hash, const protocol::OperationProcessOrder& op, uint32_t flags){
+	protocol::Order OperationFrm::BuildOrder(const std::string& account_address, const std::string& tx_hash, const protocol::OperationProcessOrder& op, uint32_t flags, int32_t op_index){
 		protocol::Order o;
 		o.set_seller_address(account_address);
 		o.mutable_remain_order()->CopyFrom(op);
 		o.set_flags(flags);
 		o.set_tx_hash(tx_hash);
+		o.set_op_index(op_index);
 		return o;
 	}
 

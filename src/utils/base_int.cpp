@@ -429,20 +429,20 @@ std::string utils::generatId(int64_t block_num, int32_t tx_index, int32_t op_ind
 	b <<= 32;
 	uint128_t c(op_index+1);
 	uint128_t d = a+b+c;
-	return d.str(16, 128);
+	return d.str(2, 128);//must be 2 for order sort
 }
 
-//void utils::parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index){
-//	std::string s_block_seq = id.substr(0, 64);
-//	std::string s_tx_index = id.substr(64, 32);
-//	std::string s_op_index = id.substr(96, 32);
-//
-//	block_num = std::stoll(s_block_seq, nullptr, 2)-1;
-//	assert(block_num >= 0);
-//	tx_index = std::stoi(s_tx_index, nullptr, 2)-1;
-//	assert(tx_index >= 0);
-//	op_index = std::stoi(s_op_index, nullptr, 2)-1;	
-//	assert(op_index >= 0);
-//}
+void utils::parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index){
+	std::string s_block_seq = id.substr(0, 64);
+	std::string s_tx_index = id.substr(64, 32);
+	std::string s_op_index = id.substr(96, 32);
+
+	block_num = std::stoll(s_block_seq, nullptr, 2);
+	assert(block_num > 0);
+	tx_index = std::stoi(s_tx_index, nullptr, 2)-1;
+	assert(tx_index >= 0);
+	op_index = std::stoi(s_op_index, nullptr, 2)-1;
+	assert(op_index >= 0);
+}
 
 

@@ -73,7 +73,7 @@ namespace bumo{
 		bool CheckOrderVaild(protocol::OperationProcessOrder const& ope, std::shared_ptr<Environment> environment);
 		void FreeznAsset(protocol::AssetStore& asset,const int64_t& amount);
 		void UnfreeznAsset(protocol::AssetStore& asset, const int64_t& amount);
-		protocol::Order BuildOrder(const std::string& account_address,const std::string& tx_hash, const protocol::OperationProcessOrder& op, uint32_t flags);
+		protocol::Order BuildOrder(const std::string& account_address,const std::string& tx_hash, const protocol::OperationProcessOrder& op, uint32_t flags,int32_t op_index);
 		OrderFrame::pointer sell_sheep_order_;
 		bool passive_;
 		protocol::AssetStore sheep_asset_;

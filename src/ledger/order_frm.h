@@ -77,6 +77,7 @@ namespace bumo
 		int64_t GetFee(const int64_t& received);
 		int64_t GetBoughtAfterFee(const int64_t& received);
 		std::string ToString();
+		int32_t GetOperationIndex();
 
 		protocol::Order const&	GetOrder() const{
 			return order_;

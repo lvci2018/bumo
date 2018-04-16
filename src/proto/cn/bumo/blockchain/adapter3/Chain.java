@@ -15467,6 +15467,11 @@ public final class Chain {
      */
     com.google.protobuf.ByteString
         getTxHashBytes();
+
+    /**
+     * <code>optional int32 op_index = 6;</code>
+     */
+    int getOpIndex();
   }
   /**
    * Protobuf type {@code protocol.Order}
@@ -15484,6 +15489,7 @@ public final class Chain {
       flags_ = 0;
       lastModifiedLedgerSeq_ = 0L;
       txHash_ = "";
+      opIndex_ = 0;
     }
 
     @java.lang.Override
@@ -15544,6 +15550,11 @@ public final class Chain {
               java.lang.String s = input.readStringRequireUtf8();
 
               txHash_ = s;
+              break;
+            }
+            case 48: {
+
+              opIndex_ = input.readInt32();
               break;
             }
           }
@@ -15676,6 +15687,15 @@ public final class Chain {
       }
     }
 
+    public static final int OP_INDEX_FIELD_NUMBER = 6;
+    private int opIndex_;
+    /**
+     * <code>optional int32 op_index = 6;</code>
+     */
+    public int getOpIndex() {
+      return opIndex_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -15703,6 +15723,9 @@ public final class Chain {
       if (!getTxHashBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, txHash_);
       }
+      if (opIndex_ != 0) {
+        output.writeInt32(6, opIndex_);
+      }
     }
 
     public int getSerializedSize() {
@@ -15727,6 +15750,10 @@ public final class Chain {
       }
       if (!getTxHashBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, txHash_);
+      }
+      if (opIndex_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, opIndex_);
       }
       memoizedSize = size;
       return size;
@@ -15757,6 +15784,8 @@ public final class Chain {
           == other.getLastModifiedLedgerSeq());
       result = result && getTxHash()
           .equals(other.getTxHash());
+      result = result && (getOpIndex()
+          == other.getOpIndex());
       return result;
     }
 
@@ -15780,6 +15809,8 @@ public final class Chain {
           getLastModifiedLedgerSeq());
       hash = (37 * hash) + TX_HASH_FIELD_NUMBER;
       hash = (53 * hash) + getTxHash().hashCode();
+      hash = (37 * hash) + OP_INDEX_FIELD_NUMBER;
+      hash = (53 * hash) + getOpIndex();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -15912,6 +15943,8 @@ public final class Chain {
 
         txHash_ = "";
 
+        opIndex_ = 0;
+
         return this;
       }
 
@@ -15943,6 +15976,7 @@ public final class Chain {
         result.flags_ = flags_;
         result.lastModifiedLedgerSeq_ = lastModifiedLedgerSeq_;
         result.txHash_ = txHash_;
+        result.opIndex_ = opIndex_;
         onBuilt();
         return result;
       }
@@ -16000,6 +16034,9 @@ public final class Chain {
         if (!other.getTxHash().isEmpty()) {
           txHash_ = other.txHash_;
           onChanged();
+        }
+        if (other.getOpIndex() != 0) {
+          setOpIndex(other.getOpIndex());
         }
         onChanged();
         return this;
@@ -16333,6 +16370,32 @@ public final class Chain {
         onChanged();
         return this;
       }
+
+      private int opIndex_ ;
+      /**
+       * <code>optional int32 op_index = 6;</code>
+       */
+      public int getOpIndex() {
+        return opIndex_;
+      }
+      /**
+       * <code>optional int32 op_index = 6;</code>
+       */
+      public Builder setOpIndex(int value) {
+        
+        opIndex_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 op_index = 6;</code>
+       */
+      public Builder clearOpIndex() {
+        
+        opIndex_ = 0;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -16496,6 +16559,11 @@ public final class Chain {
      * <code>optional int64 amount_bought = 8;</code>
      */
     long getAmountBought();
+
+    /**
+     * <code>optional int32 op_index = 9;</code>
+     */
+    int getOpIndex();
   }
   /**
    * Protobuf type {@code protocol.ClaimOrder}
@@ -16514,6 +16582,7 @@ public final class Chain {
       txHash_ = "";
       amountSold_ = 0L;
       amountBought_ = 0L;
+      opIndex_ = 0;
     }
 
     @java.lang.Override
@@ -16606,6 +16675,11 @@ public final class Chain {
             case 64: {
 
               amountBought_ = input.readInt64();
+              break;
+            }
+            case 72: {
+
+              opIndex_ = input.readInt32();
               break;
             }
           }
@@ -16846,6 +16920,15 @@ public final class Chain {
       return amountBought_;
     }
 
+    public static final int OP_INDEX_FIELD_NUMBER = 9;
+    private int opIndex_;
+    /**
+     * <code>optional int32 op_index = 9;</code>
+     */
+    public int getOpIndex() {
+      return opIndex_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -16882,6 +16965,9 @@ public final class Chain {
       if (amountBought_ != 0L) {
         output.writeInt64(8, amountBought_);
       }
+      if (opIndex_ != 0) {
+        output.writeInt32(9, opIndex_);
+      }
     }
 
     public int getSerializedSize() {
@@ -16917,6 +17003,10 @@ public final class Chain {
       if (amountBought_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(8, amountBought_);
+      }
+      if (opIndex_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, opIndex_);
       }
       memoizedSize = size;
       return size;
@@ -16959,6 +17049,8 @@ public final class Chain {
       }
       result = result && (getAmountBought()
           == other.getAmountBought());
+      result = result && (getOpIndex()
+          == other.getOpIndex());
       return result;
     }
 
@@ -16993,6 +17085,8 @@ public final class Chain {
       hash = (37 * hash) + AMOUNT_BOUGHT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getAmountBought());
+      hash = (37 * hash) + OP_INDEX_FIELD_NUMBER;
+      hash = (53 * hash) + getOpIndex();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -17139,6 +17233,8 @@ public final class Chain {
         }
         amountBought_ = 0L;
 
+        opIndex_ = 0;
+
         return this;
       }
 
@@ -17181,6 +17277,7 @@ public final class Chain {
           result.assetBought_ = assetBoughtBuilder_.build();
         }
         result.amountBought_ = amountBought_;
+        result.opIndex_ = opIndex_;
         onBuilt();
         return result;
       }
@@ -17248,6 +17345,9 @@ public final class Chain {
         }
         if (other.getAmountBought() != 0L) {
           setAmountBought(other.getAmountBought());
+        }
+        if (other.getOpIndex() != 0) {
+          setOpIndex(other.getOpIndex());
         }
         onChanged();
         return this;
@@ -17973,6 +18073,32 @@ public final class Chain {
       public Builder clearAmountBought() {
         
         amountBought_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int opIndex_ ;
+      /**
+       * <code>optional int32 op_index = 9;</code>
+       */
+      public int getOpIndex() {
+        return opIndex_;
+      }
+      /**
+       * <code>optional int32 op_index = 9;</code>
+       */
+      public Builder setOpIndex(int value) {
+        
+        opIndex_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 op_index = 9;</code>
+       */
+      public Builder clearOpIndex() {
+        
+        opIndex_ = 0;
         onChanged();
         return this;
       }
@@ -27009,9 +27135,9 @@ public final class Chain {
      *operation index
      * </pre>
      *
-     * <code>optional int32 index = 5;</code>
+     * <code>optional int32 op_index = 5;</code>
      */
-    int getIndex();
+    int getOpIndex();
   }
   /**
    * Protobuf type {@code protocol.OperationOrderResult}
@@ -27028,7 +27154,7 @@ public final class Chain {
       ordersClaimed_ = java.util.Collections.emptyList();
       effect_ = 0;
       code_ = 0;
-      index_ = 0;
+      opIndex_ = 0;
     }
 
     @java.lang.Override
@@ -27091,7 +27217,7 @@ public final class Chain {
             }
             case 40: {
 
-              index_ = input.readInt32();
+              opIndex_ = input.readInt32();
               break;
             }
           }
@@ -27322,17 +27448,17 @@ public final class Chain {
       return code_;
     }
 
-    public static final int INDEX_FIELD_NUMBER = 5;
-    private int index_;
+    public static final int OP_INDEX_FIELD_NUMBER = 5;
+    private int opIndex_;
     /**
      * <pre>
      *operation index
      * </pre>
      *
-     * <code>optional int32 index = 5;</code>
+     * <code>optional int32 op_index = 5;</code>
      */
-    public int getIndex() {
-      return index_;
+    public int getOpIndex() {
+      return opIndex_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -27359,8 +27485,8 @@ public final class Chain {
       if (code_ != 0) {
         output.writeInt32(4, code_);
       }
-      if (index_ != 0) {
-        output.writeInt32(5, index_);
+      if (opIndex_ != 0) {
+        output.writeInt32(5, opIndex_);
       }
     }
 
@@ -27385,9 +27511,9 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, code_);
       }
-      if (index_ != 0) {
+      if (opIndex_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, index_);
+          .computeInt32Size(5, opIndex_);
       }
       memoizedSize = size;
       return size;
@@ -27415,8 +27541,8 @@ public final class Chain {
       }
       result = result && (getCode()
           == other.getCode());
-      result = result && (getIndex()
-          == other.getIndex());
+      result = result && (getOpIndex()
+          == other.getOpIndex());
       return result;
     }
 
@@ -27439,8 +27565,8 @@ public final class Chain {
       }
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode();
-      hash = (37 * hash) + INDEX_FIELD_NUMBER;
-      hash = (53 * hash) + getIndex();
+      hash = (37 * hash) + OP_INDEX_FIELD_NUMBER;
+      hash = (53 * hash) + getOpIndex();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -27576,7 +27702,7 @@ public final class Chain {
         }
         code_ = 0;
 
-        index_ = 0;
+        opIndex_ = 0;
 
         return this;
       }
@@ -27618,7 +27744,7 @@ public final class Chain {
           result.order_ = orderBuilder_.build();
         }
         result.code_ = code_;
-        result.index_ = index_;
+        result.opIndex_ = opIndex_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -27696,8 +27822,8 @@ public final class Chain {
         if (other.getCode() != 0) {
           setCode(other.getCode());
         }
-        if (other.getIndex() != 0) {
-          setIndex(other.getIndex());
+        if (other.getOpIndex() != 0) {
+          setOpIndex(other.getOpIndex());
         }
         onChanged();
         return this;
@@ -28165,27 +28291,27 @@ public final class Chain {
         return this;
       }
 
-      private int index_ ;
+      private int opIndex_ ;
       /**
        * <pre>
        *operation index
        * </pre>
        *
-       * <code>optional int32 index = 5;</code>
+       * <code>optional int32 op_index = 5;</code>
        */
-      public int getIndex() {
-        return index_;
+      public int getOpIndex() {
+        return opIndex_;
       }
       /**
        * <pre>
        *operation index
        * </pre>
        *
-       * <code>optional int32 index = 5;</code>
+       * <code>optional int32 op_index = 5;</code>
        */
-      public Builder setIndex(int value) {
+      public Builder setOpIndex(int value) {
         
-        index_ = value;
+        opIndex_ = value;
         onChanged();
         return this;
       }
@@ -28194,11 +28320,11 @@ public final class Chain {
        *operation index
        * </pre>
        *
-       * <code>optional int32 index = 5;</code>
+       * <code>optional int32 op_index = 5;</code>
        */
-      public Builder clearIndex() {
+      public Builder clearOpIndex() {
         
-        index_ = 0;
+        opIndex_ = 0;
         onChanged();
         return this;
       }
@@ -35608,95 +35734,96 @@ public final class Chain {
       "\n\007selling\030\001 \001(\0132\022.protocol.AssetKey\022\"\n\006b" +
       "uying\030\002 \001(\0132\022.protocol.AssetKey\022\016\n\006amoun" +
       "t\030\003 \001(\003\022\036\n\005price\030\004 \001(\0132\017.protocol.Price\022" +
-      "\020\n\010order_id\030\005 \001(\t\022\023\n\013fee_percent\030\006 \001(\005\"\230" +
+      "\020\n\010order_id\030\005 \001(\t\022\023\n\013fee_percent\030\006 \001(\005\"\252" +
       "\001\n\005Order\022\026\n\016seller_address\030\001 \001(\t\0225\n\014rema",
       "in_order\030\002 \001(\0132\037.protocol.OperationProce" +
       "ssOrder\022\r\n\005flags\030\003 \001(\r\022 \n\030last_modified_" +
-      "ledger_seq\030\004 \001(\003\022\017\n\007tx_hash\030\005 \001(\t\"\340\001\n\nCl" +
-      "aimOrder\022\021\n\tseller_id\030\001 \001(\t\022\020\n\010order_id\030" +
-      "\002 \001(\t\022\017\n\007tx_hash\030\003 \001(\t\022\036\n\005price\030\004 \001(\0132\017." +
-      "protocol.Price\022&\n\nasset_sold\030\005 \001(\0132\022.pro" +
-      "tocol.AssetKey\022\023\n\013amount_sold\030\006 \001(\003\022(\n\014a" +
-      "sset_bought\030\007 \001(\0132\022.protocol.AssetKey\022\025\n" +
-      "\ramount_bought\030\010 \001(\003\"1\n\024OperationSetAsse" +
-      "tFee\022\014\n\004code\030\001 \001(\t\022\013\n\003fee\030\002 \001(\005\"\366\006\n\tOper",
-      "ation\022&\n\004type\030\001 \001(\0162\030.protocol.Operation" +
-      ".Type\022\026\n\016source_address\030\002 \001(\t\022\020\n\010metadat" +
-      "a\030\003 \001(\014\0228\n\016create_account\030\004 \001(\0132 .protoc" +
-      "ol.OperationCreateAccount\0222\n\013issue_asset" +
-      "\030\005 \001(\0132\035.protocol.OperationIssueAsset\022+\n" +
-      "\007payment\030\006 \001(\0132\032.protocol.OperationPayme" +
-      "nt\0224\n\014set_metadata\030\007 \001(\0132\036.protocol.Oper" +
-      "ationSetMetadata\022=\n\021set_signer_weight\030\010 " +
-      "\001(\0132\".protocol.OperationSetSignerWeight\022" +
-      "6\n\rset_threshold\030\t \001(\0132\037.protocol.Operat",
-      "ionSetThreshold\022,\n\010pay_coin\030\n \001(\0132\032.prot" +
-      "ocol.OperationPayCoin\022#\n\003log\030\013 \001(\0132\026.pro" +
-      "tocol.OperationLog\0226\n\rprocess_order\030\014 \001(" +
-      "\0132\037.protocol.OperationProcessOrder\0228\n\016re" +
-      "gister_asset\030\r \001(\0132 .protocol.OperationR" +
-      "egisterAsset\0225\n\rset_asset_fee\030\016 \001(\0132\036.pr" +
-      "otocol.OperationSetAssetFee\"\322\001\n\004Type\022\013\n\007" +
-      "UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSUE_A" +
-      "SSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004\022\025\n" +
-      "\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD\020\006\022",
-      "\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rPROCESS_ORDER\020" +
-      "\t\022\022\n\016REGISTER_ASSET\020\n\022\021\n\rSET_ASSET_FEE\020\013" +
-      "\"h\n\025OperationSetThreshold\022\024\n\014tx_threshol" +
-      "d\030\001 \001(\003\0229\n\017type_thresholds\030\004 \003(\0132 .proto" +
-      "col.OperationTypeThreshold\"\274\001\n\013Transacti" +
-      "on\022\026\n\016source_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(" +
-      "\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022" +
-      "\020\n\010metadata\030\005 \001(\014\022\'\n\noperations\030\006 \003(\0132\023." +
-      "protocol.Operation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000" +
-      "\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007address\030\001",
-      " \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_" +
-      "NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020transa" +
-      "ction_type\030\001 \001(\0162!.protocol.Trigger.Tran" +
-      "sactionType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013trans" +
-      "action\030\003 \001(\0132\".protocol.Trigger.Operatio" +
-      "nTrigger\032/\n\020OperationTrigger\022\014\n\004hash\030\001 \001" +
-      "(\014\022\r\n\005index\030\002 \001(\003\"C\n\017TransactionType\022\026\n\022" +
-      "NORMAL_TRANSACTION\020\000\022\030\n\024CONTRACT_TRANSAC" +
-      "TION\020\001\"\211\001\n\016TransactionEnv\022*\n\013transaction" +
-      "\030\001 \001(\0132\025.protocol.Transaction\022\'\n\nsignatu",
-      "res\030\002 \003(\0132\023.protocol.Signature\022\"\n\007trigge" +
-      "r\030\003 \001(\0132\021.protocol.Trigger\"\240\002\n\024Operation" +
-      "OrderResult\022,\n\016orders_claimed\030\001 \003(\0132\024.pr" +
-      "otocol.ClaimOrder\022>\n\006effect\030\002 \001(\0162..prot" +
-      "ocol.OperationOrderResult.OrderEffectTyp" +
-      "e\022\036\n\005order\030\003 \001(\0132\017.protocol.Order\022\014\n\004cod" +
-      "e\030\004 \001(\005\022\r\n\005index\030\005 \001(\005\"]\n\017OrderEffectTyp" +
-      "e\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rORDER_CREATED\020\001\022" +
-      "\021\n\rORDER_UPDATED\020\002\022\021\n\rORDER_DELETED\020\003\"\335\001" +
-      "\n\023TransactionEnvStore\0221\n\017transaction_env",
-      "\030\001 \001(\0132\030.protocol.TransactionEnv\022\022\n\nerro" +
-      "r_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledg" +
-      "er_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash" +
-      "\030\006 \001(\014\0225\n\rorders_result\030\007 \003(\0132\036.protocol" +
-      ".OperationOrderResult\":\n\021TransactionEnvS" +
-      "et\022%\n\003txs\030\002 \003(\0132\030.protocol.TransactionEn" +
-      "v\"G\n\030ConsensusValueValidation\022\025\n\rexpire_" +
-      "tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n\016C" +
-      "onsensusValue\022*\n\005txset\030\001 \001(\0132\033.protocol." +
-      "TransactionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022\026\n",
-      "\016previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 \001(" +
-      "\003\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016ledge" +
-      "r_upgrade\030\006 \001(\0132\027.protocol.LedgerUpgrade" +
-      "\0226\n\nvalidation\030\007 \001(\0132\".protocol.Consensu" +
-      "sValueValidation\"j\n\010Contract\022-\n\004type\030\001 \001" +
-      "(\0162\037.protocol.Contract.ContractType\022\017\n\007p" +
-      "ayload\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCRI" +
-      "PT\020\000\"\316\001\n\026OperationCreateAccount\022\024\n\014dest_" +
-      "address\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.protoc" +
-      "ol.Contract\022(\n\004priv\030\003 \001(\0132\032.protocol.Acc",
-      "ountPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.proto" +
-      "col.KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n\nini" +
-      "t_input\030\006 \001(\t\"X\n\024OperationSetMetadata\022\013\n" +
-      "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 \001" +
-      "(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKN" +
-      "OWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.bumo.blockcha" +
-      "in.adapter3b\006proto3"
+      "ledger_seq\030\004 \001(\003\022\017\n\007tx_hash\030\005 \001(\t\022\020\n\010op_" +
+      "index\030\006 \001(\005\"\362\001\n\nClaimOrder\022\021\n\tseller_id\030" +
+      "\001 \001(\t\022\020\n\010order_id\030\002 \001(\t\022\017\n\007tx_hash\030\003 \001(\t" +
+      "\022\036\n\005price\030\004 \001(\0132\017.protocol.Price\022&\n\nasse" +
+      "t_sold\030\005 \001(\0132\022.protocol.AssetKey\022\023\n\013amou" +
+      "nt_sold\030\006 \001(\003\022(\n\014asset_bought\030\007 \001(\0132\022.pr" +
+      "otocol.AssetKey\022\025\n\ramount_bought\030\010 \001(\003\022\020" +
+      "\n\010op_index\030\t \001(\005\"1\n\024OperationSetAssetFee",
+      "\022\014\n\004code\030\001 \001(\t\022\013\n\003fee\030\002 \001(\005\"\366\006\n\tOperatio" +
+      "n\022&\n\004type\030\001 \001(\0162\030.protocol.Operation.Typ" +
+      "e\022\026\n\016source_address\030\002 \001(\t\022\020\n\010metadata\030\003 " +
+      "\001(\014\0228\n\016create_account\030\004 \001(\0132 .protocol.O" +
+      "perationCreateAccount\0222\n\013issue_asset\030\005 \001" +
+      "(\0132\035.protocol.OperationIssueAsset\022+\n\007pay" +
+      "ment\030\006 \001(\0132\032.protocol.OperationPayment\0224" +
+      "\n\014set_metadata\030\007 \001(\0132\036.protocol.Operatio" +
+      "nSetMetadata\022=\n\021set_signer_weight\030\010 \001(\0132" +
+      "\".protocol.OperationSetSignerWeight\0226\n\rs",
+      "et_threshold\030\t \001(\0132\037.protocol.OperationS" +
+      "etThreshold\022,\n\010pay_coin\030\n \001(\0132\032.protocol" +
+      ".OperationPayCoin\022#\n\003log\030\013 \001(\0132\026.protoco" +
+      "l.OperationLog\0226\n\rprocess_order\030\014 \001(\0132\037." +
+      "protocol.OperationProcessOrder\0228\n\016regist" +
+      "er_asset\030\r \001(\0132 .protocol.OperationRegis" +
+      "terAsset\0225\n\rset_asset_fee\030\016 \001(\0132\036.protoc" +
+      "ol.OperationSetAssetFee\"\322\001\n\004Type\022\013\n\007UNKN" +
+      "OWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n\013ISSUE_ASSET" +
+      "\020\002\022\013\n\007PAYMENT\020\003\022\020\n\014SET_METADATA\020\004\022\025\n\021SET",
+      "_SIGNER_WEIGHT\020\005\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010P" +
+      "AY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rPROCESS_ORDER\020\t\022\022\n" +
+      "\016REGISTER_ASSET\020\n\022\021\n\rSET_ASSET_FEE\020\013\"h\n\025" +
+      "OperationSetThreshold\022\024\n\014tx_threshold\030\001 " +
+      "\001(\003\0229\n\017type_thresholds\030\004 \003(\0132 .protocol." +
+      "OperationTypeThreshold\"\274\001\n\013Transaction\022\026" +
+      "\n\016source_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\013\n" +
+      "\003fee\030\003 \001(\003\022\027\n\017ceil_ledger_seq\030\004 \001(\003\022\020\n\010m" +
+      "etadata\030\005 \001(\014\022\'\n\noperations\030\006 \003(\0132\023.prot" +
+      "ocol.Operation\"%\n\005Limit\022\013\n\007UNKNOWN\020\000\022\017\n\n",
+      "OPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007address\030\001 \001(\t" +
+      "\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017\n\013SIGNER_NONE" +
+      "\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022;\n\020transactio" +
+      "n_type\030\001 \001(\0162!.protocol.Trigger.Transact" +
+      "ionType\022\022\n\nledger_seq\030\002 \001(\003\0227\n\013transacti" +
+      "on\030\003 \001(\0132\".protocol.Trigger.OperationTri" +
+      "gger\032/\n\020OperationTrigger\022\014\n\004hash\030\001 \001(\014\022\r" +
+      "\n\005index\030\002 \001(\003\"C\n\017TransactionType\022\026\n\022NORM" +
+      "AL_TRANSACTION\020\000\022\030\n\024CONTRACT_TRANSACTION" +
+      "\020\001\"\211\001\n\016TransactionEnv\022*\n\013transaction\030\001 \001",
+      "(\0132\025.protocol.Transaction\022\'\n\nsignatures\030" +
+      "\002 \003(\0132\023.protocol.Signature\022\"\n\007trigger\030\003 " +
+      "\001(\0132\021.protocol.Trigger\"\243\002\n\024OperationOrde" +
+      "rResult\022,\n\016orders_claimed\030\001 \003(\0132\024.protoc" +
+      "ol.ClaimOrder\022>\n\006effect\030\002 \001(\0162..protocol" +
+      ".OperationOrderResult.OrderEffectType\022\036\n" +
+      "\005order\030\003 \001(\0132\017.protocol.Order\022\014\n\004code\030\004 " +
+      "\001(\005\022\020\n\010op_index\030\005 \001(\005\"]\n\017OrderEffectType" +
+      "\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rORDER_CREATED\020\001\022\021" +
+      "\n\rORDER_UPDATED\020\002\022\021\n\rORDER_DELETED\020\003\"\335\001\n",
+      "\023TransactionEnvStore\0221\n\017transaction_env\030" +
+      "\001 \001(\0132\030.protocol.TransactionEnv\022\022\n\nerror" +
+      "_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022\022\n\nledge" +
+      "r_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022\014\n\004hash\030" +
+      "\006 \001(\014\0225\n\rorders_result\030\007 \003(\0132\036.protocol." +
+      "OperationOrderResult\":\n\021TransactionEnvSe" +
+      "t\022%\n\003txs\030\002 \003(\0132\030.protocol.TransactionEnv" +
+      "\"G\n\030ConsensusValueValidation\022\025\n\rexpire_t" +
+      "x_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n\016Co" +
+      "nsensusValue\022*\n\005txset\030\001 \001(\0132\033.protocol.T",
+      "ransactionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022\026\n\016" +
+      "previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 \001(\003" +
+      "\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016ledger" +
+      "_upgrade\030\006 \001(\0132\027.protocol.LedgerUpgrade\022" +
+      "6\n\nvalidation\030\007 \001(\0132\".protocol.Consensus" +
+      "ValueValidation\"j\n\010Contract\022-\n\004type\030\001 \001(" +
+      "\0162\037.protocol.Contract.ContractType\022\017\n\007pa" +
+      "yload\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCRIP" +
+      "T\020\000\"\316\001\n\026OperationCreateAccount\022\024\n\014dest_a" +
+      "ddress\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.protoco",
+      "l.Contract\022(\n\004priv\030\003 \001(\0132\032.protocol.Acco" +
+      "untPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.protoc" +
+      "ol.KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n\ninit" +
+      "_input\030\006 \001(\t\"X\n\024OperationSetMetadata\022\013\n\003" +
+      "key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 \001(" +
+      "\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKNO" +
+      "WN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.bumo.blockchai" +
+      "n.adapter3b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -35824,13 +35951,13 @@ public final class Chain {
     internal_static_protocol_Order_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Order_descriptor,
-        new java.lang.String[] { "SellerAddress", "RemainOrder", "Flags", "LastModifiedLedgerSeq", "TxHash", });
+        new java.lang.String[] { "SellerAddress", "RemainOrder", "Flags", "LastModifiedLedgerSeq", "TxHash", "OpIndex", });
     internal_static_protocol_ClaimOrder_descriptor =
       getDescriptor().getMessageTypes().get(19);
     internal_static_protocol_ClaimOrder_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ClaimOrder_descriptor,
-        new java.lang.String[] { "SellerId", "OrderId", "TxHash", "Price", "AssetSold", "AmountSold", "AssetBought", "AmountBought", });
+        new java.lang.String[] { "SellerId", "OrderId", "TxHash", "Price", "AssetSold", "AmountSold", "AssetBought", "AmountBought", "OpIndex", });
     internal_static_protocol_OperationSetAssetFee_descriptor =
       getDescriptor().getMessageTypes().get(20);
     internal_static_protocol_OperationSetAssetFee_fieldAccessorTable = new
@@ -35884,7 +36011,7 @@ public final class Chain {
     internal_static_protocol_OperationOrderResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationOrderResult_descriptor,
-        new java.lang.String[] { "OrdersClaimed", "Effect", "Order", "Code", "Index", });
+        new java.lang.String[] { "OrdersClaimed", "Effect", "Order", "Code", "OpIndex", });
     internal_static_protocol_TransactionEnvStore_descriptor =
       getDescriptor().getMessageTypes().get(28);
     internal_static_protocol_TransactionEnvStore_fieldAccessorTable = new

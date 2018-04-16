@@ -2354,6 +2354,12 @@ class Order : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_tx_hash();
   void set_allocated_tx_hash(::std::string* tx_hash);
 
+  // optional int32 op_index = 6;
+  void clear_op_index();
+  static const int kOpIndexFieldNumber = 6;
+  ::google::protobuf::int32 op_index() const;
+  void set_op_index(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:protocol.Order)
  private:
 
@@ -2362,8 +2368,9 @@ class Order : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::internal::ArenaStringPtr seller_address_;
   ::protocol::OperationProcessOrder* remain_order_;
   ::google::protobuf::int64 last_modified_ledger_seq_;
-  ::google::protobuf::internal::ArenaStringPtr tx_hash_;
   ::google::protobuf::uint32 flags_;
+  ::google::protobuf::int32 op_index_;
+  ::google::protobuf::internal::ArenaStringPtr tx_hash_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -2506,6 +2513,12 @@ class ClaimOrder : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int64 amount_bought() const;
   void set_amount_bought(::google::protobuf::int64 value);
 
+  // optional int32 op_index = 9;
+  void clear_op_index();
+  static const int kOpIndexFieldNumber = 9;
+  ::google::protobuf::int32 op_index() const;
+  void set_op_index(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:protocol.ClaimOrder)
  private:
 
@@ -2519,6 +2532,7 @@ class ClaimOrder : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int64 amount_sold_;
   ::protocol::AssetKey* asset_bought_;
   ::google::protobuf::int64 amount_bought_;
+  ::google::protobuf::int32 op_index_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -3711,11 +3725,11 @@ class OperationOrderResult : public ::google::protobuf::Message /* @@protoc_inse
   ::google::protobuf::int32 code() const;
   void set_code(::google::protobuf::int32 value);
 
-  // optional int32 index = 5;
-  void clear_index();
-  static const int kIndexFieldNumber = 5;
-  ::google::protobuf::int32 index() const;
-  void set_index(::google::protobuf::int32 value);
+  // optional int32 op_index = 5;
+  void clear_op_index();
+  static const int kOpIndexFieldNumber = 5;
+  ::google::protobuf::int32 op_index() const;
+  void set_op_index(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:protocol.OperationOrderResult)
  private:
@@ -3726,7 +3740,7 @@ class OperationOrderResult : public ::google::protobuf::Message /* @@protoc_inse
   ::protocol::Order* order_;
   int effect_;
   ::google::protobuf::int32 code_;
-  ::google::protobuf::int32 index_;
+  ::google::protobuf::int32 op_index_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -6721,6 +6735,20 @@ inline void Order::set_allocated_tx_hash(::std::string* tx_hash) {
   // @@protoc_insertion_point(field_set_allocated:protocol.Order.tx_hash)
 }
 
+// optional int32 op_index = 6;
+inline void Order::clear_op_index() {
+  op_index_ = 0;
+}
+inline ::google::protobuf::int32 Order::op_index() const {
+  // @@protoc_insertion_point(field_get:protocol.Order.op_index)
+  return op_index_;
+}
+inline void Order::set_op_index(::google::protobuf::int32 value) {
+  
+  op_index_ = value;
+  // @@protoc_insertion_point(field_set:protocol.Order.op_index)
+}
+
 // -------------------------------------------------------------------
 
 // ClaimOrder
@@ -6997,6 +7025,20 @@ inline void ClaimOrder::set_amount_bought(::google::protobuf::int64 value) {
   
   amount_bought_ = value;
   // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_bought)
+}
+
+// optional int32 op_index = 9;
+inline void ClaimOrder::clear_op_index() {
+  op_index_ = 0;
+}
+inline ::google::protobuf::int32 ClaimOrder::op_index() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.op_index)
+  return op_index_;
+}
+inline void ClaimOrder::set_op_index(::google::protobuf::int32 value) {
+  
+  op_index_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.op_index)
 }
 
 // -------------------------------------------------------------------
@@ -8201,18 +8243,18 @@ inline void OperationOrderResult::set_code(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:protocol.OperationOrderResult.code)
 }
 
-// optional int32 index = 5;
-inline void OperationOrderResult::clear_index() {
-  index_ = 0;
+// optional int32 op_index = 5;
+inline void OperationOrderResult::clear_op_index() {
+  op_index_ = 0;
 }
-inline ::google::protobuf::int32 OperationOrderResult::index() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationOrderResult.index)
-  return index_;
+inline ::google::protobuf::int32 OperationOrderResult::op_index() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationOrderResult.op_index)
+  return op_index_;
 }
-inline void OperationOrderResult::set_index(::google::protobuf::int32 value) {
+inline void OperationOrderResult::set_op_index(::google::protobuf::int32 value) {
   
-  index_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationOrderResult.index)
+  op_index_ = value;
+  // @@protoc_insertion_point(field_set:protocol.OperationOrderResult.op_index)
 }
 
 // -------------------------------------------------------------------

@@ -193,6 +193,7 @@ namespace bumo {
 		co.set_seller_id(account_b->GetAccountAddress());
 		co.set_order_id(selling_wheat_order.GetOrderID());
 		co.set_tx_hash(selling_wheat_order.GetTxHash());
+		co.set_op_index(selling_wheat_order.GetOperationIndex());
 		co.mutable_price()->CopyFrom(selling_wheat_order.GetPrice());
 
 		co.mutable_asset_sold()->CopyFrom(wheat);
