@@ -828,6 +828,11 @@ POST /getTransactionBlob
 | 5      | SET_SIGNER_WEIGHT | 设置权重     |
 | 6      | SET_THRESHOLD     | 设置门限     |
 | 7      | PAY_COIN          | 支付BU COIN  |
+| 8      | LOG               | LOG日志      |
+| 9      | PROCESS_ORDER     | 订单提交     |
+| 10     | REGISTER_ASSET    | 注册资产     |
+| 11     | SET_ASSET_FEE     | 设置资产费用 |
+
 
 #### 创建账号
 
@@ -974,8 +979,7 @@ POST /getTransactionBlob
       "type": 2,
       "issue_asset": {
         "amount": 1000,
-        "code": "CNY",
-        "type": 0 //目前只能填0 或者不填
+        "code": "CNY"
       }
     }
     ```
@@ -985,12 +989,12 @@ POST /getTransactionBlob
     {
         string code = 1;
         int64 amount = 2;
-        int32 type = 3;
     }
     ```
     - code:要发行的资产代码，长度范围[1, 64]
     - 发行的数量。数值范围(0,MAX(int64))
     - 执行成功后，操作源的资产表中会出现这部分新发行的资产
+    - 资产类型为不限量发行模式 type为0
 
 #### 转移资产
 
@@ -999,6 +1003,7 @@ POST /getTransactionBlob
 |payment.dest_address |  目标账户
 |payment.asset.key.issuer|  资产发行方
 |payment.asset.key.code|  资产代码
+|payment.asset.key.type|  资产类型
 |payment.asset.amount|  要转移的数量
 |payment.input|  触发合约调用的入参
 
@@ -1019,7 +1024,7 @@ POST /getTransactionBlob
           "key": {
             "issuer": "buQgmhhxLwhdUvcWijzxumUHaNqZtJpWvNsf",
             "code": "CNY",
-            "type": 0 //目前只能填0 或者不填
+            "type": 0 //支持 0 或者 2
           },
           "amount": 100
         },
@@ -1039,6 +1044,8 @@ POST /getTransactionBlob
     ```
     - dest_address: 资产接收方账号地址
     - asset: 要转移的资产
+    - input: 本次转移触发接收方的合约，合约的执行入参就是input
+
     ```text
     message Asset
     {
@@ -1048,12 +1055,17 @@ POST /getTransactionBlob
 
     message AssetKey
     {
-         string issuer = 1; //资产发行方
-         string code = 2; //资产代码
-         int32 type = 3;   //资产类型
+        enum Type {
+            UNLIMIT 			= 0;
+            SELF_COIN 			= 1;
+            LIMIT				= 2;
+        };
+        string issuer = 1; //资产发行方
+        string code = 2; //资产代码
+        Type type = 3;   //资产类型
     }
     ```
-    - input: 本次转移触发接收方的合约，合约的执行入参就是input
+    - type: 资产类型 0 不限量发行 1 代表本币 issuer和code为空 2 限量发行。转移资产只允许转移类型为0 或 2
 
 #### 设置metadata
 |参数|描述
@@ -1228,6 +1240,196 @@ POST /getTransactionBlob
     - dest_address: BU接收方账号地址
     - amount: 要转移的BU数量
     - input: 本次转移触发接收方的合约，合约的执行入参就是input
+
+### LOG日志
+
+|参数|描述
+|:--- | --- 
+|log.topic |  日志主题
+|log.datas|  日志内容
+
+
+- 功能
+  只智能合约写入一笔交易来记录日志
+- 成功条件
+  - 各项参数合法
+- json格式
+
+
+  ```JSON
+    {
+      "type": 8,
+      "log": {
+          "topic": "xxxx",
+          "datas": ["aa","bb"]
+        }
+      }
+    }
+  ```
+
+- protocol buffer 结构
+    ```text
+    message OperationLog
+    {
+        string topic = 1;
+	      repeated string datas = 2;
+    }
+    ```
+    - topic: 日志主题
+    - datas: 日志内容
+
+### 订单提交
+
+|参数|描述
+|:--- | --- 
+|process_order.selling |  卖资产
+|process_order.buying|  买资产
+|process_order.amount|  交易数量
+|process_order.price |  价格
+|process_order.order_id|  订单id
+|process_order.fee_percent|  撮合费
+
+
+- 功能
+  提交新订单和撤销订单操作
+- 成功条件
+  - 各项参数合法
+- json格式
+
+
+  ```JSON
+    {
+    "type":9,
+    "process_order":{
+        "selling":{
+            "issuer":"xxxx",
+            "code":"BTC",
+            "type":2    //此type必须为1 或 2
+        },
+        "buying":{
+            "issuer":"xxxx",
+            "code":"ETH",
+            "type":2    //此type必须为1 或 2
+        },
+        "amount":555,   // 提交新订单amount值不能为0，撤单为0
+        "price":{
+            "n":1,  //分子 selling 
+            "5":5   //分母 buying
+        },
+        "order_id":"",  //提交新订单 此字段必须为空，不为空说明是撤单
+        "fee_percent":10
+    }
+  }
+  ```
+
+- protocol buffer 结构
+    ```text
+    message OperationProcessOrder{
+      AssetKey selling	=1;
+      AssetKey buying		=2;
+      int64 amount		=3; // amount being sold. if set to 0, delete the order
+      Price price			=4; // price of thing being sold in terms of what you are buying
+      
+      // 0=create a new offer, otherwise edit an existing offer
+      string order_id		=5;
+      int32 fee_percent	=6; //for buy
+    }
+    ```
+    - selling: 要卖的资产
+    - buying: 要买的资产
+    - amount: 要卖的数量，提交新订单不为0，撤单为0
+    - price:  以买资产为单位的价格
+    - order_id: 订单id，提交新订单不需要填，撤单必填
+    - fee_percent: 买资产交付的费率
+
+    相关结构
+    ```text
+    message Price{
+      int32 n	=1; // numerator
+      int32 d	=2; // denominator
+    }
+    ```
+
+### 注册资产
+
+|参数|描述
+|:--- | --- 
+|register_asset.code |  资产代码
+|register_asset.property.decimal|  小数精度
+|register_asset.property.description|  资产描述
+|register_asset.property.max_supply|  最大发行量
+|register_asset.property.issued_amount|  已发行量
+|register_asset.property.fee_percent|  费率
+
+
+- 功能
+  操作源账号注册一种数字资产，不能重复注册相同资产
+- 成功条件
+  - 各项参数合法
+  - 已发行量为0
+- json格式
+
+    ```json
+    {
+      "type": 10,
+      "register_asset": {
+        "code": "CNY",
+        "property":{
+          "decimal":8,
+          "description":"xxxx",
+          "max_supply":100000000,
+          "issued_amount":0,
+          "fee_percent":10
+        }
+      }
+    }
+    ```
+- protocol buffer 结构
+    ```text
+    message OperationRegisterAsset{
+      string code = 1;
+      AssetProperty property = 2;
+    }
+    ```
+    - code:要发行的资产代码，长度范围[1, 64]
+    - 最大发行量。数值范围(0,MAX(int64))
+    - 执行成功后，操作源的资产表中会出现这部分新发行的资产
+    - 资产类型为限量发行模式 type为2
+
+
+### 设置资产费用
+
+|参数|描述
+|:--- | --- 
+|set_asset_fee.code |  资产代码
+|set_asset_fee.fee|  费率
+
+
+- 功能
+  操作源账号修改发行限量资产的费率
+- 成功条件
+  - 各项参数合法
+  - 费率不能为负
+- json格式
+
+    ```json
+    {
+      "type": 11,
+      "set_asset_fee": {
+        "code":"CNY",
+        "fee": 7
+      }
+    }
+    ```
+- protocol buffer 结构
+    ```text
+    message OperationSetAssetFee{
+      string  code = 1;
+      int32	fee	 = 2;
+    }
+    ```
+    - code : 资产代码
+    - fee : 费率 
 
 ## 高级功能
 

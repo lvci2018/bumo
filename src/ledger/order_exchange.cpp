@@ -150,7 +150,7 @@ namespace bumo {
 			//fee compulate
 			int64_t fee = selling_wheat_order.GetFee(num_sheep_sent);
 			int64_t num_sheep_sent_after_fee = num_sheep_sent - fee;
-			/*if (!AccountFrm::PayIssuerFee(environment_, sheep, fee)){
+			/*if (!AccountFrm::PayMatchFee(environment_, sheep, fee)){
 				PROCESS_EXIT();
 			}*/
 

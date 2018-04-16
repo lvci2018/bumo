@@ -97,8 +97,11 @@ message AccountThreshold{
 message OperationIssueAsset{
 	string code = 1;
 	int64 amount = 2;
-	int32 type = 3;
-	AssetProperty property = 4;
+}
+
+message OperationRegisterAsset{
+	string code = 1;
+	AssetProperty property = 2;
 }
 
 message OperationPayCoin{
@@ -156,10 +159,10 @@ message ClaimOrder
 	// amount and asset sent to the owner
 	AssetKey asset_bought	=7;
 	int64 amount_bought		=8;
-};
+}
 
 message OperationSetAssetFee{
-	AssetKey key = 1;
+	string	code = 1;
 	int32	fee	 = 2;
 }
 
@@ -193,7 +196,7 @@ message Operation {
 	OperationPayCoin			pay_coin           = 10;
 	OperationLog				log				   = 11;
 	OperationProcessOrder		process_order	   = 12;
-	OperationIssueAsset			register_asset	   = 13;
+	OperationRegisterAsset		register_asset	   = 13;
 	OperationSetAssetFee		set_asset_fee	   = 14;
 }
 

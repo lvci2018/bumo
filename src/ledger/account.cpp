@@ -376,7 +376,7 @@ namespace bumo {
 		return acc_frm;
 	}
 
-	bool AccountFrm::PayIssuerFee(std::shared_ptr<Environment> environment, const protocol::AssetKey& asset_key, int64_t fee){
+	bool AccountFrm::PayMatchFee(std::shared_ptr<Environment> environment, const protocol::AssetKey& asset_key, int64_t fee){
 		AccountFrm::pointer account;
 		if (!environment->GetEntry(asset_key.issuer(), account)){
 			LOG_ERROR("Account(%s) must be exist,invalid database state", account->GetAccountAddress().c_str());

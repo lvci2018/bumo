@@ -59,6 +59,7 @@ class OperationOrderResult;
 class OperationPayCoin;
 class OperationPayment;
 class OperationProcessOrder;
+class OperationRegisterAsset;
 class OperationSetAssetFee;
 class OperationSetMetadata;
 class OperationSetSignerWeight;
@@ -1611,21 +1612,6 @@ class OperationIssueAsset : public ::google::protobuf::Message /* @@protoc_inser
   ::google::protobuf::int64 amount() const;
   void set_amount(::google::protobuf::int64 value);
 
-  // optional int32 type = 3;
-  void clear_type();
-  static const int kTypeFieldNumber = 3;
-  ::google::protobuf::int32 type() const;
-  void set_type(::google::protobuf::int32 value);
-
-  // optional .protocol.AssetProperty property = 4;
-  bool has_property() const;
-  void clear_property();
-  static const int kPropertyFieldNumber = 4;
-  const ::protocol::AssetProperty& property() const;
-  ::protocol::AssetProperty* mutable_property();
-  ::protocol::AssetProperty* release_property();
-  void set_allocated_property(::protocol::AssetProperty* property);
-
   // @@protoc_insertion_point(class_scope:protocol.OperationIssueAsset)
  private:
 
@@ -1633,8 +1619,6 @@ class OperationIssueAsset : public ::google::protobuf::Message /* @@protoc_inser
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr code_;
   ::google::protobuf::int64 amount_;
-  ::protocol::AssetProperty* property_;
-  ::google::protobuf::int32 type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -1642,6 +1626,103 @@ class OperationIssueAsset : public ::google::protobuf::Message /* @@protoc_inser
 
   void InitAsDefaultInstance();
   static OperationIssueAsset* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class OperationRegisterAsset : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:protocol.OperationRegisterAsset) */ {
+ public:
+  OperationRegisterAsset();
+  virtual ~OperationRegisterAsset();
+
+  OperationRegisterAsset(const OperationRegisterAsset& from);
+
+  inline OperationRegisterAsset& operator=(const OperationRegisterAsset& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const OperationRegisterAsset& default_instance();
+
+  void Swap(OperationRegisterAsset* other);
+
+  // implements Message ----------------------------------------------
+
+  inline OperationRegisterAsset* New() const { return New(NULL); }
+
+  OperationRegisterAsset* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const OperationRegisterAsset& from);
+  void MergeFrom(const OperationRegisterAsset& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(OperationRegisterAsset* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string code = 1;
+  void clear_code();
+  static const int kCodeFieldNumber = 1;
+  const ::std::string& code() const;
+  void set_code(const ::std::string& value);
+  void set_code(const char* value);
+  void set_code(const char* value, size_t size);
+  ::std::string* mutable_code();
+  ::std::string* release_code();
+  void set_allocated_code(::std::string* code);
+
+  // optional .protocol.AssetProperty property = 2;
+  bool has_property() const;
+  void clear_property();
+  static const int kPropertyFieldNumber = 2;
+  const ::protocol::AssetProperty& property() const;
+  ::protocol::AssetProperty* mutable_property();
+  ::protocol::AssetProperty* release_property();
+  void set_allocated_property(::protocol::AssetProperty* property);
+
+  // @@protoc_insertion_point(class_scope:protocol.OperationRegisterAsset)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr code_;
+  ::protocol::AssetProperty* property_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_chain_2eproto();
+  friend void protobuf_AssignDesc_chain_2eproto();
+  friend void protobuf_ShutdownFile_chain_2eproto();
+
+  void InitAsDefaultInstance();
+  static OperationRegisterAsset* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2508,14 +2589,16 @@ class OperationSetAssetFee : public ::google::protobuf::Message /* @@protoc_inse
 
   // accessors -------------------------------------------------------
 
-  // optional .protocol.AssetKey key = 1;
-  bool has_key() const;
-  void clear_key();
-  static const int kKeyFieldNumber = 1;
-  const ::protocol::AssetKey& key() const;
-  ::protocol::AssetKey* mutable_key();
-  ::protocol::AssetKey* release_key();
-  void set_allocated_key(::protocol::AssetKey* key);
+  // optional string code = 1;
+  void clear_code();
+  static const int kCodeFieldNumber = 1;
+  const ::std::string& code() const;
+  void set_code(const ::std::string& value);
+  void set_code(const char* value);
+  void set_code(const char* value, size_t size);
+  ::std::string* mutable_code();
+  ::std::string* release_code();
+  void set_allocated_code(::std::string* code);
 
   // optional int32 fee = 2;
   void clear_fee();
@@ -2528,7 +2611,7 @@ class OperationSetAssetFee : public ::google::protobuf::Message /* @@protoc_inse
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::protocol::AssetKey* key_;
+  ::google::protobuf::internal::ArenaStringPtr code_;
   ::google::protobuf::int32 fee_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
@@ -2755,14 +2838,14 @@ class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::protocol::OperationProcessOrder* release_process_order();
   void set_allocated_process_order(::protocol::OperationProcessOrder* process_order);
 
-  // optional .protocol.OperationIssueAsset register_asset = 13;
+  // optional .protocol.OperationRegisterAsset register_asset = 13;
   bool has_register_asset() const;
   void clear_register_asset();
   static const int kRegisterAssetFieldNumber = 13;
-  const ::protocol::OperationIssueAsset& register_asset() const;
-  ::protocol::OperationIssueAsset* mutable_register_asset();
-  ::protocol::OperationIssueAsset* release_register_asset();
-  void set_allocated_register_asset(::protocol::OperationIssueAsset* register_asset);
+  const ::protocol::OperationRegisterAsset& register_asset() const;
+  ::protocol::OperationRegisterAsset* mutable_register_asset();
+  ::protocol::OperationRegisterAsset* release_register_asset();
+  void set_allocated_register_asset(::protocol::OperationRegisterAsset* register_asset);
 
   // optional .protocol.OperationSetAssetFee set_asset_fee = 14;
   bool has_set_asset_fee() const;
@@ -2789,7 +2872,7 @@ class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::protocol::OperationPayCoin* pay_coin_;
   ::protocol::OperationLog* log_;
   ::protocol::OperationProcessOrder* process_order_;
-  ::protocol::OperationIssueAsset* register_asset_;
+  ::protocol::OperationRegisterAsset* register_asset_;
   ::protocol::OperationSetAssetFee* set_asset_fee_;
   int type_;
   mutable int _cached_size_;
@@ -5915,48 +5998,82 @@ inline void OperationIssueAsset::set_amount(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:protocol.OperationIssueAsset.amount)
 }
 
-// optional int32 type = 3;
-inline void OperationIssueAsset::clear_type() {
-  type_ = 0;
+// -------------------------------------------------------------------
+
+// OperationRegisterAsset
+
+// optional string code = 1;
+inline void OperationRegisterAsset::clear_code() {
+  code_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::int32 OperationIssueAsset::type() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationIssueAsset.type)
-  return type_;
+inline const ::std::string& OperationRegisterAsset::code() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationRegisterAsset.code)
+  return code_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void OperationIssueAsset::set_type(::google::protobuf::int32 value) {
+inline void OperationRegisterAsset::set_code(const ::std::string& value) {
   
-  type_ = value;
-  // @@protoc_insertion_point(field_set:protocol.OperationIssueAsset.type)
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.OperationRegisterAsset.code)
+}
+inline void OperationRegisterAsset::set_code(const char* value) {
+  
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.OperationRegisterAsset.code)
+}
+inline void OperationRegisterAsset::set_code(const char* value, size_t size) {
+  
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.OperationRegisterAsset.code)
+}
+inline ::std::string* OperationRegisterAsset::mutable_code() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.OperationRegisterAsset.code)
+  return code_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* OperationRegisterAsset::release_code() {
+  // @@protoc_insertion_point(field_release:protocol.OperationRegisterAsset.code)
+  
+  return code_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void OperationRegisterAsset::set_allocated_code(::std::string* code) {
+  if (code != NULL) {
+    
+  } else {
+    
+  }
+  code_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), code);
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationRegisterAsset.code)
 }
 
-// optional .protocol.AssetProperty property = 4;
-inline bool OperationIssueAsset::has_property() const {
+// optional .protocol.AssetProperty property = 2;
+inline bool OperationRegisterAsset::has_property() const {
   return !_is_default_instance_ && property_ != NULL;
 }
-inline void OperationIssueAsset::clear_property() {
+inline void OperationRegisterAsset::clear_property() {
   if (GetArenaNoVirtual() == NULL && property_ != NULL) delete property_;
   property_ = NULL;
 }
-inline const ::protocol::AssetProperty& OperationIssueAsset::property() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationIssueAsset.property)
+inline const ::protocol::AssetProperty& OperationRegisterAsset::property() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationRegisterAsset.property)
   return property_ != NULL ? *property_ : *default_instance_->property_;
 }
-inline ::protocol::AssetProperty* OperationIssueAsset::mutable_property() {
+inline ::protocol::AssetProperty* OperationRegisterAsset::mutable_property() {
   
   if (property_ == NULL) {
     property_ = new ::protocol::AssetProperty;
   }
-  // @@protoc_insertion_point(field_mutable:protocol.OperationIssueAsset.property)
+  // @@protoc_insertion_point(field_mutable:protocol.OperationRegisterAsset.property)
   return property_;
 }
-inline ::protocol::AssetProperty* OperationIssueAsset::release_property() {
-  // @@protoc_insertion_point(field_release:protocol.OperationIssueAsset.property)
+inline ::protocol::AssetProperty* OperationRegisterAsset::release_property() {
+  // @@protoc_insertion_point(field_release:protocol.OperationRegisterAsset.property)
   
   ::protocol::AssetProperty* temp = property_;
   property_ = NULL;
   return temp;
 }
-inline void OperationIssueAsset::set_allocated_property(::protocol::AssetProperty* property) {
+inline void OperationRegisterAsset::set_allocated_property(::protocol::AssetProperty* property) {
   delete property_;
   property_ = property;
   if (property) {
@@ -5964,7 +6081,7 @@ inline void OperationIssueAsset::set_allocated_property(::protocol::AssetPropert
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:protocol.OperationIssueAsset.property)
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationRegisterAsset.property)
 }
 
 // -------------------------------------------------------------------
@@ -6886,42 +7003,48 @@ inline void ClaimOrder::set_amount_bought(::google::protobuf::int64 value) {
 
 // OperationSetAssetFee
 
-// optional .protocol.AssetKey key = 1;
-inline bool OperationSetAssetFee::has_key() const {
-  return !_is_default_instance_ && key_ != NULL;
+// optional string code = 1;
+inline void OperationSetAssetFee::clear_code() {
+  code_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void OperationSetAssetFee::clear_key() {
-  if (GetArenaNoVirtual() == NULL && key_ != NULL) delete key_;
-  key_ = NULL;
+inline const ::std::string& OperationSetAssetFee::code() const {
+  // @@protoc_insertion_point(field_get:protocol.OperationSetAssetFee.code)
+  return code_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::protocol::AssetKey& OperationSetAssetFee::key() const {
-  // @@protoc_insertion_point(field_get:protocol.OperationSetAssetFee.key)
-  return key_ != NULL ? *key_ : *default_instance_->key_;
-}
-inline ::protocol::AssetKey* OperationSetAssetFee::mutable_key() {
+inline void OperationSetAssetFee::set_code(const ::std::string& value) {
   
-  if (key_ == NULL) {
-    key_ = new ::protocol::AssetKey;
-  }
-  // @@protoc_insertion_point(field_mutable:protocol.OperationSetAssetFee.key)
-  return key_;
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:protocol.OperationSetAssetFee.code)
 }
-inline ::protocol::AssetKey* OperationSetAssetFee::release_key() {
-  // @@protoc_insertion_point(field_release:protocol.OperationSetAssetFee.key)
+inline void OperationSetAssetFee::set_code(const char* value) {
   
-  ::protocol::AssetKey* temp = key_;
-  key_ = NULL;
-  return temp;
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:protocol.OperationSetAssetFee.code)
 }
-inline void OperationSetAssetFee::set_allocated_key(::protocol::AssetKey* key) {
-  delete key_;
-  key_ = key;
-  if (key) {
+inline void OperationSetAssetFee::set_code(const char* value, size_t size) {
+  
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:protocol.OperationSetAssetFee.code)
+}
+inline ::std::string* OperationSetAssetFee::mutable_code() {
+  
+  // @@protoc_insertion_point(field_mutable:protocol.OperationSetAssetFee.code)
+  return code_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* OperationSetAssetFee::release_code() {
+  // @@protoc_insertion_point(field_release:protocol.OperationSetAssetFee.code)
+  
+  return code_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void OperationSetAssetFee::set_allocated_code(::std::string* code) {
+  if (code != NULL) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:protocol.OperationSetAssetFee.key)
+  code_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), code);
+  // @@protoc_insertion_point(field_set_allocated:protocol.OperationSetAssetFee.code)
 }
 
 // optional int32 fee = 2;
@@ -7386,7 +7509,7 @@ inline void Operation::set_allocated_process_order(::protocol::OperationProcessO
   // @@protoc_insertion_point(field_set_allocated:protocol.Operation.process_order)
 }
 
-// optional .protocol.OperationIssueAsset register_asset = 13;
+// optional .protocol.OperationRegisterAsset register_asset = 13;
 inline bool Operation::has_register_asset() const {
   return !_is_default_instance_ && register_asset_ != NULL;
 }
@@ -7394,26 +7517,26 @@ inline void Operation::clear_register_asset() {
   if (GetArenaNoVirtual() == NULL && register_asset_ != NULL) delete register_asset_;
   register_asset_ = NULL;
 }
-inline const ::protocol::OperationIssueAsset& Operation::register_asset() const {
+inline const ::protocol::OperationRegisterAsset& Operation::register_asset() const {
   // @@protoc_insertion_point(field_get:protocol.Operation.register_asset)
   return register_asset_ != NULL ? *register_asset_ : *default_instance_->register_asset_;
 }
-inline ::protocol::OperationIssueAsset* Operation::mutable_register_asset() {
+inline ::protocol::OperationRegisterAsset* Operation::mutable_register_asset() {
   
   if (register_asset_ == NULL) {
-    register_asset_ = new ::protocol::OperationIssueAsset;
+    register_asset_ = new ::protocol::OperationRegisterAsset;
   }
   // @@protoc_insertion_point(field_mutable:protocol.Operation.register_asset)
   return register_asset_;
 }
-inline ::protocol::OperationIssueAsset* Operation::release_register_asset() {
+inline ::protocol::OperationRegisterAsset* Operation::release_register_asset() {
   // @@protoc_insertion_point(field_release:protocol.Operation.register_asset)
   
-  ::protocol::OperationIssueAsset* temp = register_asset_;
+  ::protocol::OperationRegisterAsset* temp = register_asset_;
   register_asset_ = NULL;
   return temp;
 }
-inline void Operation::set_allocated_register_asset(::protocol::OperationIssueAsset* register_asset) {
+inline void Operation::set_allocated_register_asset(::protocol::OperationRegisterAsset* register_asset) {
   delete register_asset_;
   register_asset_ = register_asset;
   if (register_asset) {
@@ -9021,6 +9144,8 @@ inline void OperationSetMetadata::set_delete_flag(bool value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

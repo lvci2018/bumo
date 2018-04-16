@@ -239,13 +239,6 @@ namespace bumo {
 
 		case protocol::Operation_Type_ISSUE_ASSET:
 		{
-			if ((protocol::AssetKey_Type)issue_asset.type() != protocol::AssetKey_Type_UNLIMIT){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Issue asset type must be unlimit"));
-				break;
-			}
-
-
 			if (issue_asset.amount() <= 0) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
 				result.set_desc(utils::String::Format("Issue unlimit asset amount should be bigger than 0"));
@@ -475,27 +468,17 @@ namespace bumo {
 		}
 		case protocol::Operation_Type_REGISTER_ASSET:
 		{
-			if ((protocol::AssetKey_Type)issue_asset.type() != protocol::AssetKey_Type_LIMIT){
+			const protocol::OperationRegisterAsset &register_asset = operation.register_asset();
+
+			if (!register_asset.has_property()){
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Issue asset type must be limit"));
+				result.set_desc(utils::String::Format("Register limit asset should has property feild"));
 				break;
 			}
 
-			if (issue_asset.amount() != 0) {
+			if (register_asset.property().max_supply() <= 0 || register_asset.property().issued_amount() != 0) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Issue limit asset amount must be than 0"));
-				break;
-			}
-
-			if (!issue_asset.has_property()){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Issue limit asset should has property feild"));
-				break;
-			}
-
-			if (issue_asset.property().max_supply() <= 0) {
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("max_supply should be bigger than 0"));
+				result.set_desc(utils::String::Format("Register limit asset max_supply should be bigger than 0, issued_amount must be 0"));
 				break;
 			}
 
@@ -514,41 +497,16 @@ namespace bumo {
 		{			
 			const protocol::OperationSetAssetFee &asset_fee = operation.set_asset_fee();
 
-			if (source_address != asset_fee.key().issuer()){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Set asset fee must be issuer"));
-				break;
-			}
-
-			if (!asset_fee.has_key()){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Set asset fee must has key feild"));
-				break;
-			}
-
-			if ((protocol::AssetKey_Type)asset_fee.key().type() != protocol::AssetKey_Type_LIMIT){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Set asset fee type must be limit "));
-				break;
-			}
-
-			std::string trim_code = asset_fee.key().code();
-			//utils::String::Trim(trim_code);
-			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset code length should between (0,64]"));
-				break;
-			}
-
-			if (!bumo::PublicKey::IsAddressValid(asset_fee.key().issuer())) {
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("asset issuer should be a valid account address"));
-				break;
-			}
-
 			if (asset_fee.fee() < 0) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("Set asset fee amount should be bigger than 0"));
+				result.set_desc(utils::String::Format("Set asset fee should be bigger than  or equel 0"));
+				break;
+			}
+
+			std::string trim_code = asset_fee.code();
+			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE) {
+				result.set_code(protocol::ERRCODE_ASSET_INVALID);
+				result.set_desc(utils::String::Format("Set asset fee code length should between (0,64]"));
 				break;
 			}
 			break;
@@ -737,17 +695,11 @@ namespace bumo {
 
 		const protocol::OperationIssueAsset& ope = operation_.issue_asset();
 		do {
-			if ((protocol::AssetKey_Type)ope.type() != protocol::AssetKey_Type_UNLIMIT){
-				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result_.set_desc(utils::String::Format("Issue asset type must be unlimit"));
-				break;
-			}
-
 			protocol::AssetStore asset_e;
 			protocol::AssetKey key;
 			key.set_issuer(source_account_->GetAccountAddress());
 			key.set_code(ope.code());
-			key.set_type((protocol::AssetKey_Type)ope.type());
+			key.set_type(protocol::AssetKey_Type_UNLIMIT);
 			if (!source_account_->GetAsset(key, asset_e)) {
 				protocol::AssetStore asset;
 				asset.mutable_key()->CopyFrom(key);
@@ -1214,7 +1166,7 @@ namespace bumo {
 					//fee compulate
 					int64_t fee = sell_sheep_order_->GetFee(wheat_received);
 					int64_t wheat_received_after_fee = wheat_received - fee;
-					//AccountFrm::PayIssuerFee(environment,wheat,fee);
+					//AccountFrm::PayMatchFee(environment,wheat,fee);
 
 					// it's OK to use mSourceAccount, mWheatLineA and mSheepLineA
 					// here as OfferExchange won't cross offers from source account
@@ -1358,23 +1310,16 @@ namespace bumo {
 
 	void OperationFrm::RegisterAsset(std::shared_ptr<Environment> environment){
 
-		const protocol::OperationIssueAsset& ope = operation_.issue_asset();
+		const protocol::OperationRegisterAsset& ope = operation_.register_asset();
 		do {
-			if ((protocol::AssetKey_Type)ope.type() != protocol::AssetKey_Type_LIMIT){
-				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result_.set_desc(utils::String::Format("Register asset type must be limit "));
-				break;
-			}
-
 			protocol::AssetStore asset_e;
 			protocol::AssetKey key;
 			key.set_issuer(source_account_->GetAccountAddress());
 			key.set_code(ope.code());
-			key.set_type((protocol::AssetKey_Type)ope.type());
+			key.set_type(protocol::AssetKey_Type_LIMIT);
 			if (!source_account_->GetAsset(key, asset_e)) {
 				protocol::AssetStore asset;
 				asset.mutable_key()->CopyFrom(key);
-				asset.set_amount(ope.amount());
 				asset.mutable_property()->CopyFrom(ope.property());
 				source_account_->SetAsset(asset);
 			}
@@ -1391,15 +1336,19 @@ namespace bumo {
 		do 
 		{
 			protocol::AssetStore asset;
-			if (!source_account_->GetAsset(ope.key(), asset)){
+			protocol::AssetKey key;
+			key.set_issuer(source_account_->GetAccountAddress());
+			key.set_code(ope.code());
+			key.set_type(protocol::AssetKey_Type_LIMIT);
+			if (!source_account_->GetAsset(key, asset)){
 				result_.set_code(protocol::ERRCODE_ACCOUNT_ASSET_LOW_RESERVE);
-				result_.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", ope.key().issuer().c_str(), ope.key().code().c_str(), (int)ope.key().type()));
+				result_.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 				break;
 			}
 
 			if (!asset.has_property()){
 				result_.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result_.set_desc(utils::String::Format("Asset(%s:%s:%d) does not have property", ope.key().issuer().c_str(), ope.key().code().c_str(), (int)ope.key().type()));
+				result_.set_desc(utils::String::Format("Asset(%s:%s:%d) does not have property", key.issuer().c_str(), key.code().c_str(), (int)key.type()));
 				break;
 			}
 
