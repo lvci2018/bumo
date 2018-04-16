@@ -52,21 +52,20 @@ CUR_DIR = $(shell pwd)
 $(MONGOC): \
     $(LIBBSON)
 
-#all:add_permission\
-#    $(ROCKSDB) \
-#    $(PROTOBUF) \
-#    $(LIBSSL) \
-#    $(LIBCRYPTO) \
-#    $(LIBBZ2) \
-#    $(LIBZ) \
-#    $(LIBSCRYPT) \
-#    $(JSONCPP) \
-#    $(PCRE) \
-#	$(CURL) \
-#	$(GTEST)
-
-all:$(LIBSQLITE)\
-	$(LIBSOCI)
+all:add_permission\
+    $(ROCKSDB) \
+    $(PROTOBUF) \
+    $(LIBSSL) \
+    $(LIBCRYPTO) \
+    $(LIBBZ2) \
+    $(LIBZ) \
+    $(LIBSCRYPT) \
+    $(JSONCPP) \
+    $(PCRE) \
+    $(CURL) \
+    $(GTEST) \
+    $(LIBSQLITE)\
+    $(LIBSOCI)
 
 .PHONY:add_permission
 add_permission:
@@ -117,9 +116,11 @@ clean_3rd: \
     LIBZ_clean \
     LIBSCRYPT_clean \
     JSONCPP_clean \
-	CURL_clean \
-	PCRE_clean \
-	GTEST_clean 
+    CURL_clean \
+    PCRE_clean \
+    GTEST_clean \
+    LIBSQLITE_clean \
+    LIBSOCI_clean
     
 install:
 	@echo "No library to install for 3rd"
@@ -147,5 +148,10 @@ GTEST_clean:
 
 #scon -c may complains error
 JSONCPP_clean: 
-	@echo "******************Cleaning jsoncpp now*************" && cd $(JSONCPP_PATH) && ./automake.sh -c || true   
-    
+	@echo "******************Cleaning jsoncpp now*************" && cd $(JSONCPP_PATH) && ./automake.sh -c || true  
+
+LIBSQLITE_clean: 
+	@echo "******************Cleaning sqlite now*************" && cd $(LIBSQLITE_PATH)/build && make clean
+LIBSOCI_clean:
+	@echo "******************Cleaning soci now*************" && cd $(LIBSOCI_PATH)/build && make clean
+
