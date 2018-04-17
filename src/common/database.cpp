@@ -57,6 +57,7 @@ namespace bumo
 	}
 
 	Database::Database(const std::string& connect_string) {
+		pool_ = NULL;
 		RegisterDrivers();
 
 		LOG_INFO("Connecting to: %s", connect_string.c_str());
@@ -81,7 +82,12 @@ namespace bumo
 		}
 	}
 
-	
+	Database::~Database(){
+		if (pool_ != NULL){
+			delete pool_;
+			pool_ = NULL;
+		}
+	}
 
 	void Database::SetCurrentTransactionReadOnly(){
 		if (!IsSqlite()){
@@ -125,27 +131,29 @@ namespace bumo
 	}
 
 	soci::connection_pool&	Database::GetPool()	{
-		if (!pool_){
-			auto const& c = connect_string_;
+		//if (!pool_){
+		if (pool_ == NULL){
 			if (!CanUsePool()){
 				std::string s("Can't create connection pool to ");
 				s += connect_string_;
 				throw std::runtime_error(s);
 			}
 			size_t n = std::thread::hardware_concurrency();
-			LOG_INFO("Establishing %d -entry connection pool to:%s", connect_string_);
+			LOG_INFO("Establishing %d -entry connection pool to:%s", connect_string_.c_str());
 
-			pool_ = make_unique<soci::connection_pool>(n);
+			//pool_ = make_unique<soci::connection_pool>(n);
+			pool_ = new soci::connection_pool(n);
 			for (size_t i = 0; i < n; ++i){
 				LOG_DEBUG("Opening pool entry %d", i);
 				soci::session& sess = pool_->at(i);
-				sess.open(c);
+				sess.open(connect_string_);
 				if (!IsSqlite()){
 					SetSerializable(sess);
 				}
 			}
 		}
-		assert(pool_);
+		//assert(pool_);
+		assert(pool_ != NULL);
 		return *pool_;
 	}
 
@@ -158,36 +166,36 @@ namespace bumo
 
 	class SQLLogContext : utils::NonCopyable
 	{
-		std::string mName;
-		soci::session& mSess;
-		std::ostringstream mCapture;
+		std::string name_;
+		soci::session& sess_;
+		std::ostringstream capture_;
 
 	public:
 		SQLLogContext(std::string const& name, soci::session& sess)
-			: mName(name), mSess(sess){
-			mSess.set_log_stream(&mCapture);
+			: name_(name), sess_(sess){
+			sess_.set_log_stream(&capture_);
 		}
 
 		~SQLLogContext(){
-			mSess.set_log_stream(nullptr);
-			std::string captured = mCapture.str();
+			sess_.set_log_stream(nullptr);
+			std::string captured = capture_.str();
 			std::istringstream rd(captured);
 			std::string buf;
 
 			LOG_INFO("Database ");
 			LOG_INFO("Database ");
 			LOG_INFO("Database [SQL] -----------------------");
-			LOG_INFO("Database [SQL] begin capture: %s", mName);
+			LOG_INFO("Database [SQL] begin capture: %s", name_.c_str());
 			LOG_INFO("Database [SQL] -----------------------");
 
 
 			while (std::getline(rd, buf)){
-				LOG_INFO("Database [SQL] %s %s", mName, buf);
+				LOG_INFO("Database [SQL] %s %s", name_.c_str(), buf.c_str());
 				buf.clear();
 			}
 
 			LOG_INFO("Database [SQL] -----------------------");
-			LOG_INFO("Database [SQL] end capture: %s", mName);
+			LOG_INFO("Database [SQL] end capture: %s", name_.c_str());
 			LOG_INFO("Database [SQL] -----------------------");
 			LOG_INFO("Database ");
 			LOG_INFO("Database ");
@@ -212,6 +220,6 @@ namespace bumo
 	}
 
 	std::shared_ptr<SQLLogContext> Database::CaptureAndLogSQL(std::string contextName)	{
-		return make_shared<SQLLogContext>(contextName, session_);
+		return std::make_shared<SQLLogContext>(contextName, session_);
 	}
 }

@@ -239,10 +239,16 @@ namespace bumo {
 		keyvalue_db_ = NULL;
 		ledger_db_ = NULL;
 		account_db_ = NULL;
+		lite_db_ = NULL;
 		check_interval_ = utils::MICRO_UNITS_PER_SEC;
 	}
 
-	Storage::~Storage() {}
+	Storage::~Storage() {
+		if (lite_db_ != NULL){
+			delete lite_db_;
+			lite_db_ = NULL;
+		}
+	}
 
 	bool Storage::Initialize(const DbConfigure &db_config, bool bdropdb) {
 	
@@ -375,7 +381,7 @@ namespace bumo {
 			}
 
 			//sqlite databaee
-			lite_db_ = std::make_unique<Database>(db_config.order_db_path_);
+			lite_db_ = new Database(db_config.order_db_path_);
 			lite_db_->Initialize();
 
 
@@ -407,6 +413,11 @@ namespace bumo {
 			ret3 = account_db_->Close();
 			delete account_db_;
 			account_db_ = NULL;
+		}
+
+		if (lite_db_ != NULL){
+			delete lite_db_;
+			lite_db_ = NULL;
 		}
 
 		return ret1 && ret2 && ret3;

@@ -34,7 +34,7 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <set>
 #include <string>
-
+#include <map>
 
 
 namespace bumo
@@ -97,7 +97,8 @@ namespace bumo
 	{
 		//medida::Meter& mQueryMeter;
 		soci::session session_;
-		std::unique_ptr<soci::connection_pool> pool_;
+		//std::unique_ptr<soci::connection_pool> pool_;
+		soci::connection_pool *pool_;
 
 		std::map<std::string, std::shared_ptr<soci::statement>> statements_;
 		//medida::Counter& mStatementsSize;
@@ -121,7 +122,7 @@ namespace bumo
 		// Instantiate object and connect to app.getConfig().DATABASE;
 		// if there is a connection error, this will throw.
 		Database(const std::string& connect_string);
-
+		~Database();
 		// Return a crude meter of total queries to the db, for use in
 		// overlay/LoadManager.
 		//medida::Meter& getQueryMeter();

@@ -15,7 +15,6 @@
 
 #ifndef STORAGE_H_
 #define STORAGE_H_
-#include <memory>
 #include <unordered_map>
 #include <utils/headers.h>
 #include <utils/sqlparser.h>
@@ -114,7 +113,7 @@ namespace bumo {
 		KeyValueDb *keyvalue_db_;
 		KeyValueDb *ledger_db_;
 		KeyValueDb *account_db_;
-		std::unique_ptr<Database> lite_db_;
+		Database *lite_db_;
 
 		bool CloseDb();
 		bool DescribeTable(const std::string &name, const std::string &sql_create_table);

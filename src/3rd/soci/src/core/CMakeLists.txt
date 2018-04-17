@@ -1,15 +1,16 @@
 
-cmake_minimum_required(VERSION 2.8)
 
 set(LIB_SOCI soci)
 
-SET(LIBRARY_OUTPUT_PATH ${SOCI_PATH}/lib)
+aux_source_directory(${BUMO_SRC_DIR}/3rd/soci/src/core SOCI_SRC)
 
-
-file(GLOB SOCI_CORE_HEADERS *.h)
-file(GLOB SOCI_CORE_SOURCES *.cpp)
-
-include_directories(./)
+#file(GLOB SOCI_CORE_HEADERS *.h)
+#file(GLOB SOCI_CORE_SOURCES *.cpp)
 
 #generate static library file
-add_library(${LIB_SOCI} STATIC ${SOCI_CORE_HEADERS} ${SOCI_CORE_SOURCES}) 
+add_library(${LIB_SOCI} ${SOCI_SRC}) 
+
+target_compile_options(${LIB_SOCI} 
+	PUBLIC -DASIO_STANDALONE 
+	PUBLIC -fPIC
+)

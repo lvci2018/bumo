@@ -3,7 +3,7 @@
 set(LIB_BUMO_COMMON bumo_common)
 set(COMMON_SRC
     configure_base.cpp general.cpp storage.cpp private_key.cpp 
-    daemon.cpp argument.cpp pb2json.cpp network.cpp data_secret_key.cpp key_store.cpp
+    daemon.cpp argument.cpp pb2json.cpp network.cpp data_secret_key.cpp key_store.cpp database.cpp price.cpp
 )
 
 #generate static library file
@@ -15,4 +15,5 @@ target_compile_options(${LIB_BUMO_COMMON}
     PUBLIC -DASIO_STANDALONE
     PUBLIC -D_WEBSOCKETPP_CPP11_STL_
     PUBLIC -D${OS_NAME}
+    PUBLIC -fPIC
 )
