@@ -1052,7 +1052,7 @@ namespace bumo {
 				if (!sell_sheep_order_){
 					std::string error_desc = utils::String::Format("Account(%s) selling(%s:%s:%d) buying(%s:%s:%d) order id(" FMT_U64 ") not exist", 
 						source_account_->GetAccountAddress().c_str(),sheep.issuer().c_str(), sheep.code().c_str(), (int)sheep.type(),
-						wheat.issuer().c_str(), wheat.code().c_str(), (int)wheat.type(),order_id);
+						wheat.issuer().c_str(), wheat.code().c_str(), (int)wheat.type(),order_id.c_str());
 					result_.set_code(protocol::ERRCODE_ORDER_NOT_FOUNT);
 					result_.set_desc(error_desc);
 					LOG_ERROR("%s", error_desc.c_str());
