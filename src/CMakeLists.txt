@@ -62,14 +62,16 @@ link_directories(
     ${BUMO_SRC_DIR}/3rd/basic/lib
     ${BUMO_SRC_DIR}/3rd/curl/lib/.libs/
     ${BUMO_SRC_DIR}/3rd/v8_target/${V8_LIB_PATH}/
+    ${BUMO_SRC_DIR}/3rd/sqlite/lib
+    ${BUMO_SRC_DIR}/3rd/soci/lib
     ${LIBRARY_OUTPUT_PATH}
 )
 
-set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt)
+set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt sqlite soci soci_sqlite3)
 
-add_subdirectory(3rd/sqlite)
-add_subdirectory(3rd/soci/src/core)
-add_subdirectory(3rd/soci/src/backends/sqlite3)
+#add_subdirectory(3rd/sqlite)
+#add_subdirectory(3rd/soci/src/core)
+#add_subdirectory(3rd/soci/src/backends/sqlite3)
 add_subdirectory(3rd/http)
 add_subdirectory(3rd/ed25519-donna)
 add_subdirectory(glue)

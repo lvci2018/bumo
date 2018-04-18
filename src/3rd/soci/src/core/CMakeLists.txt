@@ -2,15 +2,18 @@
 
 set(LIB_SOCI soci)
 
-aux_source_directory(${BUMO_SRC_DIR}/3rd/soci/src/core SOCI_SRC)
+#aux_source_directory(${BUMO_SRC_DIR}/3rd/soci/src/core SOCI_SRC)
 
-#file(GLOB SOCI_CORE_HEADERS *.h)
-#file(GLOB SOCI_CORE_SOURCES *.cpp)
+file(GLOB SOCI_CORE_HEADERS *.h)
+file(GLOB SOCI_CORE_SOURCES *.cpp)
+
+SET(LIBRARY_OUTPUT_PATH ${SOCI_ROOT}/lib)
 
 #generate static library file
-add_library(${LIB_SOCI} ${SOCI_SRC}) 
+#add_library(${LIB_SOCI} ${SOCI_SRC}) 
+add_library(${LIB_SOCI} ${SOCI_CORE_HEADERS} ${SOCI_CORE_SOURCES}) 
 
-target_compile_options(${LIB_SOCI} 
-	PUBLIC -DASIO_STANDALONE 
-	PUBLIC -fPIC
-)
+# target_compile_options(${LIB_SOCI} 
+# 	PUBLIC -DASIO_STANDALONE 
+# 	PUBLIC -fPIC
+# )

@@ -63,6 +63,8 @@ all:add_permission\
     $(JSONCPP) \
     $(PCRE) \
     $(CURL) \
+	$(LIBSQLITE) \
+	$(LIBSOCI) \
     $(GTEST)
 
 .PHONY:add_permission
@@ -116,6 +118,8 @@ clean_3rd: \
     JSONCPP_clean \
     CURL_clean \
     PCRE_clean \
+	LIBSQLITE_clean \
+	LIBSOCI_clean \
     GTEST_clean
     
 install:
@@ -146,8 +150,8 @@ GTEST_clean:
 JSONCPP_clean: 
 	@echo "******************Cleaning jsoncpp now*************" && cd $(JSONCPP_PATH) && ./automake.sh -c || true  
 
-#LIBSQLITE_clean: 
-#	@echo "******************Cleaning sqlite now*************" && cd $(LIBSQLITE_PATH)/build && make clean
-#LIBSOCI_clean:
-#	@echo "******************Cleaning soci now*************" && cd $(LIBSOCI_PATH)/build && make clean
+LIBSQLITE_clean: 
+	@echo "******************Cleaning sqlite now*************" && cd $(LIBSQLITE_PATH)/build && make clean
+LIBSOCI_clean:
+	@echo "******************Cleaning soci now*************" && cd $(LIBSOCI_PATH)/build && make clean
 
