@@ -831,10 +831,9 @@ POST /getTransactionBlob
 | 5      | SET_SIGNER_WEIGHT | 设置权重     |
 | 6      | SET_THRESHOLD     | 设置门限     |
 | 7      | PAY_COIN          | 支付BU COIN  |
-| 8      | LOG               | LOG日志      |
-| 9      | PROCESS_ORDER     | 订单提交     |
-| 10     | REGISTER_ASSET    | 注册资产     |
-| 11     | SET_ASSET_FEE     | 设置资产费用 |
+| 8      | PROCESS_ORDER     | 订单提交     |
+| 9      | REGISTER_ASSET    | 注册资产     |
+| 10     | SET_ASSET_FEE     | 设置资产费用 |
 
 
 #### 创建账号
@@ -1243,43 +1242,6 @@ POST /getTransactionBlob
     - dest_address: BU接收方账号地址
     - amount: 要转移的BU数量
     - input: 本次转移触发接收方的合约，合约的执行入参就是input
-
-### LOG日志
-
-|参数|描述
-|:--- | --- 
-|log.topic |  日志主题
-|log.datas|  日志内容
-
-
-- 功能
-  只智能合约写入一笔交易来记录日志
-- 成功条件
-  - 各项参数合法
-- json格式
-
-
-  ```JSON
-    {
-      "type": 8,
-      "log": {
-          "topic": "xxxx",
-          "datas": ["aa","bb"]
-        }
-      }
-    }
-  ```
-
-- protocol buffer 结构
-    ```text
-    message OperationLog
-    {
-        string topic = 1;
-	      repeated string datas = 2;
-    }
-    ```
-    - topic: 日志主题
-    - datas: 日志内容
 
 ### 订单提交
 
