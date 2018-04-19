@@ -64,7 +64,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../src/3rd/basic/lib;./dbin/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>leveldb_d.lib;json_d.lib;sqlite3_d.lib;iphlpapi.lib;libprotobuf_d.lib;libeay32.lib;ssleay32.lib;shlwapi.lib;gtestd.lib;libbumotools.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>leveldb_d.lib;json_d.lib;sqlite3_d.lib;iphlpapi.lib;libprotobuf_d.lib;libeay32.lib;ssleay32.lib;shlwapi.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -96,7 +96,6 @@
     <ClCompile Include="..\..\test\gtest\common\web_socket_server.cpp" />
     <ClCompile Include="..\..\test\gtest\main.cpp" />
     <ClCompile Include="..\..\test\gtest\test\get_block_reward_utest.cpp" />
-    <ClCompile Include="..\..\test\gtest\test\libbumotools_utest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Ed25519-donna.vcxproj">
