@@ -33,7 +33,7 @@ namespace bumo {
 			auto seller_max_sheep = INT64_MAX;
 
 			auto result = int64_t{};
-			if (!utils::bigDivide(result, seller_max_sheep, price.d(), price.n(), utils::Rounding::eRoundDown))
+			if (!utils::bigDivide(result, seller_max_sheep, (int64_t)price.d(), (int64_t)price.n(), utils::Rounding::eRoundDown))
 				result = INT64_MAX;
 
 			return result;
@@ -59,7 +59,7 @@ namespace bumo {
 
 		// this guy can get X wheat to you. How many sheep does that get him?
 		// bias towards seller
-		if (!utils::bigDivide(result.num_sheep_send_, result.num_wheat_received_, price.n(),price.d(), utils::Rounding::eRoundUp)){
+		if (!utils::bigDivide(result.num_sheep_send_, result.num_wheat_received_, (int64_t)price.n(),(int64_t)price.d(), utils::Rounding::eRoundUp)){
 			result.reduced_ = true;
 			result.num_sheep_send_ = INT64_MAX;
 		}
@@ -68,7 +68,7 @@ namespace bumo {
 		result.num_sheep_send_ = (std::min)(result.num_sheep_send_, max_sheep_send);
 
 		auto new_wheat_received = int64_t{};
-		if (!utils::bigDivide(new_wheat_received, result.num_sheep_send_, price.d(), price.n(), utils::Rounding::eRoundDown))
+		if (!utils::bigDivide(new_wheat_received, result.num_sheep_send_, (int64_t)price.d(), (int64_t)price.n(), utils::Rounding::eRoundDown))
 			new_wheat_received = INT64_MAX;
 
 		result.num_wheat_received_ = (std::min)(result.num_wheat_received_, new_wheat_received);

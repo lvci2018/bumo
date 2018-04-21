@@ -16,8 +16,7 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PRICE_H
 #define PRICE_H
 
-#include <utils/base_int.h>
-#include <proto/cpp//chain.pb.h>
+#include <proto/cpp/chain.pb.h>
 
 namespace bumo{
 	bool operator>=(protocol::Price const& a, protocol::Price const& b);

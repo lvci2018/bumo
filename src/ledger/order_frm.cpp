@@ -15,6 +15,7 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "order_frm.h"
 #include <utils/logger.h>
+#include <utils/base_int.h>
 #include "ledger_frm.h"
 using namespace soci;
 

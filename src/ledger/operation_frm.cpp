@@ -14,6 +14,7 @@
 */
 
 #include <utils/strings.h>
+#include <utils/base_int.h>
 #include <ledger/ledger_manager.h>
 #include "transaction_frm.h"
 #include "operation_frm.h"
@@ -1104,8 +1105,8 @@ namespace bumo {
 				protocol::Price const& sheepPrice = sell_sheep_order_->GetPrice();
 				{
 					int64_t max_sheep_based_wheat=0;
-					if (!utils::bigDivide(max_sheep_based_wheat, max_wheat_can_buy, sheepPrice.d(),
-						sheepPrice.n(),utils::Rounding::eRoundDown))
+					if (!utils::bigDivide(max_sheep_based_wheat, max_wheat_can_buy, (int64_t)sheepPrice.d(),
+						(int64_t)sheepPrice.n(), utils::Rounding::eRoundDown))
 						max_sheep_based_wheat = INT64_MAX;
 
 					if (max_amount_sheep_can_sell > max_sheep_based_wheat)

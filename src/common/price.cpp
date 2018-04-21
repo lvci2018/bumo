@@ -1,4 +1,5 @@
 #include "price.h"
+#include <utils/base_int.h>
 
 namespace bumo {
 
