@@ -1,10 +1,10 @@
 #bumo utils module CmakeLists.txt -- libbumo_utils.a
 
 set(LIB_BUMO_UTILS bumo_utils)
-set(UTILS_SRC
+set(UTILS_SRC 
     file.cpp logger.cpp net.cpp thread.cpp timestamp.cpp utils.cpp 
     crypto.cpp lrucache.hpp timer.cpp system.cpp sqlparser.cpp 
-    exprparser.cpp sm3.cpp ecc_sm2.cpp random.cpp
+    exprparser.cpp sm3.cpp ecc_sm2.cpp random.cpp base_int.cpp ledger_range.cpp
 )
 
 #generate static library file

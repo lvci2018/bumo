@@ -372,7 +372,10 @@ std::ostream & operator<<(std::ostream & stream, const uint128_t & rhs){
     return stream;
 }
 
-utils::uint256 utils::CryptoUint256(const std::string &input) {
+///////////////////////////////////////////////////////////////////////////
+namespace utils {
+
+uint256 CryptoUint256(const std::string &input) {
 	std::string str_out = utils::Sha256::Crypto(input);
 	utils::uint256 tmp;
 	tmp.init(str_out);
@@ -381,14 +384,14 @@ utils::uint256 utils::CryptoUint256(const std::string &input) {
 
 
 
-int utils::hex_to_decimal(char a) {
+int hex_to_decimal(char a) {
 	if (a <= '9' && a >= '0')	return a - '0';
 	else if (a <= 'f' && a >= 'a')	return a - 'a' + 10;
 	else if (a <= 'F' && a >= 'A')	return a - 'A' + 10;
 	return  0;
 }
 
-bool utils::bigDivide(int64_t& result, int64_t A, int64_t B, int64_t C, Rounding rounding) {
+bool bigDivide(int64_t& result, int64_t A, int64_t B, int64_t C, Rounding rounding) {
 	bool res;
 	assert((A >= 0) && (B >= 0) && (C > 0));
 	uint64_t r2;
@@ -400,7 +403,7 @@ bool utils::bigDivide(int64_t& result, int64_t A, int64_t B, int64_t C, Rounding
 	return res;
 }
 
-bool utils::bigDivide(uint64_t& result, uint64_t A, uint64_t B, uint64_t C, Rounding rounding) {
+bool bigDivide(uint64_t& result, uint64_t A, uint64_t B, uint64_t C, Rounding rounding) {
 	// update when moving to (signed) int128
 	uint128_t a(A);
 	uint128_t b(B);
@@ -412,7 +415,7 @@ bool utils::bigDivide(uint64_t& result, uint64_t A, uint64_t B, uint64_t C, Roun
 	return (x <= UINT64_MAX);
 }
 
-int64_t  utils::bigDivide(int64_t A, int64_t B, int64_t C, Rounding rounding) {
+int64_t  bigDivide(int64_t A, int64_t B, int64_t C, Rounding rounding) {
 	int64_t res;
 	if (!bigDivide(res, A, B, C, rounding)) {
 		throw std::overflow_error("overflow while performing bigDivide");
@@ -420,7 +423,7 @@ int64_t  utils::bigDivide(int64_t A, int64_t B, int64_t C, Rounding rounding) {
 	return res;
 }
 
-std::string utils::generatId(int64_t block_num, int32_t tx_index, int32_t op_index){
+std::string generatId(int64_t block_num, int32_t tx_index, int32_t op_index){
 	assert(tx_index >= 0);
 	assert(op_index >= 0);
 	uint128_t a(block_num);
@@ -432,7 +435,7 @@ std::string utils::generatId(int64_t block_num, int32_t tx_index, int32_t op_ind
 	return d.str(2, 128);//must be 2 for order sort
 }
 
-void utils::parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index){
+void parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index){
 	if (id.empty()) return;
 	std::string s_block_seq = id.substr(0, 64);
 	std::string s_tx_index = id.substr(64, 32);
@@ -445,5 +448,5 @@ void utils::parseId(const std::string& id, int64_t& block_num, int32_t& tx_index
 	op_index = std::stoi(s_op_index, nullptr, 2)-1;
 	assert(op_index >= 0);
 }
-
+}
 
