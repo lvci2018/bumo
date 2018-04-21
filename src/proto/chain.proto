@@ -12,7 +12,7 @@ message Account{
 	bytes assets_hash = 5;    //assets_hash = merkelhash(assets)
 	Contract contract = 6;
 	int64 balance = 7;
-	//int64 freezn_balance = 8;
+	int64 freezn_balance = 8;
 }
 
 message AssetKey{
@@ -126,9 +126,15 @@ message Price{
 }
 
 message OperationProcessOrder{
-	AssetKey selling	=1;
-	AssetKey buying		=2;
-	int64 amount		=3; // amount being sold. if set to 0, delete the order
+	AssetKey selling	=1; // A
+	AssetKey buying		=2; // B
+	int64 amount		=3; // amount of A. amount being sold. if set to 0, delete the order.
+
+	/* price for this order:
+	price of A in terms of B
+	price=AmountB/AmountA=priceNumerator/priceDenominator
+	price is after fees
+	*/
 	Price price			=4; // price of thing being sold in terms of what you are buying
 	
 	// 0=create a new offer, otherwise edit an existing offer
@@ -180,10 +186,9 @@ message Operation {
 			SET_SIGNER_WEIGHT		= 5;
 			SET_THRESHOLD			= 6;
 			PAY_COIN                = 7;
-			LOG						= 8;
-			PROCESS_ORDER			= 9;
-			REGISTER_ASSET			= 10;
-			SET_ASSET_FEE			= 11;
+			PROCESS_ORDER			= 8;
+			REGISTER_ASSET			= 9;
+			SET_ASSET_FEE			= 10;
 	};
 	Type type = 1;
 	string source_address = 2;

@@ -175,7 +175,7 @@ namespace bumo {
 				"sellingassettype,sellingassetcode,sellingissuer,"
 				"buyingassettype,buyingassetcode,buyingissuer,"
 				"amount,pricen,priced,price,flags,lastmodified,txhash,opindex) VALUES "
-				"(:sid,:oid,:sat,:sac,:si,:bat,:bac,:bi,:a,:pn,:pd,:p,:f,:l,:ha,opi)";
+				"(:sid,:oid,:sat,:sac,:si,:bat,:bac,:bi,:a,:pn,:pd,:p,:f,:l,:ha,:opi)";
 		}
 		else{
 			sql = "UPDATE orders SET sellingassettype=:sat "
@@ -189,9 +189,8 @@ namespace bumo {
 		auto& st = prep.statement();
 
 		if (insert)
-		{
 			st.exchange(use(order_.seller_address(), "sid"));
-		}
+
 		st.exchange(use(order_.remain_order().order_id(), "oid"));
 		st.exchange(use(sellingType, "sat"));
 		st.exchange(use(order_.remain_order().selling().code(), selling_ind, "sac"));

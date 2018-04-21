@@ -379,16 +379,18 @@ namespace bumo {
 			const protocol::OperationProcessOrder operation_process_order = operation.process_order();
 
 			//cacel order
-			if (!operation_process_order.order_id().empty() && operation_process_order.amount() == 0){
-				result.set_code(protocol::ERRCODE_ASSET_INVALID);
-				result.set_desc(utils::String::Format("order id(%s) excute cancle ,amount must be zero", operation_process_order.order_id().c_str()));
-				break;
+			if (!operation_process_order.order_id().empty()){
+				if (operation_process_order.amount() != 0){
+					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_desc(utils::String::Format("order id(%s) excute cancle ,amount must be zero", operation_process_order.order_id().c_str()));
+					break;
+				}
 			}
 
 			//insert order
 			if (operation_process_order.order_id().empty()){
 
-				if (operation_process_order.amount() != 0){
+				if (operation_process_order.amount() == 0){
 					result.set_code(protocol::ERRCODE_ASSET_INVALID);
 					result.set_desc(utils::String::Format("insert order amount must be not zero"));
 					break;

@@ -433,6 +433,7 @@ std::string utils::generatId(int64_t block_num, int32_t tx_index, int32_t op_ind
 }
 
 void utils::parseId(const std::string& id, int64_t& block_num, int32_t& tx_index, int32_t& op_index){
+	if (id.empty()) return;
 	std::string s_block_seq = id.substr(0, 64);
 	std::string s_tx_index = id.substr(64, 32);
 	std::string s_op_index = id.substr(96, 32);

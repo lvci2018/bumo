@@ -108,6 +108,7 @@ namespace bumo {
 		void NonceIncrease();
 		int64_t GetAccountBalance() const;
 		int64_t GetBalanceAboveReserve() const;
+		int64_t GetAvailable() const;
 		bool AddBalance(int64_t amount);
 		static AccountFrm::pointer CreatAccountFrm(const std::string& account_address, int64_t balance);
 		static bool PayMatchFee(std::shared_ptr<Environment> environment, const protocol::AssetKey& asset_key, int64_t fee);

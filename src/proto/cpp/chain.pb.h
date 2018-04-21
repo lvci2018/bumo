@@ -380,6 +380,12 @@ class Account : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::google::protobuf::int64 balance() const;
   void set_balance(::google::protobuf::int64 value);
 
+  // optional int64 freezn_balance = 8;
+  void clear_freezn_balance();
+  static const int kFreeznBalanceFieldNumber = 8;
+  ::google::protobuf::int64 freezn_balance() const;
+  void set_freezn_balance(::google::protobuf::int64 value);
+
   // @@protoc_insertion_point(class_scope:protocol.Account)
  private:
 
@@ -392,6 +398,7 @@ class Account : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::google::protobuf::internal::ArenaStringPtr assets_hash_;
   ::protocol::Contract* contract_;
   ::google::protobuf::int64 balance_;
+  ::google::protobuf::int64 freezn_balance_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
   friend void protobuf_AssignDesc_chain_2eproto();
@@ -4838,6 +4845,20 @@ inline void Account::set_balance(::google::protobuf::int64 value) {
   
   balance_ = value;
   // @@protoc_insertion_point(field_set:protocol.Account.balance)
+}
+
+// optional int64 freezn_balance = 8;
+inline void Account::clear_freezn_balance() {
+  freezn_balance_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 Account::freezn_balance() const {
+  // @@protoc_insertion_point(field_get:protocol.Account.freezn_balance)
+  return freezn_balance_;
+}
+inline void Account::set_freezn_balance(::google::protobuf::int64 value) {
+  
+  freezn_balance_ = value;
+  // @@protoc_insertion_point(field_set:protocol.Account.freezn_balance)
 }
 
 // -------------------------------------------------------------------

@@ -62,6 +62,10 @@ namespace bumo {
 		return account_info_.balance() - LedgerManager::Instance().GetCurFeeConfig().base_reserve();
 	}
 
+	int64_t AccountFrm::GetAvailable() const{
+		return account_info_.balance() - LedgerManager::Instance().GetCurFeeConfig().base_reserve() - account_info_.freezn_balance();
+	}
+
 	std::string AccountFrm::GetAccountAddress()const {
 		return account_info_.address();
 	}
