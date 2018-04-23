@@ -430,8 +430,16 @@ namespace bumo {
 					break;
 				}
 
-				AccountFrm::pointer seller;
-				if (!Environment::AccountFromDB(operation_process_order.selling().issuer(), seller)) {
+				/*if (source_address == operation_process_order.selling().issuer()){
+					result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
+					result.set_desc(utils::String::Format("Source account(%s) can not selling asset(%s:%s:%d)", source_address.c_str(), operation_process_order.selling().issuer().c_str(), operation_process_order.selling().code().c_str(), operation_process_order.selling().type()));
+					LOG_ERROR("%s", result.desc().c_str());
+					break;
+				}*/
+
+
+				AccountFrm::pointer sell_isuuer;
+				if (!Environment::AccountFromDB(operation_process_order.selling().issuer(), sell_isuuer)) {
 					result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
 					result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.selling().issuer().c_str()));
 					LOG_ERROR("%s", result.desc().c_str());
@@ -439,14 +447,14 @@ namespace bumo {
 				}
 
 				protocol::AssetStore asset_s;
-				if (!seller->GetAsset(operation_process_order.selling(), asset_s)){
+				if (!sell_isuuer->GetAsset(operation_process_order.selling(), asset_s)){
 					result.set_code(protocol::ERRCODE_ASSET_INVALID);
-					result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_s.key().issuer().c_str(), asset_s.key().code().c_str(), asset_s.key().type()));
+					result.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", operation_process_order.selling().issuer().c_str(), operation_process_order.selling().code().c_str(), operation_process_order.selling().type()));
 					break;
 				}
 
-				AccountFrm::pointer buyer;
-				if (!Environment::AccountFromDB(operation_process_order.buying().issuer(), buyer)) {
+				AccountFrm::pointer buy_issuer;
+				if (!Environment::AccountFromDB(operation_process_order.buying().issuer(), buy_issuer)) {
 					result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
 					result.set_desc(utils::String::Format("Source account(%s) not exist", operation_process_order.buying().issuer().c_str()));
 					LOG_ERROR("%s", result.desc().c_str());
@@ -454,9 +462,9 @@ namespace bumo {
 				}
 
 				protocol::AssetStore asset_b;
-				if (!seller->GetAsset(operation_process_order.buying(), asset_b)){
+				if (!buy_issuer->GetAsset(operation_process_order.buying(), asset_b)){
 					result.set_code(protocol::ERRCODE_ASSET_INVALID);
-					result.set_desc(utils::String::Format("asset(%s:%s:%d) not exist", asset_b.key().issuer().c_str(), asset_b.key().code().c_str(), asset_b.key().type()));
+					result.set_desc(utils::String::Format("Asset(%s:%s:%d) not exist", operation_process_order.buying().issuer().c_str(), operation_process_order.buying().code().c_str(), operation_process_order.buying().type()));
 					break;
 				}
 				if (operation_process_order.fee_percent() < asset_b.property().fee_percent()){
@@ -1357,6 +1365,8 @@ namespace bumo {
 			}
 
 			asset.mutable_property()->set_fee_percent(ope.fee());
+
+			source_account_->SetAsset(asset);
 
 		} while (false);
 		
