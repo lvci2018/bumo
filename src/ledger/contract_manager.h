@@ -161,7 +161,7 @@ namespace bumo{
 		static Json::Value ReportException(v8::Isolate* isolate, v8::TryCatch* try_catch);
 		static const char* ToCString(const v8::String::Utf8Value& value);
 		static void CallBackLog(const v8::FunctionCallbackInfo<v8::Value>& args);
-		static void CallBackTopicLog(const v8::FunctionCallbackInfo<v8::Value>& args);
+		//static void CallBackTopicLog(const v8::FunctionCallbackInfo<v8::Value>& args);
 		static void CallBackGetAccountAsset(const v8::FunctionCallbackInfo<v8::Value>& args);
 		static void CallBackSetValidators(const v8::FunctionCallbackInfo<v8::Value>& args);
 		static void CallBackGetValidators(const v8::FunctionCallbackInfo<v8::Value>& args);

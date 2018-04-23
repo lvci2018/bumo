@@ -19369,21 +19369,17 @@ public final class Chain {
        */
       PAY_COIN(7),
       /**
-       * <code>LOG = 8;</code>
+       * <code>PROCESS_ORDER = 8;</code>
        */
-      LOG(8),
+      PROCESS_ORDER(8),
       /**
-       * <code>PROCESS_ORDER = 9;</code>
+       * <code>REGISTER_ASSET = 9;</code>
        */
-      PROCESS_ORDER(9),
+      REGISTER_ASSET(9),
       /**
-       * <code>REGISTER_ASSET = 10;</code>
+       * <code>SET_ASSET_FEE = 10;</code>
        */
-      REGISTER_ASSET(10),
-      /**
-       * <code>SET_ASSET_FEE = 11;</code>
-       */
-      SET_ASSET_FEE(11),
+      SET_ASSET_FEE(10),
       UNRECOGNIZED(-1),
       ;
 
@@ -19420,21 +19416,17 @@ public final class Chain {
        */
       public static final int PAY_COIN_VALUE = 7;
       /**
-       * <code>LOG = 8;</code>
+       * <code>PROCESS_ORDER = 8;</code>
        */
-      public static final int LOG_VALUE = 8;
+      public static final int PROCESS_ORDER_VALUE = 8;
       /**
-       * <code>PROCESS_ORDER = 9;</code>
+       * <code>REGISTER_ASSET = 9;</code>
        */
-      public static final int PROCESS_ORDER_VALUE = 9;
+      public static final int REGISTER_ASSET_VALUE = 9;
       /**
-       * <code>REGISTER_ASSET = 10;</code>
+       * <code>SET_ASSET_FEE = 10;</code>
        */
-      public static final int REGISTER_ASSET_VALUE = 10;
-      /**
-       * <code>SET_ASSET_FEE = 11;</code>
-       */
-      public static final int SET_ASSET_FEE_VALUE = 11;
+      public static final int SET_ASSET_FEE_VALUE = 10;
 
 
       public final int getNumber() {
@@ -19463,10 +19455,9 @@ public final class Chain {
           case 5: return SET_SIGNER_WEIGHT;
           case 6: return SET_THRESHOLD;
           case 7: return PAY_COIN;
-          case 8: return LOG;
-          case 9: return PROCESS_ORDER;
-          case 10: return REGISTER_ASSET;
-          case 11: return SET_ASSET_FEE;
+          case 8: return PROCESS_ORDER;
+          case 9: return REGISTER_ASSET;
+          case 10: return SET_ASSET_FEE;
           default: return null;
         }
       }
@@ -35956,7 +35947,7 @@ public final class Chain {
       "\014asset_bought\030\007 \001(\0132\022.protocol.AssetKey\022" +
       "\025\n\ramount_bought\030\010 \001(\003\022\020\n\010op_index\030\t \001(\005",
       "\"1\n\024OperationSetAssetFee\022\014\n\004code\030\001 \001(\t\022\013" +
-      "\n\003fee\030\002 \001(\005\"\366\006\n\tOperation\022&\n\004type\030\001 \001(\0162" +
+      "\n\003fee\030\002 \001(\005\"\355\006\n\tOperation\022&\n\004type\030\001 \001(\0162" +
       "\030.protocol.Operation.Type\022\026\n\016source_addr" +
       "ess\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_ac" +
       "count\030\004 \001(\0132 .protocol.OperationCreateAc" +
@@ -35973,67 +35964,66 @@ public final class Chain {
       "onProcessOrder\0228\n\016register_asset\030\r \001(\0132 " +
       ".protocol.OperationRegisterAsset\0225\n\rset_" +
       "asset_fee\030\016 \001(\0132\036.protocol.OperationSetA" +
-      "ssetFee\"\322\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_" +
+      "ssetFee\"\311\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_" +
       "ACCOUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022",
       "\020\n\014SET_METADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005" +
-      "\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG" +
-      "\020\010\022\021\n\rPROCESS_ORDER\020\t\022\022\n\016REGISTER_ASSET\020" +
-      "\n\022\021\n\rSET_ASSET_FEE\020\013\"h\n\025OperationSetThre" +
-      "shold\022\024\n\014tx_threshold\030\001 \001(\003\0229\n\017type_thre" +
-      "sholds\030\004 \003(\0132 .protocol.OperationTypeThr" +
-      "eshold\"\274\001\n\013Transaction\022\026\n\016source_address" +
-      "\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ce" +
-      "il_ledger_seq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n" +
-      "\noperations\030\006 \003(\0132\023.protocol.Operation\"%",
-      "\n\005Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n" +
-      "\006Signer\022\017\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003" +
-      "\"$\n\005Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211" +
-      "\002\n\007Trigger\022;\n\020transaction_type\030\001 \001(\0162!.p" +
-      "rotocol.Trigger.TransactionType\022\022\n\nledge" +
-      "r_seq\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132\".proto" +
-      "col.Trigger.OperationTrigger\032/\n\020Operatio" +
-      "nTrigger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n" +
-      "\017TransactionType\022\026\n\022NORMAL_TRANSACTION\020\000" +
-      "\022\030\n\024CONTRACT_TRANSACTION\020\001\"\211\001\n\016Transacti",
-      "onEnv\022*\n\013transaction\030\001 \001(\0132\025.protocol.Tr" +
-      "ansaction\022\'\n\nsignatures\030\002 \003(\0132\023.protocol" +
-      ".Signature\022\"\n\007trigger\030\003 \001(\0132\021.protocol.T" +
-      "rigger\"\243\002\n\024OperationOrderResult\022,\n\016order" +
-      "s_claimed\030\001 \003(\0132\024.protocol.ClaimOrder\022>\n" +
-      "\006effect\030\002 \001(\0162..protocol.OperationOrderR" +
-      "esult.OrderEffectType\022\036\n\005order\030\003 \001(\0132\017.p" +
-      "rotocol.Order\022\014\n\004code\030\004 \001(\005\022\020\n\010op_index\030" +
-      "\005 \001(\005\"]\n\017OrderEffectType\022\021\n\rORDER_UNKNOW" +
-      "N\020\000\022\021\n\rORDER_CREATED\020\001\022\021\n\rORDER_UPDATED\020",
-      "\002\022\021\n\rORDER_DELETED\020\003\"\335\001\n\023TransactionEnvS" +
-      "tore\0221\n\017transaction_env\030\001 \001(\0132\030.protocol" +
-      ".TransactionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\ne" +
-      "rror_desc\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nc" +
-      "lose_time\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\0225\n\rorders_" +
-      "result\030\007 \003(\0132\036.protocol.OperationOrderRe" +
-      "sult\":\n\021TransactionEnvSet\022%\n\003txs\030\002 \003(\0132\030" +
-      ".protocol.TransactionEnv\"G\n\030ConsensusVal" +
-      "ueValidation\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014e" +
-      "rror_tx_ids\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005",
-      "txset\030\001 \001(\0132\033.protocol.TransactionEnvSet" +
-      "\022\022\n\nclose_time\030\002 \001(\003\022\026\n\016previous_proof\030\003" +
-      " \001(\014\022\022\n\nledger_seq\030\004 \001(\003\022\034\n\024previous_led" +
-      "ger_hash\030\005 \001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027" +
-      ".protocol.LedgerUpgrade\0226\n\nvalidation\030\007 " +
-      "\001(\0132\".protocol.ConsensusValueValidation\"" +
-      "j\n\010Contract\022-\n\004type\030\001 \001(\0162\037.protocol.Con" +
-      "tract.ContractType\022\017\n\007payload\030\002 \001(\t\"\036\n\014C" +
-      "ontractType\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026Operatio" +
-      "nCreateAccount\022\024\n\014dest_address\030\001 \001(\t\022$\n\010",
-      "contract\030\002 \001(\0132\022.protocol.Contract\022(\n\004pr" +
-      "iv\030\003 \001(\0132\032.protocol.AccountPrivilege\022$\n\t" +
-      "metadatas\030\004 \003(\0132\021.protocol.KeyPair\022\024\n\014in" +
-      "it_balance\030\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024" +
-      "OperationSetMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005val" +
-      "ue\030\002 \001(\t\022\017\n\007version\030\003 \001(\003\022\023\n\013delete_flag" +
-      "\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATUR" +
-      "E\020dB\035\n\033cn.bumo.blockchain.adapter3b\006prot" +
-      "o3"
+      "\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\021\n\rPRO" +
+      "CESS_ORDER\020\010\022\022\n\016REGISTER_ASSET\020\t\022\021\n\rSET_" +
+      "ASSET_FEE\020\n\"h\n\025OperationSetThreshold\022\024\n\014" +
+      "tx_threshold\030\001 \001(\003\0229\n\017type_thresholds\030\004 " +
+      "\003(\0132 .protocol.OperationTypeThreshold\"\274\001" +
+      "\n\013Transaction\022\026\n\016source_address\030\001 \001(\t\022\r\n" +
+      "\005nonce\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger" +
+      "_seq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n\noperatio" +
+      "ns\030\006 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013",
+      "\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017" +
+      "\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit" +
+      "\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigge" +
+      "r\022;\n\020transaction_type\030\001 \001(\0162!.protocol.T" +
+      "rigger.TransactionType\022\022\n\nledger_seq\030\002 \001" +
+      "(\003\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigg" +
+      "er.OperationTrigger\032/\n\020OperationTrigger\022" +
+      "\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transact" +
+      "ionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTR" +
+      "ACT_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013",
+      "transaction\030\001 \001(\0132\025.protocol.Transaction" +
+      "\022\'\n\nsignatures\030\002 \003(\0132\023.protocol.Signatur" +
+      "e\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\243\002" +
+      "\n\024OperationOrderResult\022,\n\016orders_claimed" +
+      "\030\001 \003(\0132\024.protocol.ClaimOrder\022>\n\006effect\030\002" +
+      " \001(\0162..protocol.OperationOrderResult.Ord" +
+      "erEffectType\022\036\n\005order\030\003 \001(\0132\017.protocol.O" +
+      "rder\022\014\n\004code\030\004 \001(\005\022\020\n\010op_index\030\005 \001(\005\"]\n\017" +
+      "OrderEffectType\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rOR" +
+      "DER_CREATED\020\001\022\021\n\rORDER_UPDATED\020\002\022\021\n\rORDE",
+      "R_DELETED\020\003\"\335\001\n\023TransactionEnvStore\0221\n\017t" +
+      "ransaction_env\030\001 \001(\0132\030.protocol.Transact" +
+      "ionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc" +
+      "\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time" +
+      "\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\0225\n\rorders_result\030\007 " +
+      "\003(\0132\036.protocol.OperationOrderResult\":\n\021T" +
+      "ransactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol" +
+      ".TransactionEnv\"G\n\030ConsensusValueValidat" +
+      "ion\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_i" +
+      "ds\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001",
+      "(\0132\033.protocol.TransactionEnvSet\022\022\n\nclose" +
+      "_time\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nl" +
+      "edger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030" +
+      "\005 \001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol" +
+      ".LedgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".pro" +
+      "tocol.ConsensusValueValidation\"j\n\010Contra" +
+      "ct\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Con" +
+      "tractType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractTy" +
+      "pe\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAc" +
+      "count\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030",
+      "\002 \001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132" +
+      "\032.protocol.AccountPrivilege\022$\n\tmetadatas" +
+      "\030\004 \003(\0132\021.protocol.KeyPair\022\024\n\014init_balanc" +
+      "e\030\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024Operation" +
+      "SetMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022" +
+      "\017\n\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n" +
+      "\005Limit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn" +
+      ".bumo.blockchain.adapter3b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

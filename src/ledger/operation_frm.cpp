@@ -358,7 +358,7 @@ namespace bumo {
 			}
 			break;
 		}
-		case protocol::Operation_Type_LOG:
+		/*case protocol::Operation_Type_LOG:
 		{
 			const protocol::OperationLog &log = operation.log();
 			if (log.topic().size() == 0 || log.topic().size() > General::TRANSACTION_LOG_TOPIC_MAXSIZE ){
@@ -374,7 +374,7 @@ namespace bumo {
 				}
 			}
 			break;
-		}
+		}*/
 		case protocol::Operation_Type_PROCESS_ORDER:
 		{
 			const protocol::OperationProcessOrder operation_process_order = operation.process_order();
@@ -485,10 +485,10 @@ namespace bumo {
 				break;
 			}
 
-			std::string trim_code = issue_asset.code();
+			std::string trim_code = register_asset.code();
 			trim_code = utils::String::Trim(trim_code);
 			if (trim_code.size() == 0 || trim_code.size() > General::ASSET_CODE_MAX_SIZE ||
-				trim_code.size() != issue_asset.code().size()) {
+				trim_code.size() != register_asset.code().size()) {
 				result.set_code(protocol::ERRCODE_ASSET_INVALID);
 				result.set_desc(utils::String::Format("Asset code length should between (0,64]"));
 				break;
@@ -590,9 +590,9 @@ namespace bumo {
 		case protocol::Operation_Type_PAY_COIN:
 			PayCoin(environment);
 			break;
-		case protocol::Operation_Type_LOG:
+		/*case protocol::Operation_Type_LOG:
 			Log(environment);
-			break;
+			break;*/
 		case protocol::Operation_Type_PROCESS_ORDER:
 			ProcessOrder(environment);
 			break;

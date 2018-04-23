@@ -227,7 +227,7 @@ namespace bumo{
 		js_func_write_["configFee"] = V8Contract::CallBackConfigFee;
 		js_func_write_["setValidators"] = V8Contract::CallBackSetValidators;
 		js_func_write_["payCoin"] = V8Contract::CallBackPayCoin;
-		js_func_write_["tlog"] = V8Contract::CallBackTopicLog;
+		//js_func_write_["tlog"] = V8Contract::CallBackTopicLog;
 
 		LoadJsLibSource();
 		LoadJslintGlobalString();
@@ -919,76 +919,76 @@ namespace bumo{
 		return;
 	}
 
-	void V8Contract::CallBackTopicLog(const v8::FunctionCallbackInfo<v8::Value>& args) {
-		std::string error_desc;
-		do {
-			if (args.Length() < 2 || args.Length() > 6) {
-				error_desc = "tlog parameter number error";
-				break;
-			}
+	//void V8Contract::CallBackTopicLog(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	//	std::string error_desc;
+	//	do {
+	//		if (args.Length() < 2 || args.Length() > 6) {
+	//			error_desc = "tlog parameter number error";
+	//			break;
+	//		}
 
-			if (!args[0]->IsString()) { 
-				error_desc = "tlog parameter 0 should be a String";
-				break;
-			}
+	//		if (!args[0]->IsString()) { 
+	//			error_desc = "tlog parameter 0 should be a String";
+	//			break;
+	//		}
 
-			for (int i = 1; i < args.Length();i++) {
-				if (!(args[i]->IsString() || args[i]->IsNumber() || args[i]->IsBoolean())) {
-					error_desc = utils::String::Format("tlog parameter %d should be a String , Number or Boolean", i);
-					break;
-				}
-			}
+	//		for (int i = 1; i < args.Length();i++) {
+	//			if (!(args[i]->IsString() || args[i]->IsNumber() || args[i]->IsBoolean())) {
+	//				error_desc = utils::String::Format("tlog parameter %d should be a String , Number or Boolean", i);
+	//				break;
+	//			}
+	//		}
 
-			if (!error_desc.empty() ) {
-				break;
-			} 
+	//		if (!error_desc.empty() ) {
+	//			break;
+	//		} 
 
-			std::string topic = ToCString(v8::String::Utf8Value(args[0]));
+	//		std::string topic = ToCString(v8::String::Utf8Value(args[0]));
 
-			v8::HandleScope scope(args.GetIsolate());
-			V8Contract *v8_contract = GetContractFrom(args.GetIsolate());
-			if (!v8_contract || !v8_contract->parameter_.ledger_context_) {
-				error_desc = "tlog can't find contract object by isolate id";
-				break;
-			}
-			LedgerContext *ledger_context = v8_contract->parameter_.ledger_context_;
-			ledger_context->GetBottomTx()->ContractStepInc(100);
-			std::string this_contract = v8_contract->parameter_.this_address_;
+	//		v8::HandleScope scope(args.GetIsolate());
+	//		V8Contract *v8_contract = GetContractFrom(args.GetIsolate());
+	//		if (!v8_contract || !v8_contract->parameter_.ledger_context_) {
+	//			error_desc = "tlog can't find contract object by isolate id";
+	//			break;
+	//		}
+	//		LedgerContext *ledger_context = v8_contract->parameter_.ledger_context_;
+	//		ledger_context->GetBottomTx()->ContractStepInc(100);
+	//		std::string this_contract = v8_contract->parameter_.this_address_;
 
-			//add to transaction
-			protocol::TransactionEnv txenv;
-			txenv.mutable_transaction()->set_source_address(this_contract);
-			protocol::Operation *ope = txenv.mutable_transaction()->add_operations();
+	//		//add to transaction
+	//		protocol::TransactionEnv txenv;
+	//		txenv.mutable_transaction()->set_source_address(this_contract);
+	//		protocol::Operation *ope = txenv.mutable_transaction()->add_operations();
 
-			ope->set_type(protocol::Operation_Type_LOG);
-			ope->mutable_log()->set_topic(topic);
-			for (int i = 1; i < args.Length(); i++) {
-				std::string data;
-				if (args[i]->IsString()) {
-					data = ToCString(v8::String::Utf8Value(args[i]));
-				}
-				else {
-					data = ToCString(v8::String::Utf8Value(args[i]->ToString()));
-				}
-				*ope->mutable_log()->add_datas() = data;
-			}
+	//		ope->set_type(protocol::Operation_Type_LOG);
+	//		ope->mutable_log()->set_topic(topic);
+	//		for (int i = 1; i < args.Length(); i++) {
+	//			std::string data;
+	//			if (args[i]->IsString()) {
+	//				data = ToCString(v8::String::Utf8Value(args[i]));
+	//			}
+	//			else {
+	//				data = ToCString(v8::String::Utf8Value(args[i]->ToString()));
+	//			}
+	//			*ope->mutable_log()->add_datas() = data;
+	//		}
 
-			Result tmp_result = LedgerManager::Instance().DoTransaction(txenv, ledger_context);
-			if (tmp_result.code() > 0) {
-				v8_contract->SetResult(tmp_result);
-				error_desc = utils::String::Format("Do transaction failed(%s)", tmp_result.desc().c_str());
-				break;
-			}
+	//		Result tmp_result = LedgerManager::Instance().DoTransaction(txenv, ledger_context);
+	//		if (tmp_result.code() > 0) {
+	//			v8_contract->SetResult(tmp_result);
+	//			error_desc = utils::String::Format("Do transaction failed(%s)", tmp_result.desc().c_str());
+	//			break;
+	//		}
 
-			args.GetReturnValue().Set(tmp_result.code() == 0);
-			return;
-		} while (false);
+	//		args.GetReturnValue().Set(tmp_result.code() == 0);
+	//		return;
+	//	} while (false);
 
-		LOG_ERROR("%s", error_desc.c_str());
-		args.GetIsolate()->ThrowException(
-			v8::String::NewFromUtf8(args.GetIsolate(), error_desc.c_str(),
-			v8::NewStringType::kNormal).ToLocalChecked());
-	}
+	//	LOG_ERROR("%s", error_desc.c_str());
+	//	args.GetIsolate()->ThrowException(
+	//		v8::String::NewFromUtf8(args.GetIsolate(), error_desc.c_str(),
+	//		v8::NewStringType::kNormal).ToLocalChecked());
+	//}
 
 	void V8Contract::CallBackGetAccountAsset(const v8::FunctionCallbackInfo<v8::Value>& args) {
 		if (args.Length() != 2) {

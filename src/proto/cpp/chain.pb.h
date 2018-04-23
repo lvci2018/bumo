@@ -106,10 +106,9 @@ enum Operation_Type {
   Operation_Type_SET_SIGNER_WEIGHT = 5,
   Operation_Type_SET_THRESHOLD = 6,
   Operation_Type_PAY_COIN = 7,
-  Operation_Type_LOG = 8,
-  Operation_Type_PROCESS_ORDER = 9,
-  Operation_Type_REGISTER_ASSET = 10,
-  Operation_Type_SET_ASSET_FEE = 11,
+  Operation_Type_PROCESS_ORDER = 8,
+  Operation_Type_REGISTER_ASSET = 9,
+  Operation_Type_SET_ASSET_FEE = 10,
   Operation_Type_Operation_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   Operation_Type_Operation_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -2719,8 +2718,6 @@ class Operation : public ::google::protobuf::Message /* @@protoc_insertion_point
     Operation_Type_SET_THRESHOLD;
   static const Type PAY_COIN =
     Operation_Type_PAY_COIN;
-  static const Type LOG =
-    Operation_Type_LOG;
   static const Type PROCESS_ORDER =
     Operation_Type_PROCESS_ORDER;
   static const Type REGISTER_ASSET =
