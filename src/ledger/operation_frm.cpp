@@ -1133,7 +1133,7 @@ namespace bumo {
 				std::string order_desc = sell_sheep_order_->ToString();
 				LOG_INFO("%s max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ")", order_desc.c_str(), max_sheep_send, max_wheat_can_buy);
 
-				OrderExchange oe(transaction_->ledger_,environment);
+				OrderExchange oe(transaction_->ledger_,environment,sell_sheep_order_);
 				//执行撮合
 				OrderExchange::ConvertResult r = oe.ConvertWithOrders(
 					sheep, max_sheep_send, sheep_sent, wheat, max_wheat_can_buy,

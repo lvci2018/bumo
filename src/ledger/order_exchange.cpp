@@ -145,11 +145,13 @@ namespace bumo {
 			selling_wheat_order.StoreChange(ledger_, db);
 		}
 
+		int64_t fee_bought_sheep = 0;
+		int64_t fee_sold_wheat = 0;
 		// Adjust balances
 		if (num_sheep_sent != 0){
 			//fee compulate
-			int64_t fee = selling_wheat_order.GetFee(num_sheep_sent);
-			int64_t num_sheep_sent_after_fee = num_sheep_sent - fee;
+			fee_bought_sheep = selling_wheat_order.GetFee(num_sheep_sent);
+			int64_t num_sheep_sent_after_fee = num_sheep_sent - fee_bought_sheep;
 			/*if (!AccountFrm::PayMatchFee(environment_, sheep, fee)){
 				PROCESS_EXIT();
 			}*/
@@ -172,6 +174,8 @@ namespace bumo {
 		}
 
 		if (num_wheat_received != 0){
+			fee_sold_wheat = sell_sheep_order_->GetFee(num_wheat_received);
+
 			if (wheat.type() == protocol::AssetKey_Type_SELF_COIN){
 				if (account_b->AddBalance(-num_wheat_received)){
 					return eOrderCantConvert;
@@ -198,8 +202,11 @@ namespace bumo {
 
 		co.mutable_asset_sold()->CopyFrom(wheat);
 		co.set_amount_sold(num_wheat_received);
+		co.set_fee_sold(fee_sold_wheat);
+
 		co.mutable_asset_bought()->CopyFrom(sheep);
 		co.set_amount_bought(num_sheep_sent);
+		co.set_fee_bought(fee_bought_sheep);
 		order_trail_.push_back(co);
 
 		return order_taken ? eOrderTaken : eOrderPartial;
