@@ -430,12 +430,12 @@ namespace bumo {
 					break;
 				}
 
-				/*if (source_address == operation_process_order.selling().issuer()){
+				if (source_address == operation_process_order.selling().issuer()){
 					result.set_code(protocol::ERRCODE_ACCOUNT_NOT_EXIST);
 					result.set_desc(utils::String::Format("Source account(%s) can not selling asset(%s:%s:%d)", source_address.c_str(), operation_process_order.selling().issuer().c_str(), operation_process_order.selling().code().c_str(), operation_process_order.selling().type()));
 					LOG_ERROR("%s", result.desc().c_str());
 					break;
-				}*/
+				}
 
 
 				AccountFrm::pointer sell_isuuer;
