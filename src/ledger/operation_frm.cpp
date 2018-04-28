@@ -397,6 +397,12 @@ namespace bumo {
 					break;
 				}
 
+				if (operation_process_order.price().n() <= 0 || operation_process_order.price().d() <= 0 || ){
+					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
+					result.set_desc(utils::String::Format("price n and d must big zero"));
+					break;
+				}
+
 
 				if (!operation_process_order.has_selling() || !operation_process_order.has_buying()){
 					result.set_code(protocol::ERRCODE_ASSET_INVALID);
