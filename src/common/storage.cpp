@@ -335,7 +335,7 @@ namespace bumo {
 						}
 					}
 					else{
-						LOG_ERROR("Rational type(%s) error",db_config.rational_db_type_);
+						LOG_ERROR("Rational type(%s) error",db_config.rational_db_type_.c_str());
 						break;
 					}
 					
