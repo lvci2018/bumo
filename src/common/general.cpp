@@ -31,7 +31,13 @@ namespace bumo {
 	const char *General::DEFAULT_KEYVALUE_DB_PATH = "data/keyvalue.db";
 	const char *General::DEFAULT_LEDGER_DB_PATH = "data/ledger.db";
 	const char *General::DEFAULT_ACCOUNT_DB_PATH = "data/account.db";
-	const char *General::DEFAULT_ORDER_DB_PATH = "data/orders.db";
+
+#ifdef USE_POSTGRES
+	const char *General::DEFAULT_RATIONAL_DB_PATH = "host=127.0.0.1 port=5432 dbname=bumochain user=postgres password=root";
+#else
+	const char *General::DEFAULT_RATIONAL_DB_PATH = "data/order.db";
+#endif // USE_POSTGRES
+
 	
 	const char *General::CONFIG_FILE = "config/bumo.json";
 	const char *General::MONITOR_CONFIG_FILE = "config/monitor.json";
@@ -41,7 +47,12 @@ namespace bumo {
 	const char *General::DEFAULT_KEYVALUE_DB_PATH = "data/keyvalue.db";
 	const char *General::DEFAULT_LEDGER_DB_PATH = "data/ledger.db";
 	const char *General::DEFAULT_ACCOUNT_DB_PATH = "data/account.db";
-	const char *General::DEFAULT_ORDER_DB_PATH = "data/orders.db";
+
+#ifdef USE_POSTGRES
+	const char *General::DEFAULT_RATIONAL_DB_PATH = "host=127.0.0.1 port=5432 dbname=bumochain user=postgres password=root";
+#else
+	const char *General::DEFAULT_RATIONAL_DB_PATH = "data/order.db";
+#endif // USE_POSTGRES
 
 	const char *General::CONFIG_FILE = "config/bumo.json";
 	const char *General::LOGGER_FILE = "log/bumo.log";

@@ -29,6 +29,11 @@ set(EXECUTABLE_OUTPUT_PATH ${BUMO_ROOT_DIR}/bin)
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS)
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS)
 
+option(USE_PSQL "Use Postgresql" ON)
+if(USE_PSQL)
+    add_definitions(-DUSE_POSTGRESQL)
+endif()
+
 execute_process(COMMAND make all WORKING_DIRECTORY ${BUMO_SRC_DIR}/3rd)
 
 include_directories(
@@ -46,8 +51,10 @@ include_directories(
     ${BUMO_SRC_DIR}/3rd/openssl/include
     ${BUMO_SRC_DIR}/3rd/http
     ${BUMO_SRC_DIR}/3rd/libscrypt
+    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/install/include
     ${BUMO_SRC_DIR}/3rd/soci/src/core
     ${BUMO_SRC_DIR}/3rd/soci/src/backends/sqlite3
+    ${BUMO_SRC_DIR}/3rd/soci/src/backends/postgresql
 )
 
 link_directories(
@@ -62,16 +69,14 @@ link_directories(
     ${BUMO_SRC_DIR}/3rd/basic/lib
     ${BUMO_SRC_DIR}/3rd/curl/lib/.libs/
     ${BUMO_SRC_DIR}/3rd/v8_target/${V8_LIB_PATH}/
+    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/install/lib
     ${BUMO_SRC_DIR}/3rd/sqlite/lib
     ${BUMO_SRC_DIR}/3rd/soci/lib
     ${LIBRARY_OUTPUT_PATH}
 )
 
-set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt sqlite soci soci_sqlite3)
+set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt pq sqlite soci soci_sqlite3 soci_postgresql)
 
-#add_subdirectory(3rd/sqlite)
-#add_subdirectory(3rd/soci/src/core)
-#add_subdirectory(3rd/soci/src/backends/sqlite3)
 add_subdirectory(3rd/http)
 add_subdirectory(3rd/ed25519-donna)
 add_subdirectory(glue)

@@ -405,7 +405,7 @@ namespace bumo {
 			return false;
 		}
 
-		Database& db = Storage::Instance().lite_db();
+		SociDb& db = Storage::Instance().order_db();
 
 		for (int i = 0; i < request.txset().txs_size() && enabled_; i++) {
 			auto txproto = request.txset().txs(i);

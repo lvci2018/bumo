@@ -39,6 +39,9 @@ GTEST_PATH = gtest
 PCRE = pcre-8.39/.libs/libpcre.a
 PCRE_PATH = pcre-8.39
 
+POSTGRE = postgresql-9.6.8/src/interfaces/libpq/libpq.a 
+POSTGRE_PATH = postgresql-9.6.8
+
 LIBSQLITE = sqlite/lib/libsqlite.a
 LIBSQLITE_PATH = sqlite
 
@@ -63,9 +66,11 @@ all:add_permission\
     $(JSONCPP) \
     $(PCRE) \
     $(CURL) \
+	$(POSTGRE) \
 	$(LIBSQLITE) \
 	$(LIBSOCI) \
     $(GTEST)
+
 
 .PHONY:add_permission
 add_permission:
@@ -73,6 +78,7 @@ add_permission:
 	chmod +x ./jsoncpp/automake.sh; \
 	chmod +x ./rocksdb/build_tools/*; \
 	#chmod +x ./sqlite/configure; 
+	chmod +x ./postgresql-9.6.8/configure; \
 	chmod +x ./openssl/config; \
 	[-d ./openssl/include] || cd openssl && ./config;
 
@@ -99,10 +105,12 @@ $(PCRE):
 	@echo "***************building pcre now****************" && cd $(PCRE_PATH) && autoreconf -f -i && chmod +x configure && ./configure --enable-shared=no --enable-static=yes && $(MAKE) -j 4
 $(GTEST):
 	@echo "**************building gtest now***************" && cd $(GTEST_PATH) && $(MAKE) -j 4
+$(POSTGRE) :
+	@echo "*************building POSTGRE now***************" && cd $(POSTGRE_PATH) && chmod +x configure && ./configure --prefix="$(CUR_DIR)/$(POSTGRE_PATH)/install" --without-readline && $(MAKE) && make install
 $(LIBSQLITE):
 	@echo "**************building sqlite now***************" && cd $(LIBSQLITE_PATH) && [ -d build ] || mkdir build && cd build && cmake .. && $(MAKE) -j 4
 $(LIBSOCI):
-	@echo "**************building soci now***************" && cd $(LIBSOCI_PATH) && [ -d build ] || mkdir build && cd build && cmake .. && $(MAKE) -j 4
+	@echo "**************building soci now***************" && cd $(LIBSOCI_PATH) && [ -d build ] || mkdir build && cd build && cmake -DPOSTGRESQL_INCLUDE_DIR="$(CUR_DIR)/$(POSTGRE_PATH)/install/include" -DPOSTGRESQL_LIBRARIES="$(CUR_DIR)/$(POSTGRE_PATH)/install/lib"  .. && $(MAKE) -j 4
 
 clean:
 	@echo "******************skip clean 3rd, you can use 'clean_3rd' if you need******************"
@@ -118,6 +126,7 @@ clean_3rd: \
     JSONCPP_clean \
     CURL_clean \
     PCRE_clean \
+	POSTGRE_clean \
 	LIBSQLITE_clean \
 	LIBSOCI_clean \
     GTEST_clean
@@ -150,6 +159,8 @@ GTEST_clean:
 JSONCPP_clean: 
 	@echo "******************Cleaning jsoncpp now*************" && cd $(JSONCPP_PATH) && ./automake.sh -c || true  
 
+POSTGRE_clean:
+	@echo "******************Cleaning rocksdb now*************" && cd $(POSTGRE_PATH) && make clean
 LIBSQLITE_clean: 
 	@echo "******************Cleaning sqlite now*************" && cd $(LIBSQLITE_PATH)/build && make clean
 LIBSOCI_clean:

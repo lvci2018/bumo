@@ -622,7 +622,7 @@ namespace bumo {
 		}
 
 		bool error_encountered = false;
-		Database& db = Storage::Instance().lite_db();
+		SociDb& db = Storage::Instance().order_db();
 		{
 			soci::transaction sql_tx(db.GetSession());
 

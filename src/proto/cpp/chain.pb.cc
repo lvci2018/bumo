@@ -486,15 +486,17 @@ void protobuf_AssignDesc_chain_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Order, _is_default_instance_));
   ClaimOrder_descriptor_ = file->message_type(19);
-  static const int ClaimOrder_offsets_[9] = {
+  static const int ClaimOrder_offsets_[11] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, seller_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, order_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, tx_hash_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, price_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, asset_sold_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, amount_sold_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, fee_sold_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, asset_bought_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, amount_bought_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, fee_bought_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClaimOrder, op_index_),
   };
   ClaimOrder_reflection_ =
@@ -1033,91 +1035,92 @@ void protobuf_AddDesc_chain_2eproto() {
     "er_address\030\001 \001(\t\0225\n\014remain_order\030\002 \001(\0132\037"
     ".protocol.OperationProcessOrder\022\r\n\005flags"
     "\030\003 \001(\r\022 \n\030last_modified_ledger_seq\030\004 \001(\003"
-    "\022\017\n\007tx_hash\030\005 \001(\t\022\020\n\010op_index\030\006 \001(\005\"\362\001\n\n"
+    "\022\017\n\007tx_hash\030\005 \001(\t\022\020\n\010op_index\030\006 \001(\005\"\230\002\n\n"
     "ClaimOrder\022\021\n\tseller_id\030\001 \001(\t\022\020\n\010order_i"
     "d\030\002 \001(\t\022\017\n\007tx_hash\030\003 \001(\t\022\036\n\005price\030\004 \001(\0132"
     "\017.protocol.Price\022&\n\nasset_sold\030\005 \001(\0132\022.p"
-    "rotocol.AssetKey\022\023\n\013amount_sold\030\006 \001(\003\022(\n"
-    "\014asset_bought\030\007 \001(\0132\022.protocol.AssetKey\022"
-    "\025\n\ramount_bought\030\010 \001(\003\022\020\n\010op_index\030\t \001(\005"
-    "\"1\n\024OperationSetAssetFee\022\014\n\004code\030\001 \001(\t\022\013"
-    "\n\003fee\030\002 \001(\005\"\355\006\n\tOperation\022&\n\004type\030\001 \001(\0162"
-    "\030.protocol.Operation.Type\022\026\n\016source_addr"
-    "ess\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_ac"
-    "count\030\004 \001(\0132 .protocol.OperationCreateAc"
-    "count\0222\n\013issue_asset\030\005 \001(\0132\035.protocol.Op"
-    "erationIssueAsset\022+\n\007payment\030\006 \001(\0132\032.pro"
-    "tocol.OperationPayment\0224\n\014set_metadata\030\007"
-    " \001(\0132\036.protocol.OperationSetMetadata\022=\n\021"
-    "set_signer_weight\030\010 \001(\0132\".protocol.Opera"
-    "tionSetSignerWeight\0226\n\rset_threshold\030\t \001"
-    "(\0132\037.protocol.OperationSetThreshold\022,\n\010p"
-    "ay_coin\030\n \001(\0132\032.protocol.OperationPayCoi"
-    "n\022#\n\003log\030\013 \001(\0132\026.protocol.OperationLog\0226"
-    "\n\rprocess_order\030\014 \001(\0132\037.protocol.Operati"
-    "onProcessOrder\0228\n\016register_asset\030\r \001(\0132 "
-    ".protocol.OperationRegisterAsset\0225\n\rset_"
-    "asset_fee\030\016 \001(\0132\036.protocol.OperationSetA"
-    "ssetFee\"\311\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_"
-    "ACCOUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022"
-    "\020\n\014SET_METADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005"
-    "\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\021\n\rPRO"
-    "CESS_ORDER\020\010\022\022\n\016REGISTER_ASSET\020\t\022\021\n\rSET_"
-    "ASSET_FEE\020\n\"h\n\025OperationSetThreshold\022\024\n\014"
-    "tx_threshold\030\001 \001(\003\0229\n\017type_thresholds\030\004 "
-    "\003(\0132 .protocol.OperationTypeThreshold\"\274\001"
-    "\n\013Transaction\022\026\n\016source_address\030\001 \001(\t\022\r\n"
-    "\005nonce\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger"
-    "_seq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n\noperatio"
-    "ns\030\006 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013"
-    "\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017"
-    "\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit"
-    "\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigge"
-    "r\022;\n\020transaction_type\030\001 \001(\0162!.protocol.T"
-    "rigger.TransactionType\022\022\n\nledger_seq\030\002 \001"
-    "(\003\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigg"
-    "er.OperationTrigger\032/\n\020OperationTrigger\022"
-    "\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transact"
-    "ionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTR"
-    "ACT_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013"
-    "transaction\030\001 \001(\0132\025.protocol.Transaction"
-    "\022\'\n\nsignatures\030\002 \003(\0132\023.protocol.Signatur"
-    "e\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\243\002"
-    "\n\024OperationOrderResult\022,\n\016orders_claimed"
-    "\030\001 \003(\0132\024.protocol.ClaimOrder\022>\n\006effect\030\002"
-    " \001(\0162..protocol.OperationOrderResult.Ord"
-    "erEffectType\022\036\n\005order\030\003 \001(\0132\017.protocol.O"
-    "rder\022\014\n\004code\030\004 \001(\005\022\020\n\010op_index\030\005 \001(\005\"]\n\017"
-    "OrderEffectType\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rOR"
-    "DER_CREATED\020\001\022\021\n\rORDER_UPDATED\020\002\022\021\n\rORDE"
-    "R_DELETED\020\003\"\335\001\n\023TransactionEnvStore\0221\n\017t"
-    "ransaction_env\030\001 \001(\0132\030.protocol.Transact"
-    "ionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc"
-    "\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time"
-    "\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\0225\n\rorders_result\030\007 "
-    "\003(\0132\036.protocol.OperationOrderResult\":\n\021T"
-    "ransactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol"
-    ".TransactionEnv\"G\n\030ConsensusValueValidat"
-    "ion\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_i"
-    "ds\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001"
-    "(\0132\033.protocol.TransactionEnvSet\022\022\n\nclose"
-    "_time\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nl"
-    "edger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030"
-    "\005 \001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol"
-    ".LedgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".pro"
-    "tocol.ConsensusValueValidation\"j\n\010Contra"
-    "ct\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Con"
-    "tractType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractTy"
-    "pe\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAc"
-    "count\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030"
-    "\002 \001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132"
-    "\032.protocol.AccountPrivilege\022$\n\tmetadatas"
-    "\030\004 \003(\0132\021.protocol.KeyPair\022\024\n\014init_balanc"
-    "e\030\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024Operation"
-    "SetMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022"
-    "\017\n\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n"
-    "\005Limit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn"
-    ".bumo.blockchain.adapter3b\006proto3", 5513);
+    "rotocol.AssetKey\022\023\n\013amount_sold\030\006 \001(\003\022\020\n"
+    "\010fee_sold\030\007 \001(\003\022(\n\014asset_bought\030\010 \001(\0132\022."
+    "protocol.AssetKey\022\025\n\ramount_bought\030\t \001(\003"
+    "\022\022\n\nfee_bought\030\n \001(\003\022\020\n\010op_index\030\013 \001(\005\"1"
+    "\n\024OperationSetAssetFee\022\014\n\004code\030\001 \001(\t\022\013\n\003"
+    "fee\030\002 \001(\005\"\355\006\n\tOperation\022&\n\004type\030\001 \001(\0162\030."
+    "protocol.Operation.Type\022\026\n\016source_addres"
+    "s\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_acco"
+    "unt\030\004 \001(\0132 .protocol.OperationCreateAcco"
+    "unt\0222\n\013issue_asset\030\005 \001(\0132\035.protocol.Oper"
+    "ationIssueAsset\022+\n\007payment\030\006 \001(\0132\032.proto"
+    "col.OperationPayment\0224\n\014set_metadata\030\007 \001"
+    "(\0132\036.protocol.OperationSetMetadata\022=\n\021se"
+    "t_signer_weight\030\010 \001(\0132\".protocol.Operati"
+    "onSetSignerWeight\0226\n\rset_threshold\030\t \001(\013"
+    "2\037.protocol.OperationSetThreshold\022,\n\010pay"
+    "_coin\030\n \001(\0132\032.protocol.OperationPayCoin\022"
+    "#\n\003log\030\013 \001(\0132\026.protocol.OperationLog\0226\n\r"
+    "process_order\030\014 \001(\0132\037.protocol.Operation"
+    "ProcessOrder\0228\n\016register_asset\030\r \001(\0132 .p"
+    "rotocol.OperationRegisterAsset\0225\n\rset_as"
+    "set_fee\030\016 \001(\0132\036.protocol.OperationSetAss"
+    "etFee\"\311\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_AC"
+    "COUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n"
+    "\014SET_METADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021"
+    "\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\021\n\rPROCE"
+    "SS_ORDER\020\010\022\022\n\016REGISTER_ASSET\020\t\022\021\n\rSET_AS"
+    "SET_FEE\020\n\"h\n\025OperationSetThreshold\022\024\n\014tx"
+    "_threshold\030\001 \001(\003\0229\n\017type_thresholds\030\004 \003("
+    "\0132 .protocol.OperationTypeThreshold\"\274\001\n\013"
+    "Transaction\022\026\n\016source_address\030\001 \001(\t\022\r\n\005n"
+    "once\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger_s"
+    "eq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n\noperations"
+    "\030\006 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013\n\007"
+    "UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007"
+    "address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017"
+    "\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022"
+    ";\n\020transaction_type\030\001 \001(\0162!.protocol.Tri"
+    "gger.TransactionType\022\022\n\nledger_seq\030\002 \001(\003"
+    "\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigger"
+    ".OperationTrigger\032/\n\020OperationTrigger\022\014\n"
+    "\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transactio"
+    "nType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTRAC"
+    "T_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013tr"
+    "ansaction\030\001 \001(\0132\025.protocol.Transaction\022\'"
+    "\n\nsignatures\030\002 \003(\0132\023.protocol.Signature\022"
+    "\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\243\002\n\024"
+    "OperationOrderResult\022,\n\016orders_claimed\030\001"
+    " \003(\0132\024.protocol.ClaimOrder\022>\n\006effect\030\002 \001"
+    "(\0162..protocol.OperationOrderResult.Order"
+    "EffectType\022\036\n\005order\030\003 \001(\0132\017.protocol.Ord"
+    "er\022\014\n\004code\030\004 \001(\005\022\020\n\010op_index\030\005 \001(\005\"]\n\017Or"
+    "derEffectType\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rORDE"
+    "R_CREATED\020\001\022\021\n\rORDER_UPDATED\020\002\022\021\n\rORDER_"
+    "DELETED\020\003\"\335\001\n\023TransactionEnvStore\0221\n\017tra"
+    "nsaction_env\030\001 \001(\0132\030.protocol.Transactio"
+    "nEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003"
+    " \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005"
+    " \001(\003\022\014\n\004hash\030\006 \001(\014\0225\n\rorders_result\030\007 \003("
+    "\0132\036.protocol.OperationOrderResult\":\n\021Tra"
+    "nsactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.T"
+    "ransactionEnv\"G\n\030ConsensusValueValidatio"
+    "n\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids"
+    "\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\013"
+    "2\033.protocol.TransactionEnvSet\022\022\n\nclose_t"
+    "ime\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nled"
+    "ger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 "
+    "\001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol.L"
+    "edgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".proto"
+    "col.ConsensusValueValidation\"j\n\010Contract"
+    "\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Contr"
+    "actType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType"
+    "\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAcco"
+    "unt\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002 "
+    "\001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032."
+    "protocol.AccountPrivilege\022$\n\tmetadatas\030\004"
+    " \003(\0132\021.protocol.KeyPair\022\024\n\014init_balance\030"
+    "\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationSe"
+    "tMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n"
+    "\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005L"
+    "imit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.b"
+    "umo.blockchain.adapter3b\006proto3", 5551);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "chain.proto", &protobuf_RegisterTypes);
   Account::default_instance_ = new Account();
@@ -10049,8 +10052,10 @@ const int ClaimOrder::kTxHashFieldNumber;
 const int ClaimOrder::kPriceFieldNumber;
 const int ClaimOrder::kAssetSoldFieldNumber;
 const int ClaimOrder::kAmountSoldFieldNumber;
+const int ClaimOrder::kFeeSoldFieldNumber;
 const int ClaimOrder::kAssetBoughtFieldNumber;
 const int ClaimOrder::kAmountBoughtFieldNumber;
+const int ClaimOrder::kFeeBoughtFieldNumber;
 const int ClaimOrder::kOpIndexFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -10085,8 +10090,10 @@ void ClaimOrder::SharedCtor() {
   price_ = NULL;
   asset_sold_ = NULL;
   amount_sold_ = GOOGLE_LONGLONG(0);
+  fee_sold_ = GOOGLE_LONGLONG(0);
   asset_bought_ = NULL;
   amount_bought_ = GOOGLE_LONGLONG(0);
+  fee_bought_ = GOOGLE_LONGLONG(0);
   op_index_ = 0;
 }
 
@@ -10133,6 +10140,23 @@ ClaimOrder* ClaimOrder::New(::google::protobuf::Arena* arena) const {
 
 void ClaimOrder::Clear() {
 // @@protoc_insertion_point(message_clear_start:protocol.ClaimOrder)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(ClaimOrder, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<ClaimOrder*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(amount_sold_, fee_sold_);
   seller_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   order_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tx_hash_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -10140,11 +10164,13 @@ void ClaimOrder::Clear() {
   price_ = NULL;
   if (GetArenaNoVirtual() == NULL && asset_sold_ != NULL) delete asset_sold_;
   asset_sold_ = NULL;
-  amount_sold_ = GOOGLE_LONGLONG(0);
   if (GetArenaNoVirtual() == NULL && asset_bought_ != NULL) delete asset_bought_;
   asset_bought_ = NULL;
-  amount_bought_ = GOOGLE_LONGLONG(0);
-  op_index_ = 0;
+  ZR_(amount_bought_, op_index_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool ClaimOrder::MergePartialFromCodedStream(
@@ -10244,26 +10270,41 @@ bool ClaimOrder::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_asset_bought;
+        if (input->ExpectTag(56)) goto parse_fee_sold;
         break;
       }
 
-      // optional .protocol.AssetKey asset_bought = 7;
+      // optional int64 fee_sold = 7;
       case 7: {
-        if (tag == 58) {
+        if (tag == 56) {
+         parse_fee_sold:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &fee_sold_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(66)) goto parse_asset_bought;
+        break;
+      }
+
+      // optional .protocol.AssetKey asset_bought = 8;
+      case 8: {
+        if (tag == 66) {
          parse_asset_bought:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_asset_bought()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_amount_bought;
+        if (input->ExpectTag(72)) goto parse_amount_bought;
         break;
       }
 
-      // optional int64 amount_bought = 8;
-      case 8: {
-        if (tag == 64) {
+      // optional int64 amount_bought = 9;
+      case 9: {
+        if (tag == 72) {
          parse_amount_bought:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -10272,13 +10313,28 @@ bool ClaimOrder::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_op_index;
+        if (input->ExpectTag(80)) goto parse_fee_bought;
         break;
       }
 
-      // optional int32 op_index = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional int64 fee_bought = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_fee_bought:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &fee_bought_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(88)) goto parse_op_index;
+        break;
+      }
+
+      // optional int32 op_index = 11;
+      case 11: {
+        if (tag == 88) {
          parse_op_index:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -10362,20 +10418,30 @@ void ClaimOrder::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->amount_sold(), output);
   }
 
-  // optional .protocol.AssetKey asset_bought = 7;
+  // optional int64 fee_sold = 7;
+  if (this->fee_sold() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(7, this->fee_sold(), output);
+  }
+
+  // optional .protocol.AssetKey asset_bought = 8;
   if (this->has_asset_bought()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, *this->asset_bought_, output);
+      8, *this->asset_bought_, output);
   }
 
-  // optional int64 amount_bought = 8;
+  // optional int64 amount_bought = 9;
   if (this->amount_bought() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(8, this->amount_bought(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(9, this->amount_bought(), output);
   }
 
-  // optional int32 op_index = 9;
+  // optional int64 fee_bought = 10;
+  if (this->fee_bought() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(10, this->fee_bought(), output);
+  }
+
+  // optional int32 op_index = 11;
   if (this->op_index() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->op_index(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->op_index(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:protocol.ClaimOrder)
@@ -10436,21 +10502,31 @@ void ClaimOrder::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(6, this->amount_sold(), target);
   }
 
-  // optional .protocol.AssetKey asset_bought = 7;
+  // optional int64 fee_sold = 7;
+  if (this->fee_sold() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(7, this->fee_sold(), target);
+  }
+
+  // optional .protocol.AssetKey asset_bought = 8;
   if (this->has_asset_bought()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        7, *this->asset_bought_, false, target);
+        8, *this->asset_bought_, false, target);
   }
 
-  // optional int64 amount_bought = 8;
+  // optional int64 amount_bought = 9;
   if (this->amount_bought() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(8, this->amount_bought(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(9, this->amount_bought(), target);
   }
 
-  // optional int32 op_index = 9;
+  // optional int64 fee_bought = 10;
+  if (this->fee_bought() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(10, this->fee_bought(), target);
+  }
+
+  // optional int32 op_index = 11;
   if (this->op_index() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->op_index(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->op_index(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:protocol.ClaimOrder)
@@ -10503,21 +10579,35 @@ int ClaimOrder::ByteSize() const {
         this->amount_sold());
   }
 
-  // optional .protocol.AssetKey asset_bought = 7;
+  // optional int64 fee_sold = 7;
+  if (this->fee_sold() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->fee_sold());
+  }
+
+  // optional .protocol.AssetKey asset_bought = 8;
   if (this->has_asset_bought()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->asset_bought_);
   }
 
-  // optional int64 amount_bought = 8;
+  // optional int64 amount_bought = 9;
   if (this->amount_bought() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int64Size(
         this->amount_bought());
   }
 
-  // optional int32 op_index = 9;
+  // optional int64 fee_bought = 10;
+  if (this->fee_bought() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int64Size(
+        this->fee_bought());
+  }
+
+  // optional int32 op_index = 11;
   if (this->op_index() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -10573,11 +10663,17 @@ void ClaimOrder::MergeFrom(const ClaimOrder& from) {
   if (from.amount_sold() != 0) {
     set_amount_sold(from.amount_sold());
   }
+  if (from.fee_sold() != 0) {
+    set_fee_sold(from.fee_sold());
+  }
   if (from.has_asset_bought()) {
     mutable_asset_bought()->::protocol::AssetKey::MergeFrom(from.asset_bought());
   }
   if (from.amount_bought() != 0) {
     set_amount_bought(from.amount_bought());
+  }
+  if (from.fee_bought() != 0) {
+    set_fee_bought(from.fee_bought());
   }
   if (from.op_index() != 0) {
     set_op_index(from.op_index());
@@ -10614,8 +10710,10 @@ void ClaimOrder::InternalSwap(ClaimOrder* other) {
   std::swap(price_, other->price_);
   std::swap(asset_sold_, other->asset_sold_);
   std::swap(amount_sold_, other->amount_sold_);
+  std::swap(fee_sold_, other->fee_sold_);
   std::swap(asset_bought_, other->asset_bought_);
   std::swap(amount_bought_, other->amount_bought_);
+  std::swap(fee_bought_, other->fee_bought_);
   std::swap(op_index_, other->op_index_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -10854,7 +10952,21 @@ void ClaimOrder::clear_amount_sold() {
   // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_sold)
 }
 
-// optional .protocol.AssetKey asset_bought = 7;
+// optional int64 fee_sold = 7;
+void ClaimOrder::clear_fee_sold() {
+  fee_sold_ = GOOGLE_LONGLONG(0);
+}
+ ::google::protobuf::int64 ClaimOrder::fee_sold() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.fee_sold)
+  return fee_sold_;
+}
+ void ClaimOrder::set_fee_sold(::google::protobuf::int64 value) {
+  
+  fee_sold_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.fee_sold)
+}
+
+// optional .protocol.AssetKey asset_bought = 8;
 bool ClaimOrder::has_asset_bought() const {
   return !_is_default_instance_ && asset_bought_ != NULL;
 }
@@ -10892,7 +11004,7 @@ void ClaimOrder::set_allocated_asset_bought(::protocol::AssetKey* asset_bought) 
   // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.asset_bought)
 }
 
-// optional int64 amount_bought = 8;
+// optional int64 amount_bought = 9;
 void ClaimOrder::clear_amount_bought() {
   amount_bought_ = GOOGLE_LONGLONG(0);
 }
@@ -10906,7 +11018,21 @@ void ClaimOrder::clear_amount_bought() {
   // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_bought)
 }
 
-// optional int32 op_index = 9;
+// optional int64 fee_bought = 10;
+void ClaimOrder::clear_fee_bought() {
+  fee_bought_ = GOOGLE_LONGLONG(0);
+}
+ ::google::protobuf::int64 ClaimOrder::fee_bought() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.fee_bought)
+  return fee_bought_;
+}
+ void ClaimOrder::set_fee_bought(::google::protobuf::int64 value) {
+  
+  fee_bought_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.fee_bought)
+}
+
+// optional int32 op_index = 11;
 void ClaimOrder::clear_op_index() {
   op_index_ = 0;
 }

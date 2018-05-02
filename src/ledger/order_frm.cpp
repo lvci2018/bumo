@@ -25,7 +25,7 @@ namespace bumo {
 		"CREATE TABLE orders"
 		"("
 		"sellerid         VARCHAR(56)  NOT NULL,"
-		"orderid          VARCHAR(128) NOT NULL CHECK (orderid >= 0),"
+		"orderid          VARCHAR(128) NOT NULL,"
 		"sellingassettype INT          NOT NULL,"
 		"sellingassetcode VARCHAR(12),"
 		"sellingissuer    VARCHAR(56),"
@@ -39,7 +39,7 @@ namespace bumo {
 		"flags            INT              NOT NULL,"
 		"lastmodified     INT              NOT NULL,"
 		"txhash           VARCHAR(64)      NOT NULL,"
-		"opindex		  INT			   NOT NULL,"
+		"opindex          INT              NOT NULL,"
 		"PRIMARY KEY      (orderid)"
 		");";
 
@@ -138,7 +138,7 @@ namespace bumo {
 		return order_.op_index();
 	}
 
-	void OrderFrame::StoreDelete(Database& db) const{
+	void OrderFrame::StoreDelete(SociDb& db) const{
 		auto prep = db.GetPreparedStatement("DELETE FROM orders WHERE orderid=:s");
 		auto& st = prep.statement();
 		st.exchange(use(order_.remain_order().order_id()));
@@ -146,11 +146,11 @@ namespace bumo {
 		st.execute(true);
 	}
 
-	void OrderFrame::StoreChange(LedgerFrm* ledger,Database& db){
+	void OrderFrame::StoreChange(LedgerFrm* ledger, SociDb& db){
 		StoreUpdateHelper(ledger,db, false);
 	}
 
-	void OrderFrame::StoreAdd(LedgerFrm* ledger, Database& db){
+	void OrderFrame::StoreAdd(LedgerFrm* ledger, SociDb& db){
 		StoreUpdateHelper(ledger,db, true);
 	}
 
@@ -162,7 +162,7 @@ namespace bumo {
 		order_.set_last_modified_ledger_seq(ledger->GetClosingLedgerSeq());
 	}
 
-	void OrderFrame::StoreUpdateHelper(LedgerFrm* ledger, Database& db, bool insert){
+	void OrderFrame::StoreUpdateHelper(LedgerFrm* ledger, SociDb& db, bool insert){
 		
 		Touch(ledger);
 
@@ -219,7 +219,7 @@ namespace bumo {
 		}
 	}
 
-	bool OrderFrame::Exists(Database& db, OrderKey const& key){
+	bool OrderFrame::Exists(SociDb& db, OrderKey const& key){
 
 		int exists = 0;
 		//auto timer = db.getSelectTimer("offer-exists");
@@ -248,7 +248,7 @@ namespace bumo {
 		return count;
 	}
 
-	void DeleteOffersModifiedOnOrAfterLedger(Database& db, int64_t oldestLedger){
+	void DeleteOffersModifiedOnOrAfterLedger(SociDb& db, int64_t oldestLedger){
 		/*db.getEntryCache().erase_if(
 			[oldestLedger](std::shared_ptr<LedgerEntry const> le) -> bool {
 			return le && le->data.type() == OFFER &&
@@ -265,7 +265,7 @@ namespace bumo {
 		}
 	}
 
-	OrderFrame::pointer OrderFrame::LoadOrder(std::string const& account_address,const std::string& order_id, Database& db){
+	OrderFrame::pointer OrderFrame::LoadOrder(std::string const& account_address, const std::string& order_id, SociDb& db){
 		OrderFrame::pointer ret_order;
 
 		std::string sql = orderColumnSelector;
@@ -357,7 +357,7 @@ namespace bumo {
 	}
 
 	void OrderFrame::LoadBestOrders(size_t num_orders, size_t offset, protocol::AssetKey const& selling, protocol::AssetKey const& buying,
-		std::vector<OrderFrame::pointer>& return_orders, Database& db){
+		std::vector<OrderFrame::pointer>& return_orders, SociDb& db){
 
 		std::string sql = orderColumnSelector;
 
@@ -405,7 +405,7 @@ namespace bumo {
 	}
 
 	// load all offers from the database (very slow) ; key AccountID
-	std::unordered_map<std::string, std::vector<OrderFrame::pointer>> OrderFrame::LoadAllOrders(Database& db){
+	std::unordered_map<std::string, std::vector<OrderFrame::pointer>> OrderFrame::LoadAllOrders(SociDb& db){
 		std::unordered_map<std::string, std::vector<OrderFrame::pointer>> ret_orders;
 		std::string sql = orderColumnSelector;
 		sql += " ORDER BY sellerid";
@@ -419,7 +419,7 @@ namespace bumo {
 		return ret_orders;
 	}
 
-	void OrderFrame::DropAll(Database& db){
+	void OrderFrame::DropAll(SociDb& db){
 		db.GetSession() << "DROP TABLE IF EXISTS orders;";
 		db.GetSession() << kSQLCreateStatement1;
 		db.GetSession() << kSQLCreateStatement2;
@@ -427,9 +427,13 @@ namespace bumo {
 		db.GetSession() << kSQLCreateStatement4;
 	}
 
-	void OrderFrame::Initialize(Database& db){
+	void OrderFrame::Initialize(SociDb& db){
 		int n = 0;
-		db.GetSession() << "select count(*)  from sqlite_master where type='table' and name = 'orders';", soci::into(n);
+		if (db.IsSqlite())
+			db.GetSession() << "select count(*)  from sqlite_master where type='table' and name = 'orders';", soci::into(n);
+		else
+			db.GetSession() << "select count(*)  from information_schema.TABLES where table_name = 'orders';", soci::into(n);
+
 		if (n == 0){
 			db.GetSession() << kSQLCreateStatement1;
 			db.GetSession() << kSQLCreateStatement2;

@@ -382,7 +382,7 @@ namespace bumo {
 			//cacel order
 			if (!operation_process_order.order_id().empty()){
 				if (operation_process_order.amount() != 0){
-					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("order id(%s) excute cancle ,amount must be zero", operation_process_order.order_id().c_str()));
 					break;
 				}
@@ -392,20 +392,21 @@ namespace bumo {
 			if (operation_process_order.order_id().empty()){
 
 				if (operation_process_order.amount() == 0){
-					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("insert order amount must be not zero"));
 					break;
 				}
 
-				if (operation_process_order.price().n() <= 0 || operation_process_order.price().d() <= 0){
+				if (operation_process_order.price().n() <= 0 || operation_process_order.price().d() <= 0 ){
 					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("price n and d must big zero"));
 					break;
 				}
 
 
+
 				if (!operation_process_order.has_selling() || !operation_process_order.has_buying()){
-					result.set_code(protocol::ERRCODE_ASSET_INVALID);
+					result.set_code(protocol::ERRCODE_INVALID_PARAMETER);
 					result.set_desc(utils::String::Format("order must has selling and buying "));
 					break;
 				}
@@ -442,7 +443,6 @@ namespace bumo {
 					LOG_ERROR("%s", result.desc().c_str());
 					break;
 				}
-
 
 				AccountFrm::pointer sell_isuuer;
 				if (!Environment::AccountFromDB(operation_process_order.selling().issuer(), sell_isuuer)) {
@@ -1050,7 +1050,7 @@ namespace bumo {
 
 		do
 		{
-			Database& db = Storage::Instance().lite_db();
+			SociDb& db = Storage::Instance().order_db();
 			if (!CheckOrderVaild(ope, environment))
 				return;
 
@@ -1136,10 +1136,12 @@ namespace bumo {
 				max_wheat_price.set_n(sheepPrice.d());
 				max_wheat_price.set_d(sheepPrice.n());
 
-				std::string order_desc = sell_sheep_order_->ToString();
-				LOG_INFO("%s max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ")", order_desc.c_str(), max_sheep_send, max_wheat_can_buy);
 
-				OrderExchange oe(transaction_->ledger_,environment,sell_sheep_order_);
+				std::string sell_sheep_order_flag = utils::String::Format("("FMT_I64 ":%d : %d)", transaction_->ledger_->GetClosingLedgerSeq(), transaction_->index_, index_);
+				std::string order_desc = sell_sheep_order_->ToString();
+				LOG_INFO("(%s) %s max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ")", sell_sheep_order_flag.c_str(), order_desc.c_str(), max_sheep_send, max_wheat_can_buy);
+
+				OrderExchange oe(transaction_->ledger_, environment, sell_sheep_order_, sell_sheep_order_flag);
 				//执行撮合
 				OrderExchange::ConvertResult r = oe.ConvertWithOrders(
 					sheep, max_sheep_send, sheep_sent, wheat, max_wheat_can_buy,
@@ -1160,7 +1162,7 @@ namespace bumo {
 					return OrderExchange::eKeep;
 				});
 
-				LOG_INFO("%s match result: max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ") sheep_sent(" FMT_I64") wheat_received(" FMT_I64 ") ", order_desc.c_str(), max_sheep_send, max_wheat_can_buy, sheep_sent, wheat_received);
+				LOG_INFO("(%s) %s match result: max_sheep_send(" FMT_I64") max_wheat_can_buy(" FMT_I64 ") sheep_sent(" FMT_I64") wheat_received(" FMT_I64 ") ", sell_sheep_order_flag.c_str(), order_desc.c_str(), max_sheep_send, max_wheat_can_buy, sheep_sent, wheat_received);
 				assert(sheep_sent >= 0);
 
 				switch (r)

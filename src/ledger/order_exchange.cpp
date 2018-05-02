@@ -25,12 +25,13 @@ namespace bumo {
 
 	namespace{
 
-		int64_t CanBuyAtMost(const protocol::AssetKey& asset, const protocol::Price& price){
+		int64_t CanBuyAtMost(const protocol::AssetKey& asset, const protocol::Price& price,const std::string& flag){
 			if (asset.type() == protocol::AssetKey_Type_SELF_COIN)
 				return INT64_MAX;
 
 			// compute value based on what the account can receive
 			auto seller_max_sheep = INT64_MAX;
+			LOG_INFO("(%s) CanBuyAtMost seller_max_sheep(" FMT_I64 "), price d(%d) price n(%d)", flag.c_str(), seller_max_sheep, price.d(), price.n());
 
 			auto result = int64_t{};
 			if (!utils::bigDivide(result, seller_max_sheep, (int64_t)price.d(), (int64_t)price.n(), utils::Rounding::eRoundDown))
@@ -39,7 +40,7 @@ namespace bumo {
 			return result;
 		}
 
-		int64_t	CanSellAtMost(AccountFrm::pointer account, const protocol::AssetKey& asset){
+		int64_t CanSellAtMost(AccountFrm::pointer account, const protocol::AssetKey& asset){
 			if (asset.type() == protocol::AssetKey_Type_SELF_COIN)
 				// can only send above the minimum balance
 				return account->GetBalanceAboveReserve();
@@ -87,26 +88,26 @@ namespace bumo {
 
 		const std::string& account_id_b = selling_wheat_order.GetSellerID();
 
-		Database& db = Storage::Instance().lite_db();
+		SociDb& db = Storage::Instance().order_db();
 
 		AccountFrm::pointer account_b;
 		if (!environment_->GetEntry(account_id_b, account_b))
 			PROCESS_EXIT("Account(%s) must be exist,invalid database state, order must have matching account", account_id_b.c_str());
 
+		int64_t can_buy_most = CanBuyAtMost(sheep, selling_wheat_order.GetPrice(),sell_sheep_order_flag_);
+		int64_t can_sell_most = CanSellAtMost(account_b, wheat);
 
 		num_wheat_received = (std::min)({
-			CanBuyAtMost(sheep, selling_wheat_order.GetPrice()),
-			CanSellAtMost(account_b, wheat),
+			can_buy_most,
+			can_sell_most,
 			selling_wheat_order.GetAmount()
 		});
 
 		//assert(num_wheat_received >= 0);
 		if (num_wheat_received<0)
 			PROCESS_EXIT("num_wheat_received(" FMT_I64 ") CanBuyAtMost(" FMT_I64 ") CanSellAtMost(" FMT_I64 ") selling_wheat_order amount(" FMT_I64 ")", 
-			num_wheat_received, CanBuyAtMost(sheep, selling_wheat_order.GetPrice()), CanSellAtMost(account_b, wheat), selling_wheat_order.GetAmount());
+			num_wheat_received, can_buy_most, can_sell_most, selling_wheat_order.GetAmount());
 
-		LOG_INFO("num_wheat_received(" FMT_I64 ") CanBuyAtMost(" FMT_I64 ") CanSellAtMost(" FMT_I64 ") selling_wheat_order amount(" FMT_I64 ")",
-			num_wheat_received, CanBuyAtMost(sheep, selling_wheat_order.GetPrice()), CanSellAtMost(account_b, wheat), selling_wheat_order.GetAmount());
 
 		if (selling_wheat_order.GetAmount() != num_wheat_received){
 			LOG_INFO("Order(%s) reset amount, orig amount(" FMT_I64 ")  new amount(" FMT_I64 ")", selling_wheat_order.GetOrderID().c_str(), selling_wheat_order.GetAmount(), num_wheat_received);
@@ -220,7 +221,7 @@ namespace bumo {
 		sheep_sent = 0;
 		wheat_received = 0;
 
-		Database& db = Storage::Instance().lite_db();
+		SociDb& db = Storage::Instance().order_db();
 
 		size_t order_offset = 0;
 
@@ -251,14 +252,14 @@ namespace bumo {
 				int64_t num_sheep_sent=0;
 
 				std::string order_desc = wheat_order->ToString();
-				LOG_INFO("counter %s max_wheat_receive(" FMT_I64"),max_sheep_send(" FMT_I64")", order_desc.c_str(), max_wheat_receive, max_sheep_send);
+				LOG_INFO("(%s) counter %s max_wheat_receive(" FMT_I64"),max_sheep_send(" FMT_I64")",sell_sheep_order_flag_.c_str(), order_desc.c_str(), max_wheat_receive, max_sheep_send);
 
 				OrderExchange::CrossOrderResult cor =
 					CrossOrder(*wheat_order, max_wheat_receive, num_wheat_received,
 					max_sheep_send, num_sheep_sent);
 
-				LOG_INFO("counter %s match result:%d num_wheat_received(" FMT_I64"),num_sheep_sent(" FMT_I64")",
-					order_desc.c_str(), (int)cor, num_wheat_received, num_sheep_sent);
+				LOG_INFO("(%s) counter %s match result:%d num_wheat_received(" FMT_I64"),num_sheep_sent(" FMT_I64")",
+					sell_sheep_order_flag_.c_str(), order_desc.c_str(), (int)cor, num_wheat_received, num_sheep_sent);
 
 				assert(num_sheep_sent >= 0);
 				assert(num_sheep_sent <= max_sheep_send);

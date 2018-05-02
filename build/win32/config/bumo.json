@@ -3,6 +3,8 @@
         "account_path": "data/account.db",
         "ledger_path": "data/ledger.db",
         "keyvalue_path": "data/keyvalue.db"
+	"rational_db_type": "sqlite3", //postgresql or sqlite3 ("data/order.db")
+	"rational_string" : "data/order.db" //"host=127.0.0.1 port=5432 dbname=bumochain user=postgres password=root"
     },
     "p2p": {
         "network_id": 30000,

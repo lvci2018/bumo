@@ -26,7 +26,7 @@
 #else
 #include <rocksdb/db.h>
 #endif
-#include "database.h"
+#include "socidb.h"
 
 namespace bumo {
 #ifdef WIN32
@@ -113,7 +113,7 @@ namespace bumo {
 		KeyValueDb *keyvalue_db_;
 		KeyValueDb *ledger_db_;
 		KeyValueDb *account_db_;
-		Database *lite_db_;
+		SociDb * order_db_;
 
 		bool CloseDb();
 		bool DescribeTable(const std::string &name, const std::string &sql_create_table);
@@ -127,7 +127,7 @@ namespace bumo {
 		KeyValueDb *keyvalue_db();   //storage others
 		KeyValueDb *account_db();   //storage account tree
 		KeyValueDb *ledger_db();    //storage transaction and ledger
-		Database&	lite_db();
+		SociDb&	order_db();
 
 		virtual void OnTimer(int64_t current_time) {};
 		virtual void OnSlowTimer(int64_t current_time);

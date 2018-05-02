@@ -162,12 +162,14 @@ message ClaimOrder
 	// amount and asset taken from the owner
 	AssetKey asset_sold	=5;
 	int64 amount_sold	=6;
+	int64 fee_sold		=7;
 
 	// amount and asset sent to the owner
-	AssetKey asset_bought	=7;
-	int64 amount_bought		=8;
+	AssetKey asset_bought	=8;
+	int64 amount_bought		=9;
+	int64 fee_bought		=10;
 
-	int32 op_index		=9;
+	int32 op_index			=11;
 }
 
 message OperationSetAssetFee{

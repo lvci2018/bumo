@@ -65,8 +65,6 @@ namespace bumo {
 		const static char *DEFAULT_LEDGER_DB_PATH;
 		const static char *DEFAULT_RATIONAL_DB_PATH;
 
-		const static char *DEFAULT_ORDER_DB_PATH;
-
 		const static char *CONFIG_FILE;
 		const static char *MONITOR_CONFIG_FILE;
 		const static char *CA_CONFIG_FILE;

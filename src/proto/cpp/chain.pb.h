@@ -2504,24 +2504,36 @@ class ClaimOrder : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int64 amount_sold() const;
   void set_amount_sold(::google::protobuf::int64 value);
 
-  // optional .protocol.AssetKey asset_bought = 7;
+  // optional int64 fee_sold = 7;
+  void clear_fee_sold();
+  static const int kFeeSoldFieldNumber = 7;
+  ::google::protobuf::int64 fee_sold() const;
+  void set_fee_sold(::google::protobuf::int64 value);
+
+  // optional .protocol.AssetKey asset_bought = 8;
   bool has_asset_bought() const;
   void clear_asset_bought();
-  static const int kAssetBoughtFieldNumber = 7;
+  static const int kAssetBoughtFieldNumber = 8;
   const ::protocol::AssetKey& asset_bought() const;
   ::protocol::AssetKey* mutable_asset_bought();
   ::protocol::AssetKey* release_asset_bought();
   void set_allocated_asset_bought(::protocol::AssetKey* asset_bought);
 
-  // optional int64 amount_bought = 8;
+  // optional int64 amount_bought = 9;
   void clear_amount_bought();
-  static const int kAmountBoughtFieldNumber = 8;
+  static const int kAmountBoughtFieldNumber = 9;
   ::google::protobuf::int64 amount_bought() const;
   void set_amount_bought(::google::protobuf::int64 value);
 
-  // optional int32 op_index = 9;
+  // optional int64 fee_bought = 10;
+  void clear_fee_bought();
+  static const int kFeeBoughtFieldNumber = 10;
+  ::google::protobuf::int64 fee_bought() const;
+  void set_fee_bought(::google::protobuf::int64 value);
+
+  // optional int32 op_index = 11;
   void clear_op_index();
-  static const int kOpIndexFieldNumber = 9;
+  static const int kOpIndexFieldNumber = 11;
   ::google::protobuf::int32 op_index() const;
   void set_op_index(::google::protobuf::int32 value);
 
@@ -2536,8 +2548,10 @@ class ClaimOrder : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::protocol::Price* price_;
   ::protocol::AssetKey* asset_sold_;
   ::google::protobuf::int64 amount_sold_;
+  ::google::protobuf::int64 fee_sold_;
   ::protocol::AssetKey* asset_bought_;
   ::google::protobuf::int64 amount_bought_;
+  ::google::protobuf::int64 fee_bought_;
   ::google::protobuf::int32 op_index_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_chain_2eproto();
@@ -6993,7 +7007,21 @@ inline void ClaimOrder::set_amount_sold(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_sold)
 }
 
-// optional .protocol.AssetKey asset_bought = 7;
+// optional int64 fee_sold = 7;
+inline void ClaimOrder::clear_fee_sold() {
+  fee_sold_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 ClaimOrder::fee_sold() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.fee_sold)
+  return fee_sold_;
+}
+inline void ClaimOrder::set_fee_sold(::google::protobuf::int64 value) {
+  
+  fee_sold_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.fee_sold)
+}
+
+// optional .protocol.AssetKey asset_bought = 8;
 inline bool ClaimOrder::has_asset_bought() const {
   return !_is_default_instance_ && asset_bought_ != NULL;
 }
@@ -7031,7 +7059,7 @@ inline void ClaimOrder::set_allocated_asset_bought(::protocol::AssetKey* asset_b
   // @@protoc_insertion_point(field_set_allocated:protocol.ClaimOrder.asset_bought)
 }
 
-// optional int64 amount_bought = 8;
+// optional int64 amount_bought = 9;
 inline void ClaimOrder::clear_amount_bought() {
   amount_bought_ = GOOGLE_LONGLONG(0);
 }
@@ -7045,7 +7073,21 @@ inline void ClaimOrder::set_amount_bought(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:protocol.ClaimOrder.amount_bought)
 }
 
-// optional int32 op_index = 9;
+// optional int64 fee_bought = 10;
+inline void ClaimOrder::clear_fee_bought() {
+  fee_bought_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 ClaimOrder::fee_bought() const {
+  // @@protoc_insertion_point(field_get:protocol.ClaimOrder.fee_bought)
+  return fee_bought_;
+}
+inline void ClaimOrder::set_fee_bought(::google::protobuf::int64 value) {
+  
+  fee_bought_ = value;
+  // @@protoc_insertion_point(field_set:protocol.ClaimOrder.fee_bought)
+}
+
+// optional int32 op_index = 11;
 inline void ClaimOrder::clear_op_index() {
   op_index_ = 0;
 }

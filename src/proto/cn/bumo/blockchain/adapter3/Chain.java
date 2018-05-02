@@ -9058,7 +9058,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: ±íÊ¾²»ÉèÖÃ
+     *required, [-1,MAX(INT64)] -1: è¡¨ç¤ºä¸è®¾ç½®
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -9067,7 +9067,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9076,7 +9076,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9084,7 +9084,7 @@ public final class Chain {
     cn.bumo.blockchain.adapter3.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9092,7 +9092,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9101,7 +9101,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9195,7 +9195,7 @@ public final class Chain {
     private long txThreshold_;
     /**
      * <pre>
-     *required, [-1,MAX(INT64)] -1: ±íÊ¾²»ÉèÖÃ
+     *required, [-1,MAX(INT64)] -1: è¡¨ç¤ºä¸è®¾ç½®
      * </pre>
      *
      * <code>optional int64 tx_threshold = 1;</code>
@@ -9208,7 +9208,7 @@ public final class Chain {
     private java.util.List<cn.bumo.blockchain.adapter3.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9218,7 +9218,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9229,7 +9229,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9239,7 +9239,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9249,7 +9249,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+     *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9591,7 +9591,7 @@ public final class Chain {
       private long txThreshold_ ;
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: ±íÊ¾²»ÉèÖÃ
+       *required, [-1,MAX(INT64)] -1: è¡¨ç¤ºä¸è®¾ç½®
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9601,7 +9601,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: ±íÊ¾²»ÉèÖÃ
+       *required, [-1,MAX(INT64)] -1: è¡¨ç¤ºä¸è®¾ç½®
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9614,7 +9614,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(INT64)] -1: ±íÊ¾²»ÉèÖÃ
+       *required, [-1,MAX(INT64)] -1: è¡¨ç¤ºä¸è®¾ç½®
        * </pre>
        *
        * <code>optional int64 tx_threshold = 1;</code>
@@ -9640,7 +9640,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9654,7 +9654,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9668,7 +9668,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9682,7 +9682,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9703,7 +9703,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9721,7 +9721,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9741,7 +9741,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9762,7 +9762,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9780,7 +9780,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9798,7 +9798,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9817,7 +9817,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9834,7 +9834,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9851,7 +9851,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9862,7 +9862,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9876,7 +9876,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9891,7 +9891,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9902,7 +9902,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -9914,7 +9914,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÕâ¸öÉèÖÃ£¬Ôò²Ù×÷ÃÅÏŞÒÔÕâ¸öÎª×¼
+       *å¦‚æœè¿™ä¸ªè®¾ç½®ï¼Œåˆ™æ“ä½œé—¨é™ä»¥è¿™ä¸ªä¸ºå‡†
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 2;</code>
@@ -11960,7 +11960,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: ±íÊ¾²»ÉèÖÃ
+     *required, [-1,MAX(UINT32)] -1: è¡¨ç¤ºä¸è®¾ç½®
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -11969,7 +11969,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11978,7 +11978,7 @@ public final class Chain {
         getSignersList();
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11986,7 +11986,7 @@ public final class Chain {
     cn.bumo.blockchain.adapter3.Chain.Signer getSigners(int index);
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -11994,7 +11994,7 @@ public final class Chain {
     int getSignersCount();
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12003,7 +12003,7 @@ public final class Chain {
         getSignersOrBuilderList();
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12097,7 +12097,7 @@ public final class Chain {
     private long masterWeight_;
     /**
      * <pre>
-     *required, [-1,MAX(UINT32)] -1: ±íÊ¾²»ÉèÖÃ
+     *required, [-1,MAX(UINT32)] -1: è¡¨ç¤ºä¸è®¾ç½®
      * </pre>
      *
      * <code>optional int64 master_weight = 1;</code>
@@ -12110,7 +12110,7 @@ public final class Chain {
     private java.util.List<cn.bumo.blockchain.adapter3.Chain.Signer> signers_;
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12120,7 +12120,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12131,7 +12131,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12141,7 +12141,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12151,7 +12151,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+     *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
      * </pre>
      *
      * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12493,7 +12493,7 @@ public final class Chain {
       private long masterWeight_ ;
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: ±íÊ¾²»ÉèÖÃ
+       *required, [-1,MAX(UINT32)] -1: è¡¨ç¤ºä¸è®¾ç½®
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -12503,7 +12503,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: ±íÊ¾²»ÉèÖÃ
+       *required, [-1,MAX(UINT32)] -1: è¡¨ç¤ºä¸è®¾ç½®
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -12516,7 +12516,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *required, [-1,MAX(UINT32)] -1: ±íÊ¾²»ÉèÖÃ
+       *required, [-1,MAX(UINT32)] -1: è¡¨ç¤ºä¸è®¾ç½®
        * </pre>
        *
        * <code>optional int64 master_weight = 1;</code>
@@ -12542,7 +12542,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12556,7 +12556,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12570,7 +12570,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12584,7 +12584,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12605,7 +12605,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12623,7 +12623,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12643,7 +12643,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12664,7 +12664,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12682,7 +12682,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12700,7 +12700,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12719,7 +12719,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12736,7 +12736,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12753,7 +12753,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12764,7 +12764,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12778,7 +12778,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12793,7 +12793,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12804,7 +12804,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -12816,7 +12816,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *address:weight, Èç¹ûweight Îª0 ±íÊ¾É¾³ıÕâ¸ösigner
+       *address:weight, å¦‚æœweight ä¸º0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªsigner
        * </pre>
        *
        * <code>repeated .protocol.Signer signers = 2;</code>
@@ -16740,11 +16740,16 @@ public final class Chain {
     long getAmountSold();
 
     /**
+     * <code>optional int64 fee_sold = 7;</code>
+     */
+    long getFeeSold();
+
+    /**
      * <pre>
      * amount and asset sent to the owner
      * </pre>
      *
-     * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+     * <code>optional .protocol.AssetKey asset_bought = 8;</code>
      */
     boolean hasAssetBought();
     /**
@@ -16752,7 +16757,7 @@ public final class Chain {
      * amount and asset sent to the owner
      * </pre>
      *
-     * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+     * <code>optional .protocol.AssetKey asset_bought = 8;</code>
      */
     cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetBought();
     /**
@@ -16760,17 +16765,22 @@ public final class Chain {
      * amount and asset sent to the owner
      * </pre>
      *
-     * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+     * <code>optional .protocol.AssetKey asset_bought = 8;</code>
      */
     cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetBoughtOrBuilder();
 
     /**
-     * <code>optional int64 amount_bought = 8;</code>
+     * <code>optional int64 amount_bought = 9;</code>
      */
     long getAmountBought();
 
     /**
-     * <code>optional int32 op_index = 9;</code>
+     * <code>optional int64 fee_bought = 10;</code>
+     */
+    long getFeeBought();
+
+    /**
+     * <code>optional int32 op_index = 11;</code>
      */
     int getOpIndex();
   }
@@ -16790,7 +16800,9 @@ public final class Chain {
       orderId_ = "";
       txHash_ = "";
       amountSold_ = 0L;
+      feeSold_ = 0L;
       amountBought_ = 0L;
+      feeBought_ = 0L;
       opIndex_ = 0;
     }
 
@@ -16868,7 +16880,12 @@ public final class Chain {
               amountSold_ = input.readInt64();
               break;
             }
-            case 58: {
+            case 56: {
+
+              feeSold_ = input.readInt64();
+              break;
+            }
+            case 66: {
               cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder subBuilder = null;
               if (assetBought_ != null) {
                 subBuilder = assetBought_.toBuilder();
@@ -16881,12 +16898,17 @@ public final class Chain {
 
               break;
             }
-            case 64: {
+            case 72: {
 
               amountBought_ = input.readInt64();
               break;
             }
-            case 72: {
+            case 80: {
+
+              feeBought_ = input.readInt64();
+              break;
+            }
+            case 88: {
 
               opIndex_ = input.readInt32();
               break;
@@ -17087,14 +17109,23 @@ public final class Chain {
       return amountSold_;
     }
 
-    public static final int ASSET_BOUGHT_FIELD_NUMBER = 7;
+    public static final int FEE_SOLD_FIELD_NUMBER = 7;
+    private long feeSold_;
+    /**
+     * <code>optional int64 fee_sold = 7;</code>
+     */
+    public long getFeeSold() {
+      return feeSold_;
+    }
+
+    public static final int ASSET_BOUGHT_FIELD_NUMBER = 8;
     private cn.bumo.blockchain.adapter3.Chain.AssetKey assetBought_;
     /**
      * <pre>
      * amount and asset sent to the owner
      * </pre>
      *
-     * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+     * <code>optional .protocol.AssetKey asset_bought = 8;</code>
      */
     public boolean hasAssetBought() {
       return assetBought_ != null;
@@ -17104,7 +17135,7 @@ public final class Chain {
      * amount and asset sent to the owner
      * </pre>
      *
-     * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+     * <code>optional .protocol.AssetKey asset_bought = 8;</code>
      */
     public cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetBought() {
       return assetBought_ == null ? cn.bumo.blockchain.adapter3.Chain.AssetKey.getDefaultInstance() : assetBought_;
@@ -17114,25 +17145,34 @@ public final class Chain {
      * amount and asset sent to the owner
      * </pre>
      *
-     * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+     * <code>optional .protocol.AssetKey asset_bought = 8;</code>
      */
     public cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetBoughtOrBuilder() {
       return getAssetBought();
     }
 
-    public static final int AMOUNT_BOUGHT_FIELD_NUMBER = 8;
+    public static final int AMOUNT_BOUGHT_FIELD_NUMBER = 9;
     private long amountBought_;
     /**
-     * <code>optional int64 amount_bought = 8;</code>
+     * <code>optional int64 amount_bought = 9;</code>
      */
     public long getAmountBought() {
       return amountBought_;
     }
 
-    public static final int OP_INDEX_FIELD_NUMBER = 9;
+    public static final int FEE_BOUGHT_FIELD_NUMBER = 10;
+    private long feeBought_;
+    /**
+     * <code>optional int64 fee_bought = 10;</code>
+     */
+    public long getFeeBought() {
+      return feeBought_;
+    }
+
+    public static final int OP_INDEX_FIELD_NUMBER = 11;
     private int opIndex_;
     /**
-     * <code>optional int32 op_index = 9;</code>
+     * <code>optional int32 op_index = 11;</code>
      */
     public int getOpIndex() {
       return opIndex_;
@@ -17168,14 +17208,20 @@ public final class Chain {
       if (amountSold_ != 0L) {
         output.writeInt64(6, amountSold_);
       }
+      if (feeSold_ != 0L) {
+        output.writeInt64(7, feeSold_);
+      }
       if (assetBought_ != null) {
-        output.writeMessage(7, getAssetBought());
+        output.writeMessage(8, getAssetBought());
       }
       if (amountBought_ != 0L) {
-        output.writeInt64(8, amountBought_);
+        output.writeInt64(9, amountBought_);
+      }
+      if (feeBought_ != 0L) {
+        output.writeInt64(10, feeBought_);
       }
       if (opIndex_ != 0) {
-        output.writeInt32(9, opIndex_);
+        output.writeInt32(11, opIndex_);
       }
     }
 
@@ -17205,17 +17251,25 @@ public final class Chain {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(6, amountSold_);
       }
+      if (feeSold_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(7, feeSold_);
+      }
       if (assetBought_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getAssetBought());
+          .computeMessageSize(8, getAssetBought());
       }
       if (amountBought_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(8, amountBought_);
+          .computeInt64Size(9, amountBought_);
+      }
+      if (feeBought_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(10, feeBought_);
       }
       if (opIndex_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(9, opIndex_);
+          .computeInt32Size(11, opIndex_);
       }
       memoizedSize = size;
       return size;
@@ -17251,6 +17305,8 @@ public final class Chain {
       }
       result = result && (getAmountSold()
           == other.getAmountSold());
+      result = result && (getFeeSold()
+          == other.getFeeSold());
       result = result && (hasAssetBought() == other.hasAssetBought());
       if (hasAssetBought()) {
         result = result && getAssetBought()
@@ -17258,6 +17314,8 @@ public final class Chain {
       }
       result = result && (getAmountBought()
           == other.getAmountBought());
+      result = result && (getFeeBought()
+          == other.getFeeBought());
       result = result && (getOpIndex()
           == other.getOpIndex());
       return result;
@@ -17287,6 +17345,9 @@ public final class Chain {
       hash = (37 * hash) + AMOUNT_SOLD_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getAmountSold());
+      hash = (37 * hash) + FEE_SOLD_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getFeeSold());
       if (hasAssetBought()) {
         hash = (37 * hash) + ASSET_BOUGHT_FIELD_NUMBER;
         hash = (53 * hash) + getAssetBought().hashCode();
@@ -17294,6 +17355,9 @@ public final class Chain {
       hash = (37 * hash) + AMOUNT_BOUGHT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getAmountBought());
+      hash = (37 * hash) + FEE_BOUGHT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getFeeBought());
       hash = (37 * hash) + OP_INDEX_FIELD_NUMBER;
       hash = (53 * hash) + getOpIndex();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -17434,6 +17498,8 @@ public final class Chain {
         }
         amountSold_ = 0L;
 
+        feeSold_ = 0L;
+
         if (assetBoughtBuilder_ == null) {
           assetBought_ = null;
         } else {
@@ -17441,6 +17507,8 @@ public final class Chain {
           assetBoughtBuilder_ = null;
         }
         amountBought_ = 0L;
+
+        feeBought_ = 0L;
 
         opIndex_ = 0;
 
@@ -17480,12 +17548,14 @@ public final class Chain {
           result.assetSold_ = assetSoldBuilder_.build();
         }
         result.amountSold_ = amountSold_;
+        result.feeSold_ = feeSold_;
         if (assetBoughtBuilder_ == null) {
           result.assetBought_ = assetBought_;
         } else {
           result.assetBought_ = assetBoughtBuilder_.build();
         }
         result.amountBought_ = amountBought_;
+        result.feeBought_ = feeBought_;
         result.opIndex_ = opIndex_;
         onBuilt();
         return result;
@@ -17549,11 +17619,17 @@ public final class Chain {
         if (other.getAmountSold() != 0L) {
           setAmountSold(other.getAmountSold());
         }
+        if (other.getFeeSold() != 0L) {
+          setFeeSold(other.getFeeSold());
+        }
         if (other.hasAssetBought()) {
           mergeAssetBought(other.getAssetBought());
         }
         if (other.getAmountBought() != 0L) {
           setAmountBought(other.getAmountBought());
+        }
+        if (other.getFeeBought() != 0L) {
+          setFeeBought(other.getFeeBought());
         }
         if (other.getOpIndex() != 0) {
           setOpIndex(other.getOpIndex());
@@ -18107,6 +18183,32 @@ public final class Chain {
         return this;
       }
 
+      private long feeSold_ ;
+      /**
+       * <code>optional int64 fee_sold = 7;</code>
+       */
+      public long getFeeSold() {
+        return feeSold_;
+      }
+      /**
+       * <code>optional int64 fee_sold = 7;</code>
+       */
+      public Builder setFeeSold(long value) {
+        
+        feeSold_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 fee_sold = 7;</code>
+       */
+      public Builder clearFeeSold() {
+        
+        feeSold_ = 0L;
+        onChanged();
+        return this;
+      }
+
       private cn.bumo.blockchain.adapter3.Chain.AssetKey assetBought_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
           cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder> assetBoughtBuilder_;
@@ -18115,7 +18217,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public boolean hasAssetBought() {
         return assetBoughtBuilder_ != null || assetBought_ != null;
@@ -18125,7 +18227,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public cn.bumo.blockchain.adapter3.Chain.AssetKey getAssetBought() {
         if (assetBoughtBuilder_ == null) {
@@ -18139,7 +18241,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public Builder setAssetBought(cn.bumo.blockchain.adapter3.Chain.AssetKey value) {
         if (assetBoughtBuilder_ == null) {
@@ -18159,7 +18261,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public Builder setAssetBought(
           cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder builderForValue) {
@@ -18177,7 +18279,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public Builder mergeAssetBought(cn.bumo.blockchain.adapter3.Chain.AssetKey value) {
         if (assetBoughtBuilder_ == null) {
@@ -18199,7 +18301,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public Builder clearAssetBought() {
         if (assetBoughtBuilder_ == null) {
@@ -18217,7 +18319,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder getAssetBoughtBuilder() {
         
@@ -18229,7 +18331,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       public cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder getAssetBoughtOrBuilder() {
         if (assetBoughtBuilder_ != null) {
@@ -18244,7 +18346,7 @@ public final class Chain {
        * amount and asset sent to the owner
        * </pre>
        *
-       * <code>optional .protocol.AssetKey asset_bought = 7;</code>
+       * <code>optional .protocol.AssetKey asset_bought = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           cn.bumo.blockchain.adapter3.Chain.AssetKey, cn.bumo.blockchain.adapter3.Chain.AssetKey.Builder, cn.bumo.blockchain.adapter3.Chain.AssetKeyOrBuilder> 
@@ -18262,13 +18364,13 @@ public final class Chain {
 
       private long amountBought_ ;
       /**
-       * <code>optional int64 amount_bought = 8;</code>
+       * <code>optional int64 amount_bought = 9;</code>
        */
       public long getAmountBought() {
         return amountBought_;
       }
       /**
-       * <code>optional int64 amount_bought = 8;</code>
+       * <code>optional int64 amount_bought = 9;</code>
        */
       public Builder setAmountBought(long value) {
         
@@ -18277,7 +18379,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int64 amount_bought = 8;</code>
+       * <code>optional int64 amount_bought = 9;</code>
        */
       public Builder clearAmountBought() {
         
@@ -18286,15 +18388,41 @@ public final class Chain {
         return this;
       }
 
+      private long feeBought_ ;
+      /**
+       * <code>optional int64 fee_bought = 10;</code>
+       */
+      public long getFeeBought() {
+        return feeBought_;
+      }
+      /**
+       * <code>optional int64 fee_bought = 10;</code>
+       */
+      public Builder setFeeBought(long value) {
+        
+        feeBought_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 fee_bought = 10;</code>
+       */
+      public Builder clearFeeBought() {
+        
+        feeBought_ = 0L;
+        onChanged();
+        return this;
+      }
+
       private int opIndex_ ;
       /**
-       * <code>optional int32 op_index = 9;</code>
+       * <code>optional int32 op_index = 11;</code>
        */
       public int getOpIndex() {
         return opIndex_;
       }
       /**
-       * <code>optional int32 op_index = 9;</code>
+       * <code>optional int32 op_index = 11;</code>
        */
       public Builder setOpIndex(int value) {
         
@@ -18303,7 +18431,7 @@ public final class Chain {
         return this;
       }
       /**
-       * <code>optional int32 op_index = 9;</code>
+       * <code>optional int32 op_index = 11;</code>
        */
       public Builder clearOpIndex() {
         
@@ -21956,7 +22084,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -21965,7 +22093,7 @@ public final class Chain {
         getTypeThresholdsList();
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -21973,7 +22101,7 @@ public final class Chain {
     cn.bumo.blockchain.adapter3.Chain.OperationTypeThreshold getTypeThresholds(int index);
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -21981,7 +22109,7 @@ public final class Chain {
     int getTypeThresholdsCount();
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -21990,7 +22118,7 @@ public final class Chain {
         getTypeThresholdsOrBuilderList();
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22093,7 +22221,7 @@ public final class Chain {
     private java.util.List<cn.bumo.blockchain.adapter3.Chain.OperationTypeThreshold> typeThresholds_;
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22103,7 +22231,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22114,7 +22242,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22124,7 +22252,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22134,7 +22262,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+     *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
      * </pre>
      *
      * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22513,7 +22641,7 @@ public final class Chain {
 
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22527,7 +22655,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22541,7 +22669,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22555,7 +22683,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22576,7 +22704,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22594,7 +22722,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22614,7 +22742,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22635,7 +22763,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22653,7 +22781,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22671,7 +22799,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22690,7 +22818,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22707,7 +22835,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22724,7 +22852,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22735,7 +22863,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22749,7 +22877,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22764,7 +22892,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22775,7 +22903,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -22787,7 +22915,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *type:threshold £¬threshold:0 ±íÊ¾É¾³ıÕâ¸öÀàĞÍµÄtype
+       *type:threshold ï¼Œthreshold:0 è¡¨ç¤ºåˆ é™¤è¿™ä¸ªç±»å‹çš„type
        * </pre>
        *
        * <code>repeated .protocol.OperationTypeThreshold type_thresholds = 4;</code>
@@ -24770,7 +24898,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *Èç¹ûÊÇÌØ¶¨Çø¿é´¥·¢µÄ£¨ÔİÊ±Î´Ìá¹©£©
+     *å¦‚æœæ˜¯ç‰¹å®šåŒºå—è§¦å‘çš„ï¼ˆæš‚æ—¶æœªæä¾›ï¼‰
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -24779,7 +24907,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+     *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -24787,7 +24915,7 @@ public final class Chain {
     boolean hasTransaction();
     /**
      * <pre>
-     *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+     *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -24795,7 +24923,7 @@ public final class Chain {
     cn.bumo.blockchain.adapter3.Chain.Trigger.OperationTrigger getTransaction();
     /**
      * <pre>
-     *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+     *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25504,7 +25632,7 @@ public final class Chain {
     private long ledgerSeq_;
     /**
      * <pre>
-     *Èç¹ûÊÇÌØ¶¨Çø¿é´¥·¢µÄ£¨ÔİÊ±Î´Ìá¹©£©
+     *å¦‚æœæ˜¯ç‰¹å®šåŒºå—è§¦å‘çš„ï¼ˆæš‚æ—¶æœªæä¾›ï¼‰
      * </pre>
      *
      * <code>optional int64 ledger_seq = 2;</code>
@@ -25517,7 +25645,7 @@ public final class Chain {
     private cn.bumo.blockchain.adapter3.Chain.Trigger.OperationTrigger transaction_;
     /**
      * <pre>
-     *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+     *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25527,7 +25655,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+     *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25537,7 +25665,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+     *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
      * </pre>
      *
      * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25909,7 +26037,7 @@ public final class Chain {
       private long ledgerSeq_ ;
       /**
        * <pre>
-       *Èç¹ûÊÇÌØ¶¨Çø¿é´¥·¢µÄ£¨ÔİÊ±Î´Ìá¹©£©
+       *å¦‚æœæ˜¯ç‰¹å®šåŒºå—è§¦å‘çš„ï¼ˆæš‚æ—¶æœªæä¾›ï¼‰
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -25919,7 +26047,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇÌØ¶¨Çø¿é´¥·¢µÄ£¨ÔİÊ±Î´Ìá¹©£©
+       *å¦‚æœæ˜¯ç‰¹å®šåŒºå—è§¦å‘çš„ï¼ˆæš‚æ—¶æœªæä¾›ï¼‰
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -25932,7 +26060,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇÌØ¶¨Çø¿é´¥·¢µÄ£¨ÔİÊ±Î´Ìá¹©£©
+       *å¦‚æœæ˜¯ç‰¹å®šåŒºå—è§¦å‘çš„ï¼ˆæš‚æ—¶æœªæä¾›ï¼‰
        * </pre>
        *
        * <code>optional int64 ledger_seq = 2;</code>
@@ -25949,7 +26077,7 @@ public final class Chain {
           cn.bumo.blockchain.adapter3.Chain.Trigger.OperationTrigger, cn.bumo.blockchain.adapter3.Chain.Trigger.OperationTrigger.Builder, cn.bumo.blockchain.adapter3.Chain.Trigger.OperationTriggerOrBuilder> transactionBuilder_;
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25959,7 +26087,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25973,7 +26101,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -25993,7 +26121,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -26011,7 +26139,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -26033,7 +26161,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -26051,7 +26179,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -26063,7 +26191,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -26078,7 +26206,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *Èç¹ûÊÇ½»Ò×´¥·¢µÄ
+       *å¦‚æœæ˜¯äº¤æ˜“è§¦å‘çš„
        * </pre>
        *
        * <code>optional .protocol.Trigger.OperationTrigger transaction = 3;</code>
@@ -32687,7 +32815,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *ºÏÔ¼ÀàĞÍ
+     *åˆçº¦ç±»å‹
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -32695,7 +32823,7 @@ public final class Chain {
     int getTypeValue();
     /**
      * <pre>
-     *ºÏÔ¼ÀàĞÍ
+     *åˆçº¦ç±»å‹
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -32704,7 +32832,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *ºÏÔ¼ÄÚÈİ,js ´úÂë
+     *åˆçº¦å†…å®¹,js ä»£ç 
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -32712,7 +32840,7 @@ public final class Chain {
     java.lang.String getPayload();
     /**
      * <pre>
-     *ºÏÔ¼ÄÚÈİ,js ´úÂë
+     *åˆçº¦å†…å®¹,js ä»£ç 
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -32889,7 +33017,7 @@ public final class Chain {
     private int type_;
     /**
      * <pre>
-     *ºÏÔ¼ÀàĞÍ
+     *åˆçº¦ç±»å‹
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -32899,7 +33027,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *ºÏÔ¼ÀàĞÍ
+     *åˆçº¦ç±»å‹
      * </pre>
      *
      * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -32913,7 +33041,7 @@ public final class Chain {
     private volatile java.lang.Object payload_;
     /**
      * <pre>
-     *ºÏÔ¼ÄÚÈİ,js ´úÂë
+     *åˆçº¦å†…å®¹,js ä»£ç 
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -32932,7 +33060,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *ºÏÔ¼ÄÚÈİ,js ´úÂë
+     *åˆçº¦å†…å®¹,js ä»£ç 
      * </pre>
      *
      * <code>optional string payload = 2;</code>
@@ -33239,7 +33367,7 @@ public final class Chain {
       private int type_ = 0;
       /**
        * <pre>
-       *ºÏÔ¼ÀàĞÍ
+       *åˆçº¦ç±»å‹
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -33249,7 +33377,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÀàĞÍ
+       *åˆçº¦ç±»å‹
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -33261,7 +33389,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÀàĞÍ
+       *åˆçº¦ç±»å‹
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -33272,7 +33400,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÀàĞÍ
+       *åˆçº¦ç±»å‹
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -33288,7 +33416,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÀàĞÍ
+       *åˆçº¦ç±»å‹
        * </pre>
        *
        * <code>optional .protocol.Contract.ContractType type = 1;</code>
@@ -33303,7 +33431,7 @@ public final class Chain {
       private java.lang.Object payload_ = "";
       /**
        * <pre>
-       *ºÏÔ¼ÄÚÈİ,js ´úÂë
+       *åˆçº¦å†…å®¹,js ä»£ç 
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -33322,7 +33450,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÄÚÈİ,js ´úÂë
+       *åˆçº¦å†…å®¹,js ä»£ç 
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -33342,7 +33470,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÄÚÈİ,js ´úÂë
+       *åˆçº¦å†…å®¹,js ä»£ç 
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -33359,7 +33487,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÄÚÈİ,js ´úÂë
+       *åˆçº¦å†…å®¹,js ä»£ç 
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -33372,7 +33500,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *ºÏÔ¼ÄÚÈİ,js ´úÂë
+       *åˆçº¦å†…å®¹,js ä»£ç 
        * </pre>
        *
        * <code>optional string payload = 2;</code>
@@ -33518,7 +33646,7 @@ public final class Chain {
   }
   /**
    * <pre>
-   *´´½¨ÕË»§
+   *åˆ›å»ºè´¦æˆ·
    * </pre>
    *
    * Protobuf type {@code protocol.OperationCreateAccount}
@@ -34002,7 +34130,7 @@ public final class Chain {
     }
     /**
      * <pre>
-     *´´½¨ÕË»§
+     *åˆ›å»ºè´¦æˆ·
      * </pre>
      *
      * Protobuf type {@code protocol.OperationCreateAccount}
@@ -34935,7 +35063,7 @@ public final class Chain {
 
     /**
      * <pre>
-     *¿ÉÑ¡¡£metadataµÄ°æ±¾ºÅ¡£Èç¹ûÉèÖÃÁË£¬±ØĞëºÍÕÊºÅÏÖÓĞµÄmetadata_versionÏàÍ¬¡£
+     *å¯é€‰ã€‚metadataçš„ç‰ˆæœ¬å·ã€‚å¦‚æœè®¾ç½®äº†ï¼Œå¿…é¡»å’Œå¸å·ç°æœ‰çš„metadata_versionç›¸åŒã€‚
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -35107,7 +35235,7 @@ public final class Chain {
     private long version_;
     /**
      * <pre>
-     *¿ÉÑ¡¡£metadataµÄ°æ±¾ºÅ¡£Èç¹ûÉèÖÃÁË£¬±ØĞëºÍÕÊºÅÏÖÓĞµÄmetadata_versionÏàÍ¬¡£
+     *å¯é€‰ã€‚metadataçš„ç‰ˆæœ¬å·ã€‚å¦‚æœè®¾ç½®äº†ï¼Œå¿…é¡»å’Œå¸å·ç°æœ‰çš„metadata_versionç›¸åŒã€‚
      * </pre>
      *
      * <code>optional int64 version = 3;</code>
@@ -35588,7 +35716,7 @@ public final class Chain {
       private long version_ ;
       /**
        * <pre>
-       *¿ÉÑ¡¡£metadataµÄ°æ±¾ºÅ¡£Èç¹ûÉèÖÃÁË£¬±ØĞëºÍÕÊºÅÏÖÓĞµÄmetadata_versionÏàÍ¬¡£
+       *å¯é€‰ã€‚metadataçš„ç‰ˆæœ¬å·ã€‚å¦‚æœè®¾ç½®äº†ï¼Œå¿…é¡»å’Œå¸å·ç°æœ‰çš„metadata_versionç›¸åŒã€‚
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -35598,7 +35726,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *¿ÉÑ¡¡£metadataµÄ°æ±¾ºÅ¡£Èç¹ûÉèÖÃÁË£¬±ØĞëºÍÕÊºÅÏÖÓĞµÄmetadata_versionÏàÍ¬¡£
+       *å¯é€‰ã€‚metadataçš„ç‰ˆæœ¬å·ã€‚å¦‚æœè®¾ç½®äº†ï¼Œå¿…é¡»å’Œå¸å·ç°æœ‰çš„metadata_versionç›¸åŒã€‚
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -35611,7 +35739,7 @@ public final class Chain {
       }
       /**
        * <pre>
-       *¿ÉÑ¡¡£metadataµÄ°æ±¾ºÅ¡£Èç¹ûÉèÖÃÁË£¬±ØĞëºÍÕÊºÅÏÖÓĞµÄmetadata_versionÏàÍ¬¡£
+       *å¯é€‰ã€‚metadataçš„ç‰ˆæœ¬å·ã€‚å¦‚æœè®¾ç½®äº†ï¼Œå¿…é¡»å’Œå¸å·ç°æœ‰çš„metadata_versionç›¸åŒã€‚
        * </pre>
        *
        * <code>optional int64 version = 3;</code>
@@ -35939,91 +36067,92 @@ public final class Chain {
       "er_address\030\001 \001(\t\0225\n\014remain_order\030\002 \001(\0132\037" +
       ".protocol.OperationProcessOrder\022\r\n\005flags" +
       "\030\003 \001(\r\022 \n\030last_modified_ledger_seq\030\004 \001(\003" +
-      "\022\017\n\007tx_hash\030\005 \001(\t\022\020\n\010op_index\030\006 \001(\005\"\362\001\n\n" +
+      "\022\017\n\007tx_hash\030\005 \001(\t\022\020\n\010op_index\030\006 \001(\005\"\230\002\n\n" +
       "ClaimOrder\022\021\n\tseller_id\030\001 \001(\t\022\020\n\010order_i" +
       "d\030\002 \001(\t\022\017\n\007tx_hash\030\003 \001(\t\022\036\n\005price\030\004 \001(\0132" +
       "\017.protocol.Price\022&\n\nasset_sold\030\005 \001(\0132\022.p" +
-      "rotocol.AssetKey\022\023\n\013amount_sold\030\006 \001(\003\022(\n" +
-      "\014asset_bought\030\007 \001(\0132\022.protocol.AssetKey\022" +
-      "\025\n\ramount_bought\030\010 \001(\003\022\020\n\010op_index\030\t \001(\005",
-      "\"1\n\024OperationSetAssetFee\022\014\n\004code\030\001 \001(\t\022\013" +
-      "\n\003fee\030\002 \001(\005\"\355\006\n\tOperation\022&\n\004type\030\001 \001(\0162" +
-      "\030.protocol.Operation.Type\022\026\n\016source_addr" +
-      "ess\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_ac" +
-      "count\030\004 \001(\0132 .protocol.OperationCreateAc" +
-      "count\0222\n\013issue_asset\030\005 \001(\0132\035.protocol.Op" +
-      "erationIssueAsset\022+\n\007payment\030\006 \001(\0132\032.pro" +
-      "tocol.OperationPayment\0224\n\014set_metadata\030\007" +
-      " \001(\0132\036.protocol.OperationSetMetadata\022=\n\021" +
-      "set_signer_weight\030\010 \001(\0132\".protocol.Opera",
-      "tionSetSignerWeight\0226\n\rset_threshold\030\t \001" +
-      "(\0132\037.protocol.OperationSetThreshold\022,\n\010p" +
-      "ay_coin\030\n \001(\0132\032.protocol.OperationPayCoi" +
-      "n\022#\n\003log\030\013 \001(\0132\026.protocol.OperationLog\0226" +
-      "\n\rprocess_order\030\014 \001(\0132\037.protocol.Operati" +
-      "onProcessOrder\0228\n\016register_asset\030\r \001(\0132 " +
-      ".protocol.OperationRegisterAsset\0225\n\rset_" +
-      "asset_fee\030\016 \001(\0132\036.protocol.OperationSetA" +
-      "ssetFee\"\311\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_" +
-      "ACCOUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022",
-      "\020\n\014SET_METADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005" +
-      "\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\021\n\rPRO" +
-      "CESS_ORDER\020\010\022\022\n\016REGISTER_ASSET\020\t\022\021\n\rSET_" +
-      "ASSET_FEE\020\n\"h\n\025OperationSetThreshold\022\024\n\014" +
-      "tx_threshold\030\001 \001(\003\0229\n\017type_thresholds\030\004 " +
-      "\003(\0132 .protocol.OperationTypeThreshold\"\274\001" +
-      "\n\013Transaction\022\026\n\016source_address\030\001 \001(\t\022\r\n" +
-      "\005nonce\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger" +
-      "_seq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n\noperatio" +
-      "ns\030\006 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013",
-      "\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017" +
-      "\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit" +
-      "\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigge" +
-      "r\022;\n\020transaction_type\030\001 \001(\0162!.protocol.T" +
-      "rigger.TransactionType\022\022\n\nledger_seq\030\002 \001" +
-      "(\003\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigg" +
-      "er.OperationTrigger\032/\n\020OperationTrigger\022" +
-      "\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transact" +
-      "ionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTR" +
-      "ACT_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013",
-      "transaction\030\001 \001(\0132\025.protocol.Transaction" +
-      "\022\'\n\nsignatures\030\002 \003(\0132\023.protocol.Signatur" +
-      "e\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\243\002" +
-      "\n\024OperationOrderResult\022,\n\016orders_claimed" +
-      "\030\001 \003(\0132\024.protocol.ClaimOrder\022>\n\006effect\030\002" +
-      " \001(\0162..protocol.OperationOrderResult.Ord" +
-      "erEffectType\022\036\n\005order\030\003 \001(\0132\017.protocol.O" +
-      "rder\022\014\n\004code\030\004 \001(\005\022\020\n\010op_index\030\005 \001(\005\"]\n\017" +
-      "OrderEffectType\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rOR" +
-      "DER_CREATED\020\001\022\021\n\rORDER_UPDATED\020\002\022\021\n\rORDE",
-      "R_DELETED\020\003\"\335\001\n\023TransactionEnvStore\0221\n\017t" +
-      "ransaction_env\030\001 \001(\0132\030.protocol.Transact" +
-      "ionEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc" +
-      "\030\003 \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time" +
-      "\030\005 \001(\003\022\014\n\004hash\030\006 \001(\014\0225\n\rorders_result\030\007 " +
-      "\003(\0132\036.protocol.OperationOrderResult\":\n\021T" +
-      "ransactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol" +
-      ".TransactionEnv\"G\n\030ConsensusValueValidat" +
-      "ion\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_i" +
-      "ds\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001",
-      "(\0132\033.protocol.TransactionEnvSet\022\022\n\nclose" +
-      "_time\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nl" +
-      "edger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030" +
-      "\005 \001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol" +
-      ".LedgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".pro" +
-      "tocol.ConsensusValueValidation\"j\n\010Contra" +
-      "ct\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Con" +
-      "tractType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractTy" +
-      "pe\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAc" +
-      "count\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030",
-      "\002 \001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132" +
-      "\032.protocol.AccountPrivilege\022$\n\tmetadatas" +
-      "\030\004 \003(\0132\021.protocol.KeyPair\022\024\n\014init_balanc" +
-      "e\030\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024Operation" +
-      "SetMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022" +
-      "\017\n\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n" +
-      "\005Limit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn" +
-      ".bumo.blockchain.adapter3b\006proto3"
+      "rotocol.AssetKey\022\023\n\013amount_sold\030\006 \001(\003\022\020\n" +
+      "\010fee_sold\030\007 \001(\003\022(\n\014asset_bought\030\010 \001(\0132\022." +
+      "protocol.AssetKey\022\025\n\ramount_bought\030\t \001(\003",
+      "\022\022\n\nfee_bought\030\n \001(\003\022\020\n\010op_index\030\013 \001(\005\"1" +
+      "\n\024OperationSetAssetFee\022\014\n\004code\030\001 \001(\t\022\013\n\003" +
+      "fee\030\002 \001(\005\"\355\006\n\tOperation\022&\n\004type\030\001 \001(\0162\030." +
+      "protocol.Operation.Type\022\026\n\016source_addres" +
+      "s\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\0228\n\016create_acco" +
+      "unt\030\004 \001(\0132 .protocol.OperationCreateAcco" +
+      "unt\0222\n\013issue_asset\030\005 \001(\0132\035.protocol.Oper" +
+      "ationIssueAsset\022+\n\007payment\030\006 \001(\0132\032.proto" +
+      "col.OperationPayment\0224\n\014set_metadata\030\007 \001" +
+      "(\0132\036.protocol.OperationSetMetadata\022=\n\021se",
+      "t_signer_weight\030\010 \001(\0132\".protocol.Operati" +
+      "onSetSignerWeight\0226\n\rset_threshold\030\t \001(\013" +
+      "2\037.protocol.OperationSetThreshold\022,\n\010pay" +
+      "_coin\030\n \001(\0132\032.protocol.OperationPayCoin\022" +
+      "#\n\003log\030\013 \001(\0132\026.protocol.OperationLog\0226\n\r" +
+      "process_order\030\014 \001(\0132\037.protocol.Operation" +
+      "ProcessOrder\0228\n\016register_asset\030\r \001(\0132 .p" +
+      "rotocol.OperationRegisterAsset\0225\n\rset_as" +
+      "set_fee\030\016 \001(\0132\036.protocol.OperationSetAss" +
+      "etFee\"\311\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_AC",
+      "COUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\013\n\007PAYMENT\020\003\022\020\n" +
+      "\014SET_METADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021" +
+      "\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\021\n\rPROCE" +
+      "SS_ORDER\020\010\022\022\n\016REGISTER_ASSET\020\t\022\021\n\rSET_AS" +
+      "SET_FEE\020\n\"h\n\025OperationSetThreshold\022\024\n\014tx" +
+      "_threshold\030\001 \001(\003\0229\n\017type_thresholds\030\004 \003(" +
+      "\0132 .protocol.OperationTypeThreshold\"\274\001\n\013" +
+      "Transaction\022\026\n\016source_address\030\001 \001(\t\022\r\n\005n" +
+      "once\030\002 \001(\003\022\013\n\003fee\030\003 \001(\003\022\027\n\017ceil_ledger_s" +
+      "eq\030\004 \001(\003\022\020\n\010metadata\030\005 \001(\014\022\'\n\noperations",
+      "\030\006 \003(\0132\023.protocol.Operation\"%\n\005Limit\022\013\n\007" +
+      "UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006Signer\022\017\n\007" +
+      "address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$\n\005Limit\022\017" +
+      "\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n\007Trigger\022" +
+      ";\n\020transaction_type\030\001 \001(\0162!.protocol.Tri" +
+      "gger.TransactionType\022\022\n\nledger_seq\030\002 \001(\003" +
+      "\0227\n\013transaction\030\003 \001(\0132\".protocol.Trigger" +
+      ".OperationTrigger\032/\n\020OperationTrigger\022\014\n" +
+      "\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017Transactio" +
+      "nType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030\n\024CONTRAC",
+      "T_TRANSACTION\020\001\"\211\001\n\016TransactionEnv\022*\n\013tr" +
+      "ansaction\030\001 \001(\0132\025.protocol.Transaction\022\'" +
+      "\n\nsignatures\030\002 \003(\0132\023.protocol.Signature\022" +
+      "\"\n\007trigger\030\003 \001(\0132\021.protocol.Trigger\"\243\002\n\024" +
+      "OperationOrderResult\022,\n\016orders_claimed\030\001" +
+      " \003(\0132\024.protocol.ClaimOrder\022>\n\006effect\030\002 \001" +
+      "(\0162..protocol.OperationOrderResult.Order" +
+      "EffectType\022\036\n\005order\030\003 \001(\0132\017.protocol.Ord" +
+      "er\022\014\n\004code\030\004 \001(\005\022\020\n\010op_index\030\005 \001(\005\"]\n\017Or" +
+      "derEffectType\022\021\n\rORDER_UNKNOWN\020\000\022\021\n\rORDE",
+      "R_CREATED\020\001\022\021\n\rORDER_UPDATED\020\002\022\021\n\rORDER_" +
+      "DELETED\020\003\"\335\001\n\023TransactionEnvStore\0221\n\017tra" +
+      "nsaction_env\030\001 \001(\0132\030.protocol.Transactio" +
+      "nEnv\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003" +
+      " \001(\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005" +
+      " \001(\003\022\014\n\004hash\030\006 \001(\014\0225\n\rorders_result\030\007 \003(" +
+      "\0132\036.protocol.OperationOrderResult\":\n\021Tra" +
+      "nsactionEnvSet\022%\n\003txs\030\002 \003(\0132\030.protocol.T" +
+      "ransactionEnv\"G\n\030ConsensusValueValidatio" +
+      "n\022\025\n\rexpire_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids",
+      "\030\002 \003(\005\"\203\002\n\016ConsensusValue\022*\n\005txset\030\001 \001(\013" +
+      "2\033.protocol.TransactionEnvSet\022\022\n\nclose_t" +
+      "ime\030\002 \001(\003\022\026\n\016previous_proof\030\003 \001(\014\022\022\n\nled" +
+      "ger_seq\030\004 \001(\003\022\034\n\024previous_ledger_hash\030\005 " +
+      "\001(\014\022/\n\016ledger_upgrade\030\006 \001(\0132\027.protocol.L" +
+      "edgerUpgrade\0226\n\nvalidation\030\007 \001(\0132\".proto" +
+      "col.ConsensusValueValidation\"j\n\010Contract" +
+      "\022-\n\004type\030\001 \001(\0162\037.protocol.Contract.Contr" +
+      "actType\022\017\n\007payload\030\002 \001(\t\"\036\n\014ContractType" +
+      "\022\016\n\nJAVASCRIPT\020\000\"\316\001\n\026OperationCreateAcco",
+      "unt\022\024\n\014dest_address\030\001 \001(\t\022$\n\010contract\030\002 " +
+      "\001(\0132\022.protocol.Contract\022(\n\004priv\030\003 \001(\0132\032." +
+      "protocol.AccountPrivilege\022$\n\tmetadatas\030\004" +
+      " \003(\0132\021.protocol.KeyPair\022\024\n\014init_balance\030" +
+      "\005 \001(\003\022\022\n\ninit_input\030\006 \001(\t\"X\n\024OperationSe" +
+      "tMetadata\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n" +
+      "\007version\030\003 \001(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005L" +
+      "imit\022\013\n\007UNKNOWN\020\000\022\r\n\tSIGNATURE\020dB\035\n\033cn.b" +
+      "umo.blockchain.adapter3b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -36157,7 +36286,7 @@ public final class Chain {
     internal_static_protocol_ClaimOrder_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ClaimOrder_descriptor,
-        new java.lang.String[] { "SellerId", "OrderId", "TxHash", "Price", "AssetSold", "AmountSold", "AssetBought", "AmountBought", "OpIndex", });
+        new java.lang.String[] { "SellerId", "OrderId", "TxHash", "Price", "AssetSold", "AmountSold", "FeeSold", "AssetBought", "AmountBought", "FeeBought", "OpIndex", });
     internal_static_protocol_OperationSetAssetFee_descriptor =
       getDescriptor().getMessageTypes().get(20);
     internal_static_protocol_OperationSetAssetFee_fieldAccessorTable = new

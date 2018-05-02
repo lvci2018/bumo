@@ -102,6 +102,9 @@
     <ProjectReference Include="libsoci.vcxproj">
       <Project>{bbd512eb-db2a-4fa1-bdb8-3ba3d2fcf51b}</Project>
     </ProjectReference>
+    <ProjectReference Include="libsoci_psql.vcxproj">
+      <Project>{03154cab-877c-43d9-ab11-4e0b2fee302e}</Project>
+    </ProjectReference>
     <ProjectReference Include="libsoci_sqlite3.vcxproj">
       <Project>{ae4b5814-d3d5-431f-9792-88689d1bc708}</Project>
     </ProjectReference>
@@ -142,12 +145,6 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -172,7 +169,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../src;../../src/3rd/basic/include;../../src/3rd/asio/include;../../src/3rd/soci/include/;../../src/3rd\basic\include\postgresql;../../src\3rd\websocketpp;../../src/3rd/basic/include/mysql;../../src/3rd/basic/include/pcre;../../src/3rd/basic/include/mongoc-1.0;../../src/3rd/http;../../src/3rd/basic/include/v8;../../src/3rd/soci/src/core</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;ASIO_STANDALONE;_WEBSOCKETPP_CPP11_STL_;WIN32_LEAN_AND_MEAN;_SHARED_PTR_H;PCRE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;ASIO_STANDALONE;_WEBSOCKETPP_CPP11_STL_;WIN32_LEAN_AND_MEAN;_SHARED_PTR_H;PCRE_STATIC;USE_POSTGRES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>

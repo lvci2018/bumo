@@ -526,7 +526,7 @@ namespace bumo {
 			return false;
 		}
 
-		Database& db = Storage::Instance().lite_db();
+		SociDb& db = Storage::Instance().order_db();
 		soci::transaction txscope(db.GetSession());
 
 		std::string con_str = consensus_value.SerializeAsString();

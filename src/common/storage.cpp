@@ -239,14 +239,14 @@ namespace bumo {
 		keyvalue_db_ = NULL;
 		ledger_db_ = NULL;
 		account_db_ = NULL;
-		lite_db_ = NULL;
+		order_db_ = NULL;
 		check_interval_ = utils::MICRO_UNITS_PER_SEC;
 	}
 
 	Storage::~Storage() {
-		if (lite_db_ != NULL){
-			delete lite_db_;
-			lite_db_ = NULL;
+		if (order_db_ != NULL){
+			delete order_db_;
+			order_db_ = NULL;
 		}
 	}
 
@@ -299,23 +299,44 @@ namespace bumo {
 						break;
 					}
 
-					{
-						if (utils::File::IsExist(db_config.order_db_path_) && !utils::File::Delete(db_config.order_db_path_)) {
+					/////////////////////////////////////////////////////////
+					if (db_config.rational_db_type_ == "postgresql"){
+						SociDb *rational_db = new SociDb();
+						if (!rational_db->Connect(strConnect, db_config.rational_db_type_)){
+							LOG_ERROR("Delete rational db failed %s", rational_db->GetErrorDesc().c_str());
+							delete rational_db;
+							return false;
+						}
+
+						rational_db->Initialize(false);
+						soci::session &se = rational_db->GetSession();
+						std::string cmd = utils::String::Format("drop database if exists %s", str_dbname.c_str());
+						se << cmd;
+
+						rational_db->Disconnect();
+						delete rational_db;
+					}
+					else if (db_config.rational_db_type_ == "sqlite3"){
+						if (utils::File::IsExist(db_config.rational_string_) && !utils::File::Delete(db_config.rational_string_)) {
 							LOG_ERROR_ERRNO("Delete order db failed", STD_ERR_CODE, STD_ERR_DESC);
 							break;
 						}
 
-						std::string tmp_path = db_config.order_db_path_ + "-shm";
+						std::string tmp_path = db_config.rational_string_ + "-shm";
 						if (utils::File::IsExist(tmp_path) && !utils::File::Delete(tmp_path)) {
 							LOG_ERROR_ERRNO("Delete order db failed", STD_ERR_CODE, STD_ERR_DESC);
 							break;
 						}
 
-						tmp_path = db_config.order_db_path_ + "-wal";
+						tmp_path = db_config.rational_string_ + "-wal";
 						if (utils::File::IsExist(tmp_path) && !utils::File::Delete(tmp_path)) {
 							LOG_ERROR_ERRNO("Delete order db failed", STD_ERR_CODE, STD_ERR_DESC);
 							break;
 						}
+					}
+					else{
+						LOG_ERROR("Rational type(%s) error",db_config.rational_db_type_);
+						break;
 					}
 					
 					LOG_INFO("Drop db successful");
@@ -380,10 +401,51 @@ namespace bumo {
 				break;
 			}
 
-			//sqlite databaee
-			lite_db_ = new Database(db_config.order_db_path_);
-			lite_db_->Initialize();
+			if (db_config.rational_db_type_ == "postgresql"){
+				SociDb *rational_db = new SociDb();
+				if (!rational_db->Connect(db_config.rational_string_, db_config.rational_db_type_)){
+					if (!rational_db->Connect(strConnect, db_config.rational_db_type_)){
+						LOG_ERROR("Connect rational db failed %s", rational_db->GetErrorDesc().c_str());
+						delete rational_db;
+						break;
+					}
 
+					std::string sql = utils::String::Format("create database %s", str_dbname.c_str());
+					soci::session& se = rational_db->GetSession();
+					se << sql;
+					rational_db->Disconnect();
+					delete rational_db;
+
+					order_db_ = new SociDb();
+					if (!order_db_->Connect(db_config.rational_string_, db_config.rational_db_type_)){
+						LOG_ERROR("Connect rational db failed %s", order_db_->GetErrorDesc().c_str());
+						delete order_db_;
+						order_db_ = NULL;
+						break;
+					}
+					order_db_->Initialize(false);
+				}
+				else{
+					order_db_ = rational_db;
+					order_db_->Initialize(false);
+				}
+
+			}
+			else if (db_config.rational_db_type_ == "sqlite3"){
+				SociDb *rational_db = new SociDb();
+				if (!rational_db->Connect(db_config.rational_string_, db_config.rational_db_type_)){
+					LOG_ERROR("Connect rational db failed %s", rational_db->GetErrorDesc().c_str());
+					delete rational_db;
+					break;
+				}
+
+				order_db_ = rational_db;
+				order_db_->Initialize(false);
+			}
+			else{
+				LOG_ERROR("Rational type(%s) error", db_config.rational_db_type_);
+				break;
+			}
 
 			TimerNotify::RegisterModule(this);
 			return true;
@@ -415,9 +477,9 @@ namespace bumo {
 			account_db_ = NULL;
 		}
 
-		if (lite_db_ != NULL){
-			delete lite_db_;
-			lite_db_ = NULL;
+		if (order_db_ != NULL){
+			delete order_db_;
+			order_db_ = NULL;
 		}
 
 		return ret1 && ret2 && ret3;
@@ -442,8 +504,8 @@ namespace bumo {
 		return account_db_;
 	}
 
-	Database& Storage::lite_db(){
-		return *lite_db_;
+	SociDb& Storage::order_db(){
+		return *order_db_;
 	}
 
 	KeyValueDb *Storage::NewKeyValueDb(const DbConfigure &db_config) {

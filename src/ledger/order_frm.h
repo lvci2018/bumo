@@ -17,7 +17,7 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #define ORDER_FRAME_H
 
 #include <proto/cpp/chain.pb.h>
-#include <common/database.h>
+#include <common/socidb.h>
 #include <unordered_map>
 #include <utils/ledger_range.h>
 
@@ -41,7 +41,7 @@ namespace bumo
 		};
 
 		double ComputePrice() const;
-		void StoreUpdateHelper(LedgerFrm* ledger, Database& db, bool insert);
+		void StoreUpdateHelper(LedgerFrm* ledger, SociDb& db, bool insert);
 		void Touch(LedgerFrm* ledger);
 		
 	public:
@@ -86,26 +86,26 @@ namespace bumo
 			return order_;
 		}
 
-		void StoreDelete(Database& db) const;
-		void StoreChange(LedgerFrm* ledger,Database& db);
-		void StoreAdd(LedgerFrm* ledger,Database& db);
-		static bool Exists(Database& db, OrderKey const& key);
+		void StoreDelete(SociDb& db) const;
+		void StoreChange(LedgerFrm* ledger, SociDb& db);
+		void StoreAdd(LedgerFrm* ledger, SociDb& db);
+		static bool Exists(SociDb& db, OrderKey const& key);
 		
 		static uint64_t CountObjects(soci::session& sess);
 		static uint64_t CountObjects(soci::session& sess, utils::LedgerRange const& ledgers);
-		static void DeleteOffersModifiedOnOrAfterLedger(Database& db,int64_t oldestLedger);
+		static void DeleteOffersModifiedOnOrAfterLedger(SociDb& db, int64_t oldestLedger);
 
-		static OrderFrame::pointer LoadOrder(std::string const& account_address, const std::string& order_id, Database& db);
+		static OrderFrame::pointer LoadOrder(std::string const& account_address, const std::string& order_id, SociDb& db);
 		static void	LoadOrders(StatementContext& prep, std::function<void(protocol::Order const&)> OrderProcessor);
 
 		static void LoadBestOrders(size_t num_orders, size_t offset, protocol::AssetKey const& pays, protocol::AssetKey const& gets, 
-			std::vector<OrderFrame::pointer>& return_orders, Database& db);
+			std::vector<OrderFrame::pointer>& return_orders, SociDb& db);
 
 		// load all offers from the database (very slow) ; key AccountID
-		static std::unordered_map<std::string, std::vector<OrderFrame::pointer>> LoadAllOrders(Database& db);
+		static std::unordered_map<std::string, std::vector<OrderFrame::pointer>> LoadAllOrders(SociDb& db);
 
-		static void DropAll(Database& db);
-		static void Initialize(Database& db);
+		static void DropAll(SociDb& db);
+		static void Initialize(SociDb& db);
 	private:
 		static const char* kSQLCreateStatement1;
 		static const char* kSQLCreateStatement2;

@@ -52,11 +52,13 @@ namespace bumo {
 	class OrderExchange
 	{
 		OrderFrame::pointer sell_sheep_order_;
+		std::string sell_sheep_order_flag_;
 		std::vector<protocol::ClaimOrder> order_trail_;
 		std::shared_ptr<Environment> environment_;
 		LedgerFrm* ledger_;
 	public:
-		OrderExchange(LedgerFrm* ledger, std::shared_ptr<Environment> environment, OrderFrame::pointer sell_sheep_order) :ledger_(ledger), environment_(environment), sell_sheep_order_(sell_sheep_order){}
+		OrderExchange(LedgerFrm* ledger, std::shared_ptr<Environment> environment, OrderFrame::pointer sell_sheep_order, const std::string& sell_sheep_order_flag) :
+			ledger_(ledger), environment_(environment), sell_sheep_order_(sell_sheep_order), sell_sheep_order_flag_(sell_sheep_order_flag){}
 
 		// buys wheat with sheep from a single order //用羊买小麦从一个单子
 		enum CrossOrderResult
