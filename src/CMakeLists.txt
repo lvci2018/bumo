@@ -51,7 +51,8 @@ include_directories(
     ${BUMO_SRC_DIR}/3rd/openssl/include
     ${BUMO_SRC_DIR}/3rd/http
     ${BUMO_SRC_DIR}/3rd/libscrypt
-    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/install/include
+    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/src/include
+    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/src/interfaces/libpq
     ${BUMO_SRC_DIR}/3rd/soci/src/core
     ${BUMO_SRC_DIR}/3rd/soci/src/backends/sqlite3
     ${BUMO_SRC_DIR}/3rd/soci/src/backends/postgresql
@@ -69,13 +70,13 @@ link_directories(
     ${BUMO_SRC_DIR}/3rd/basic/lib
     ${BUMO_SRC_DIR}/3rd/curl/lib/.libs/
     ${BUMO_SRC_DIR}/3rd/v8_target/${V8_LIB_PATH}/
-    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/install/lib
+    ${BUMO_SRC_DIR}/3rd/postgresql-9.6.8/src/interfaces/libpq
     ${BUMO_SRC_DIR}/3rd/sqlite/lib
     ${BUMO_SRC_DIR}/3rd/soci/lib
     ${LIBRARY_OUTPUT_PATH}
 )
 
-set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt pq sqlite soci soci_sqlite3 soci_postgresql)
+set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt pq soci soci_postgresql soci_sqlite3 sqlite)
 
 add_subdirectory(3rd/http)
 add_subdirectory(3rd/ed25519-donna)

@@ -23,10 +23,10 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #include <thread>
 #include <vector>
 
-extern "C" void register_factory_sqlite3();
-
 #ifdef USE_POSTGRES
 extern "C" void register_factory_postgresql();
+#else
+extern "C" void register_factory_sqlite3();
 #endif
 
 // NOTE: soci will just crash and not throw
@@ -47,9 +47,11 @@ namespace bumo
 
 	void SociDb::RegisterDrivers() {
 		if (!gDriversRegistered){
-			register_factory_sqlite3();
+			
 #ifdef USE_POSTGRES
 			register_factory_postgresql();
+#else
+			register_factory_sqlite3();
 #endif
 			gDriversRegistered = true;
 		}

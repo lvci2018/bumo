@@ -9,18 +9,18 @@ SET(LIBRARY_OUTPUT_PATH ${SOCI_ROOT}/lib)
 
 #aux_source_directory(${BUMO_SRC_DIR}/3rd/soci/src/backends/sqlite3 SOCI_SQLITE_SRC)
 
-message(STATUS "POSTGRESQL_INCLUDE_DIR=" ${POSTGRESQL_INCLUDE_DIR})
-message(STATUS "POSTGRESQL_LIBRARIES=" ${POSTGRESQL_LIBRARIES})
+message(STATUS "--------->POSTGRESQL_DIR=" ${POSTGRESQL_DIR})
 
 include_directories(
     ./
-    ../../core
-    ${POSTGRESQL_INCLUDE_DIR}
+    ${SOCI_ROOT}/src/core
+    ${POSTGRESQL_DIR}/src/include
+    ${POSTGRESQL_DIR}/src/interfaces/libpq
     )
 
 link_directories(
     ${SOCI_ROOT}/lib
-    ${POSTGRESQL_LIBRARIES}
+    ${POSTGRESQL_DIR}/src/interfaces/libpq
     )
 
 #generate static library file

@@ -106,11 +106,11 @@ $(PCRE):
 $(GTEST):
 	@echo "**************building gtest now***************" && cd $(GTEST_PATH) && $(MAKE) -j 4
 $(POSTGRE) :
-	@echo "*************building POSTGRE now***************" && cd $(POSTGRE_PATH) && chmod +x configure && ./configure --prefix="$(CUR_DIR)/$(POSTGRE_PATH)/install" --without-readline && $(MAKE) && make install
+	@echo "*************building POSTGRE now***************" && cd $(POSTGRE_PATH) && ./configure --without-readline && $(MAKE) -j 4
 $(LIBSQLITE):
 	@echo "**************building sqlite now***************" && cd $(LIBSQLITE_PATH) && [ -d build ] || mkdir build && cd build && cmake .. && $(MAKE) -j 4
 $(LIBSOCI):
-	@echo "**************building soci now***************" && cd $(LIBSOCI_PATH) && [ -d build ] || mkdir build && cd build && cmake -DPOSTGRESQL_INCLUDE_DIR="$(CUR_DIR)/$(POSTGRE_PATH)/install/include" -DPOSTGRESQL_LIBRARIES="$(CUR_DIR)/$(POSTGRE_PATH)/install/lib"  .. && $(MAKE) -j 4
+	@echo "**************building soci now***************" && cd $(LIBSOCI_PATH) && [ -d build ] || mkdir build && cd build && cmake -DPOSTGRESQL_DIR="$(CUR_DIR)/$(POSTGRE_PATH)" -DSQLITE_DIR="$(CUR_DIR)/$(LIBSQLITE_PATH)"  .. && $(MAKE) -j 4
 
 clean:
 	@echo "******************skip clean 3rd, you can use 'clean_3rd' if you need******************"

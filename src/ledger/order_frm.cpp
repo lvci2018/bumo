@@ -183,7 +183,7 @@ namespace bumo {
 				",sellingassetcode=:sac,sellingissuer=:si,"
 				"buyingassettype=:bat,buyingassetcode=:bac,buyingissuer=:bi,"
 				"amount=:a,pricen=:pn,priced=:pd,price=:p,flags=:f,"
-				"lastmodified=:l,txhash=:ha,opindex:opi WHERE orderid=:oid";
+				"lastmodified=:l,txhash=:ha,opindex=:opi WHERE orderid=:oid";
 		}
 
 		auto prep = db.GetPreparedStatement(sql);

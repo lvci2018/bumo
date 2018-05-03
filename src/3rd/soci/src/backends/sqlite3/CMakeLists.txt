@@ -8,16 +8,17 @@ file(GLOB SOCI_SQLITE3_SOURCES *.cpp)
 SET(LIBRARY_OUTPUT_PATH ${SOCI_ROOT}/lib)
 
 #aux_source_directory(${BUMO_SRC_DIR}/3rd/soci/src/backends/sqlite3 SOCI_SQLITE_SRC)
+message(STATUS "--------->SQLITE_DIR=" ${SQLITE_DIR})
 
 include_directories(
     ./
-    ../../core
-    ../../../../sqlite
+    ${SOCI_ROOT}/src/core
+    ${SQLITE_DIR}
     )
 
 link_directories(
     ${SOCI_ROOT}/lib
-    ${SOCI_ROOT}/../sqlite/lib
+    ${SQLITE_DIR}/lib
     )
 
 #generate static library file
