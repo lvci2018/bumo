@@ -1137,7 +1137,7 @@ namespace bumo {
 				max_wheat_price.set_d(sheepPrice.n());
 
 
-				std::string sell_sheep_order_flag = utils::String::Format("(" FMT_I64 ":%d : %d)", transaction_->ledger_->GetClosingLedgerSeq(), transaction_->index_, index_);
+				std::string sell_sheep_order_flag = utils::String::Format("[" FMT_I64 ":%d:%d]", transaction_->ledger_->GetClosingLedgerSeq(), transaction_->index_, index_);
 				std::string order_desc = sell_sheep_order_->ToString();
 				LOG_INFO("(%s) %s max_sheep_send(" FMT_I64 ") max_wheat_can_buy(" FMT_I64 ")", sell_sheep_order_flag.c_str(), order_desc.c_str(), max_sheep_send, max_wheat_can_buy);
 

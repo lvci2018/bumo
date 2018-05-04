@@ -167,10 +167,15 @@ namespace bumo {
 		Touch(ledger);
 
 		std::string sql;
+		int64_t amount = order_.remain_order().amount();
+		int32_t pn = order_.remain_order().price().n();
+		int32_t pd = order_.remain_order().price().d();
+		int64_t last_modify = GetLastModified();
 		soci::indicator selling_ind = soci::i_ok, buying_ind = soci::i_ok;
 		unsigned int sellingType = order_.remain_order().selling().type();
 		unsigned int buyingType = order_.remain_order().buying().type();
 		unsigned int flags = 1;
+
 		if (insert){
 			sql = "INSERT INTO orders (sellerid,orderid,"
 				"sellingassettype,sellingassetcode,sellingissuer,"
@@ -199,13 +204,13 @@ namespace bumo {
 		st.exchange(use(buyingType, "bat"));
 		st.exchange(use(order_.remain_order().buying().code(), buying_ind, "bac"));
 		st.exchange(use(order_.remain_order().buying().issuer(), buying_ind, "bi"));
-		st.exchange(use(order_.remain_order().amount(), "a"));
-		st.exchange(use(order_.remain_order().price().n(), "pn"));
-		st.exchange(use(order_.remain_order().price().d(), "pd"));
+		st.exchange(use(amount, "a"));
+		st.exchange(use(pn, "pn"));
+		st.exchange(use(pd, "pd"));
 		auto price = ComputePrice();
 		st.exchange(use(price, "p"));
 		st.exchange(use(flags, "f"));
-		st.exchange(use(GetLastModified(), "l"));
+		st.exchange(use(last_modify, "l"));
 		st.exchange(use(order_.tx_hash(), "ha"));
 		st.exchange(use(order_.op_index(), "opi"));
 		st.define_and_bind();
