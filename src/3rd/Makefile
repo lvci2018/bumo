@@ -77,8 +77,6 @@ add_permission:
 	chmod +x ./protobuf/autogen.sh; \
 	chmod +x ./jsoncpp/automake.sh; \
 	chmod +x ./rocksdb/build_tools/*; \
-	#chmod +x ./sqlite/configure; 
-	chmod +x ./postgresql-9.6.8/configure; \
 	chmod +x ./openssl/config; \
 	[-d ./openssl/include] || cd openssl && ./config;
 
@@ -106,7 +104,7 @@ $(PCRE):
 $(GTEST):
 	@echo "**************building gtest now***************" && cd $(GTEST_PATH) && $(MAKE) -j 4
 $(POSTGRE) :
-	@echo "*************building POSTGRE now***************" && cd $(POSTGRE_PATH) && ./configure --without-readline && $(MAKE) -j 4
+	@echo "*************building POSTGRE now***************" && cd $(POSTGRE_PATH) && chmod +x ./configure && ./configure --without-readline && $(MAKE) -j 4
 $(LIBSQLITE):
 	@echo "**************building sqlite now***************" && cd $(LIBSQLITE_PATH) && [ -d build ] || mkdir build && cd build && cmake .. && $(MAKE) -j 4
 $(LIBSOCI):

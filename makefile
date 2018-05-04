@@ -11,6 +11,7 @@ endif
 
 .PHONY:all
 all:
+	if [ ! -d src/3rd/postgresql-9.6.8 ]; then cd src/3rd && tar -zxvf postgresql-9.6.8.tar.gz >/dev/null && cd ../..; fi
 	$(MAKE_PLATFORM); cd build/$(CUR_OS); \
 	cmake -DSVNVERSION=$(bumo_version) -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_VERBOSE_MAKEFILE=ON ../../src; \
 	make -j 4

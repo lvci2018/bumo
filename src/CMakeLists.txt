@@ -29,10 +29,6 @@ set(EXECUTABLE_OUTPUT_PATH ${BUMO_ROOT_DIR}/bin)
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS)
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS)
 
-option(USE_PSQL "Use Postgresql" ON)
-if(USE_PSQL)
-    add_definitions(-DUSE_POSTGRESQL)
-endif()
 
 execute_process(COMMAND make all WORKING_DIRECTORY ${BUMO_SRC_DIR}/3rd)
 
@@ -76,7 +72,7 @@ link_directories(
     ${LIBRARY_OUTPUT_PATH}
 )
 
-set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt pq soci soci_postgresql soci_sqlite3 sqlite)
+set(BUMO_DEPENDS_LIBS protobuf rocksdb pcreposix pcrecpp pcre json ssl crypto z bz2 scrypt soci soci_postgresql soci_sqlite3 sqlite pq)
 
 add_subdirectory(3rd/http)
 add_subdirectory(3rd/ed25519-donna)

@@ -116,7 +116,7 @@ namespace bumo
 		//VirtualClock::time_point mLastIdleTotalTime;
 
 		static bool gDriversRegistered;
-		static void RegisterDrivers();
+		static void RegisterDrivers(const std::string& dbtype);
 		//void applySchemaUpgrade(unsigned long vers);
 
 		std::string connect_string_;

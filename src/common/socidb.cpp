@@ -23,11 +23,9 @@ along with bumo.  If not, see <http://www.gnu.org/licenses/>.
 #include <thread>
 #include <vector>
 
-#ifdef USE_POSTGRES
 extern "C" void register_factory_postgresql();
-#else
 extern "C" void register_factory_sqlite3();
-#endif
+
 
 // NOTE: soci will just crash and not throw
 //  if you misname a column in a query. yay!
@@ -45,14 +43,12 @@ namespace bumo
 			"SERIALIZABLE";
 	}
 
-	void SociDb::RegisterDrivers() {
+	void SociDb::RegisterDrivers(const std::string& dbtype) {
 		if (!gDriversRegistered){
-			
-#ifdef USE_POSTGRES
-			register_factory_postgresql();
-#else
-			register_factory_sqlite3();
-#endif
+			if (dbtype == "postgresql")
+				register_factory_postgresql();
+			else if(dbtype == "sqlite3")
+				register_factory_sqlite3();
 			gDriversRegistered = true;
 		}
 	}
@@ -73,12 +69,12 @@ namespace bumo
 			return false;
 		}
 
-		RegisterDrivers();
+		RegisterDrivers(dbtype);
 
 		try{
 			session_.open(connect_str);
 		}
-		catch (std::exception e){
+		catch (soci_error const & e){
 			error_desc_ = e.what();
 			return false;
 		}
@@ -101,9 +97,7 @@ namespace bumo
 	}
 
 	std::string SociDb::GetErrorDesc(){
-		std::string ret = error_desc_;
-		error_desc_ = "";
-		return ret;
+		return error_desc_;
 	}
 
 	SociDb::~SociDb(){

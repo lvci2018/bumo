@@ -32,4 +32,4 @@ add_library(${LIB_SOCI_POSTGRESQL} ${SOCI_POSTGRESQL_HEADERS} ${SOCI_POSTGRESQL_
 # 	PUBLIC -fPIC
 # )
 
-link_libraries(${LIB_SOCI_POSTGRESQL} pq soci)
+link_libraries(${LIB_SOCI_POSTGRESQL} ${POSTGRESQL_DIR}/src/interfaces/libpq/libpq.a soci)
